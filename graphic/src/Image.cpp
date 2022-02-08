@@ -1,7 +1,7 @@
-#include "graphic/Image.h"
+#include "sgl/graphic/Image.h"
 
-#include "graphic/Texture.h"
-#include "graphic/TextureManager.h"
+#include "sgl/graphic/Texture.h"
+#include "sgl/graphic/TextureManager.h"
 
 #include <SDL2/SDL.h>
 

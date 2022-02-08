@@ -1,7 +1,7 @@
-#include "graphic/TextureData.h"
+#include "sgl/graphic/TextureData.h"
 
-#include "graphic/GraphicConstants.h"
-#include "graphic/Renderer.h"
+#include "sgl/graphic/GraphicConstants.h"
+#include "sgl/graphic/Renderer.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

@@ -1,4 +1,4 @@
-#include "core/event/MouseMotionEvent.h"
+#include "sgl/core/event/MouseMotionEvent.h"
 
 #include <SDL2/SDL.h>
 

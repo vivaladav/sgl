@@ -1,6 +1,6 @@
-#include "graphic/ParticlesManager.h"
+#include "sgl/graphic/ParticlesManager.h"
 
-#include "graphic/ParticlesUpdater.h"
+#include "sgl/graphic/ParticlesUpdater.h"
 
 namespace lib
 {

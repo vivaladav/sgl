@@ -1,9 +1,9 @@
-#include "graphic/TexturedRenderable.h"
+#include "sgl/graphic/TexturedRenderable.h"
 
-#include "graphic/Camera.h"
-#include "graphic/Renderer.h"
-#include "graphic/Texture.h"
-#include "graphic/TextureData.h"
+#include "sgl/graphic/Camera.h"
+#include "sgl/graphic/Renderer.h"
+#include "sgl/graphic/Texture.h"
+#include "sgl/graphic/TextureData.h"
 
 #include <SDL2/SDL.h>
 

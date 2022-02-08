@@ -1,8 +1,8 @@
-#include "graphic/TextureManager.h"
+#include "sgl/graphic/TextureManager.h"
 
-#include "graphic/GraphicConstants.h"
-#include "graphic/Texture.h"
-#include "graphic/TextureData.h"
+#include "sgl/graphic/GraphicConstants.h"
+#include "sgl/graphic/Texture.h"
+#include "sgl/graphic/TextureData.h"
 
 #include <iostream>
 

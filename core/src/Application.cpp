@@ -1,4 +1,4 @@
-#include "core/Application.h"
+#include "sgl/core/Application.h"
 
 #include "event/EventDispatcher.h"
 

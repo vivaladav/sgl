@@ -1,7 +1,7 @@
-#include "sgui/Image.h"
+#include "sgl/sgui/Image.h"
 
-#include "graphic/DummyRenderable.h"
-#include "graphic/Image.h"
+#include "sgl/graphic/DummyRenderable.h"
+#include "sgl/graphic/Image.h"
 
 #include <cassert>
 

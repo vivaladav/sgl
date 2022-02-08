@@ -1,6 +1,6 @@
-#include "graphic/Font.h"
+#include "sgl/graphic/Font.h"
 
-#include "core/Size.h"
+#include "sgl/core/Size.h"
 
 #include <SDL2/SDL_ttf.h>
 

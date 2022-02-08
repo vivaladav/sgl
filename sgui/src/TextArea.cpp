@@ -1,8 +1,8 @@
-#include "sgui/TextArea.h"
+#include "sgl/sgui/TextArea.h"
 
-#include "graphic/DummyRenderable.h"
-#include "graphic/Font.h"
-#include "graphic/Text.h"
+#include "sgl/graphic/DummyRenderable.h"
+#include "sgl/graphic/Font.h"
+#include "sgl/graphic/Text.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>

@@ -1,10 +1,10 @@
-#include "sgui/PushButton.h"
+#include "sgl/sgui/PushButton.h"
 
-#include "core/event/MouseButtonEvent.h"
-#include "graphic/DummyRenderable.h"
-#include "graphic/Image.h"
-#include "graphic/Text.h"
-#include "sgui/Stage.h"
+#include "sgl/core/event/MouseButtonEvent.h"
+#include "sgl/graphic/DummyRenderable.h"
+#include "sgl/graphic/Image.h"
+#include "sgl/graphic/Text.h"
+#include "sgl/sgui/Stage.h"
 
 #include <cassert>
 

@@ -1,10 +1,10 @@
-#include "sgui/Widget.h"
+#include "sgl/sgui/Widget.h"
 
-#include "core/event/MouseButtonEvent.h"
-#include "core/event/MouseMotionEvent.h"
-#include "graphic/Camera.h"
-#include "graphic/Renderable.h"
-#include "sgui/Stage.h"
+#include "sgl/core/event/MouseButtonEvent.h"
+#include "sgl/core/event/MouseMotionEvent.h"
+#include "sgl/graphic/Camera.h"
+#include "sgl/graphic/Renderable.h"
+#include "sgl/sgui/Stage.h"
 
 #include <algorithm>
 

@@ -1,8 +1,8 @@
-#include "sgui/Stage.h"
+#include "sgl/sgui/Stage.h"
 
-#include "core/event/MouseButtonEvent.h"
-#include "core/event/MouseMotionEvent.h"
-#include "sgui/Widget.h"
+#include "sgl/core/event/MouseButtonEvent.h"
+#include "sgl/core/event/MouseMotionEvent.h"
+#include "sgl/sgui/Widget.h"
 
 #include <algorithm>
 

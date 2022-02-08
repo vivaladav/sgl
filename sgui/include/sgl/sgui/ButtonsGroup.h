@@ -1,7 +1,7 @@
 #pragma once
 
-#include "sgui/AbstractButtonsGroup.h"
-#include "sgui/Widget.h"
+#include "sgl/sgui/AbstractButtonsGroup.h"
+#include "sgl/sgui/Widget.h"
 
 namespace lib
 {

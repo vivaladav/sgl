@@ -5,14 +5,14 @@ find_package(SDL2 REQUIRED)
 
 add_library(
     utilities
-    include/utilities/ISystem.h
-    include/utilities/LoadedDie.h
-    include/utilities/State.h
-    include/utilities/StateManager.h
-    include/utilities/System.h
-    $<$<PLATFORM_ID:Linux>:include/utilities/linux/System.h>
-    $<$<PLATFORM_ID:Windows>:include/utilities/windows/System.h>
-    include/utilities/UniformDistribution.h
+    include/sgl/utilities/ISystem.h
+    include/sgl/utilities/LoadedDie.h
+    include/sgl/utilities/State.h
+    include/sgl/utilities/StateManager.h
+    include/sgl/utilities/System.h
+    $<$<PLATFORM_ID:Linux>:include/sgl/utilities/linux/System.h>
+    $<$<PLATFORM_ID:Windows>:include/sgl/utilities/windows/System.h>
+    include/sgl/utilities/UniformDistribution.h
     src/LoadedDie.cpp
     src/State.cpp
     src/StateManager.cpp

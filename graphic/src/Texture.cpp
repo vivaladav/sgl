@@ -1,8 +1,8 @@
-#include "graphic/Texture.h"
+#include "sgl/graphic/Texture.h"
 
-#include "graphic/GraphicConstants.h"
-#include "graphic/Renderer.h"
-#include "graphic/TextureData.h"
+#include "sgl/graphic/GraphicConstants.h"
+#include "sgl/graphic/Renderer.h"
+#include "sgl/graphic/TextureData.h"
 
 #include <SDL2/SDL.h>
 

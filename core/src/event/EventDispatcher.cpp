@@ -1,12 +1,12 @@
 #include "EventDispatcher.h"
 
-#include "core/event/ApplicationEvent.h"
-#include "core/event/ApplicationEventListener.h"
-#include "core/event/KeyboardEvent.h"
-#include "core/event/KeyboardEventListener.h"
-#include "core/event/MouseButtonEvent.h"
-#include "core/event/MouseEventListener.h"
-#include "core/event/MouseMotionEvent.h"
+#include "sgl/core/event/ApplicationEvent.h"
+#include "sgl/core/event/ApplicationEventListener.h"
+#include "sgl/core/event/KeyboardEvent.h"
+#include "sgl/core/event/KeyboardEventListener.h"
+#include "sgl/core/event/MouseButtonEvent.h"
+#include "sgl/core/event/MouseEventListener.h"
+#include "sgl/core/event/MouseMotionEvent.h"
 
 #include <SDL2/SDL.h>
 

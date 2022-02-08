@@ -1,9 +1,9 @@
-#include "graphic/Text.h"
+#include "sgl/graphic/Text.h"
 
-#include "graphic/Font.h"
-#include "graphic/Renderer.h"
-#include "graphic/Texture.h"
-#include "graphic/TextureManager.h"
+#include "sgl/graphic/Font.h"
+#include "sgl/graphic/Renderer.h"
+#include "sgl/graphic/Texture.h"
+#include "sgl/graphic/TextureManager.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>

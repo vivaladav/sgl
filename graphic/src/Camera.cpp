@@ -1,4 +1,4 @@
-#include "graphic/Camera.h"
+#include "sgl/graphic/Camera.h"
 
 #include <cmath>
 

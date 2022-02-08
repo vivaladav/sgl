@@ -1,8 +1,8 @@
-#include "graphic/Renderer.h"
+#include "sgl/graphic/Renderer.h"
 
-#include "graphic/Camera.h"
-#include "graphic/TextureManager.h"
-#include "graphic/Window.h"
+#include "sgl/graphic/Camera.h"
+#include "sgl/graphic/TextureManager.h"
+#include "sgl/graphic/Window.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

@@ -1,6 +1,6 @@
-#include "sgui/ButtonsGroup.h"
+#include "sgl/sgui/ButtonsGroup.h"
 
-#include "sgui/PushButton.h"
+#include "sgl/sgui/PushButton.h"
 
 #include <cassert>
 

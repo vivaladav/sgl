@@ -5,24 +5,24 @@ find_package(SDL2 REQUIRED)
 
 add_library(
     graphic
-    include/graphic/Camera.h
-    include/graphic/DummyRenderable.h
-    include/graphic/Font.h
-    include/graphic/FontManager.h
-    include/graphic/GraphicConstants.h
-    include/graphic/Image.h
-    include/graphic/Particle.h
-    include/graphic/ParticleData.h
-    include/graphic/ParticlesManager.h
-    include/graphic/ParticlesUpdater.h
-    include/graphic/Renderable.h
-    include/graphic/Renderer.h
-    include/graphic/Text.h
-    include/graphic/TexturedRenderable.h
-    include/graphic/Texture.h
-    include/graphic/TextureData.h
-    include/graphic/TextureManager.h
-    include/graphic/Window.h
+    include/sgl/graphic/Camera.h
+    include/sgl/graphic/DummyRenderable.h
+    include/sgl/graphic/Font.h
+    include/sgl/graphic/FontManager.h
+    include/sgl/graphic/GraphicConstants.h
+    include/sgl/graphic/Image.h
+    include/sgl/graphic/Particle.h
+    include/sgl/graphic/ParticleData.h
+    include/sgl/graphic/ParticlesManager.h
+    include/sgl/graphic/ParticlesUpdater.h
+    include/sgl/graphic/Renderable.h
+    include/sgl/graphic/Renderer.h
+    include/sgl/graphic/Text.h
+    include/sgl/graphic/TexturedRenderable.h
+    include/sgl/graphic/Texture.h
+    include/sgl/graphic/TextureData.h
+    include/sgl/graphic/TextureManager.h
+    include/sgl/graphic/Window.h
     src/Camera.cpp
     src/DummyRenderable.cpp
     src/Font.cpp

@@ -1,4 +1,4 @@
-#include "sgui/ProgressBar.h"
+#include "sgl/sgui/ProgressBar.h"
 
 namespace lib
 {

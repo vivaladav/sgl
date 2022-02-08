@@ -1,4 +1,4 @@
-#include "graphic/DummyRenderable.h"
+#include "sgl/graphic/DummyRenderable.h"
 
 namespace lib
 {

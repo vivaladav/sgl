@@ -5,19 +5,19 @@ find_package(SDL2 REQUIRED)
 
 add_library(
     core
-    include/core/Application.h
-    include/core/Point.h
-    include/core/Rect.h
-    include/core/Size.h
-    include/core/event/ApplicationEvent.h
-    include/core/event/ApplicationEventListener.h
-    include/core/event/Event.h
-    include/core/event/KeyboardEvent.h
-    include/core/event/KeyboardEventListener.h
-    include/core/event/MouseButtonEvent.h
-    include/core/event/MouseEvent.h
-    include/core/event/MouseEventListener.h
-    include/core/event/MouseMotionEvent.h
+    include/sgl/core/Application.h
+    include/sgl/core/Point.h
+    include/sgl/core/Rect.h
+    include/sgl/core/Size.h
+    include/sgl/core/event/ApplicationEvent.h
+    include/sgl/core/event/ApplicationEventListener.h
+    include/sgl/core/event/Event.h
+    include/sgl/core/event/KeyboardEvent.h
+    include/sgl/core/event/KeyboardEventListener.h
+    include/sgl/core/event/MouseButtonEvent.h
+    include/sgl/core/event/MouseEvent.h
+    include/sgl/core/event/MouseEventListener.h
+    include/sgl/core/event/MouseMotionEvent.h
     src/Application.cpp
     src/event/ApplicationEventListener.cpp
     src/event/Event.cpp

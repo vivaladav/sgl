@@ -1,6 +1,6 @@
-#include "graphic/FontManager.h"
+#include "sgl/graphic/FontManager.h"
 
-#include "graphic/Font.h"
+#include "sgl/graphic/Font.h"
 
 namespace lib
 {

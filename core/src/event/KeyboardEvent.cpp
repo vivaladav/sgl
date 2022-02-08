@@ -1,4 +1,4 @@
-#include "core/event/KeyboardEvent.h"
+#include "sgl/core/event/KeyboardEvent.h"
 
 #include <SDL2/SDL.h>
 

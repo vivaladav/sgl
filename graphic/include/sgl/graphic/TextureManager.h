@@ -1,6 +1,6 @@
 #pragma once
 
-#include <core/Rect.h>
+#include "sgl/core/Rect.h"
 
 #include <memory>
 #include <string>

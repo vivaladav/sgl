@@ -1,8 +1,8 @@
-#include "sgui/Label.h"
+#include "sgl/sgui/Label.h"
 
-#include "graphic/DummyRenderable.h"
-#include "graphic/Font.h"
-#include "graphic/Text.h"
+#include "sgl/graphic/DummyRenderable.h"
+#include "sgl/graphic/Font.h"
+#include "sgl/graphic/Text.h"
 
 #include <cassert>
 

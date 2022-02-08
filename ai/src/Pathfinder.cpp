@@ -1,7 +1,7 @@
-#include "ai/Pathfinder.h"
+#include "sgl/ai/Pathfinder.h"
 
 #include "PathNode.h"
-#include "ai/IPathMap.h"
+#include "sgl/ai/IPathMap.h"
 
 #include <algorithm>
 

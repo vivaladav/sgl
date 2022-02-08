@@ -1,6 +1,6 @@
-#include "graphic/Renderable.h"
+#include "sgl/graphic/Renderable.h"
 
-#include "graphic/Camera.h"
+#include "sgl/graphic/Camera.h"
 
 #include <SDL2/SDL.h>
 

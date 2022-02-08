@@ -1,4 +1,4 @@
-project(lib LANGUAGES CXX)
+project(sgl LANGUAGES CXX)
 
 add_subdirectory(ai)
 add_subdirectory(core)

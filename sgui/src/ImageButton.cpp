@@ -1,8 +1,8 @@
-#include "sgui/ImageButton.h"
+#include "sgl/sgui/ImageButton.h"
 
-#include "graphic/Image.h"
-#include "graphic/Texture.h"
-#include "graphic/TextureManager.h"
+#include "sgl/graphic/Image.h"
+#include "sgl/graphic/Texture.h"
+#include "sgl/graphic/TextureManager.h"
 
 namespace lib
 {

@@ -1,4 +1,4 @@
-#include "utilities/UniformDistribution.h"
+#include "sgl/utilities/UniformDistribution.h"
 
 #include <chrono>
 

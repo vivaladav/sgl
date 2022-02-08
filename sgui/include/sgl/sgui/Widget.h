@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sgui/WidgetContainer.h"
+#include "sgl/sgui/WidgetContainer.h"
 
 #include <vector>
 

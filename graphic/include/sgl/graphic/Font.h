@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/Size.h"
+#include "sgl/core/Size.h"
 
 typedef struct _TTF_Font TTF_Font;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphic/TexturedRenderable.h"
+#include "sgl/graphic/TexturedRenderable.h"
 
 namespace lib
 {

@@ -1,6 +1,6 @@
-#include "utilities/StateManager.h"
+#include "sgl/utilities/StateManager.h"
 
-#include "utilities/State.h"
+#include "sgl/utilities/State.h"
 
 #include <iostream>
 
