@@ -2,7 +2,7 @@
 
 #include <vector>
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -31,5 +31,5 @@ private:
 };
 
 } // namespace core
-} // namespace lib
+} // namespace sgl
 

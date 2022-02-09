@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace lib
+namespace sgl
 {
 namespace utilities
 {
@@ -18,4 +18,4 @@ public:
 inline ISystem::~ISystem() {}
 
 } // namespace utilities
-} // namespace lib
+} // namespace sgl

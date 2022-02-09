@@ -2,7 +2,7 @@
 
 #include "sgl/graphic/ParticlesUpdater.h"
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -36,4 +36,4 @@ void ParticlesManager::Render()
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

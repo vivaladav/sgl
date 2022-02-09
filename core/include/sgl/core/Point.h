@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -19,4 +19,4 @@ using Pointd2D = Point<int>;
 using Pointf2D = Point<float>;
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

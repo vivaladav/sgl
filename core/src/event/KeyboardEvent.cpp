@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -297,4 +297,4 @@ KeyboardEvent::KeyboardEvent(int key, unsigned int modifiers)
 }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

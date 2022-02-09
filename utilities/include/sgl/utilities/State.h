@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lib
+namespace sgl
 {
 namespace utilities
 {
@@ -37,4 +37,4 @@ inline unsigned int State::GetStateId() const { return mId; }
 inline StateManager * State::GetStateManager() const { return mManager; }
 
 } // namespace utilities
-} // namespace lib
+} // namespace sgl

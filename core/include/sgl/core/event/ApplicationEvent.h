@@ -2,7 +2,7 @@
 
 #include "Event.h"
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -12,5 +12,5 @@ class ApplicationEvent : public Event
 };
 
 } // namespace core
-} // namespace lib
+} // namespace sgl
 

@@ -2,7 +2,7 @@
 
 #include "sgl/graphic/Font.h"
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -58,4 +58,4 @@ void FontManager::ClearFonts()
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

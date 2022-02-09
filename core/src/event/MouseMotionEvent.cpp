@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -24,4 +24,4 @@ bool MouseMotionEvent::IsButtonPushed(int button) const
 }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

@@ -2,7 +2,7 @@
 
 #include "EventDispatcher.h"
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -17,4 +17,4 @@ void KeyboardEventListener::OnKeyDown(KeyboardEvent &) { }
 void KeyboardEventListener::OnKeyUp(KeyboardEvent &) { }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

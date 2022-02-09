@@ -3,7 +3,7 @@
 #include <cassert>
 #include <chrono>
 
-namespace lib
+namespace sgl
 {
 namespace utilities
 {
@@ -78,4 +78,4 @@ void LoadedDie::InitTresholds(const std::vector<float> & probabilities)
 }
 
 } // namespace utilities
-} // namespace lib
+} // namespace sgl

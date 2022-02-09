@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lib
+namespace sgl
 {
 namespace ai
 {
@@ -15,5 +15,5 @@ public:
 
 inline IPathMap::~IPathMap() { }
 
-} // namespace graphic
 } // namespace ai
+} // namespace sgl

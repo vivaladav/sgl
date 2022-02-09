@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -37,4 +37,4 @@ inline FontManager::FontManager() { }
 inline FontManager::~FontManager() { ClearFonts(); }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

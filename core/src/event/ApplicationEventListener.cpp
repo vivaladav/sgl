@@ -2,7 +2,7 @@
 
 #include "EventDispatcher.h"
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -16,4 +16,4 @@ ApplicationEventListener::~ApplicationEventListener()
 void ApplicationEventListener::OnApplicationQuit(ApplicationEvent &) { }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

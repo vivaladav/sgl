@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-namespace lib
+namespace sgl
 {
 namespace utilities
 {
@@ -18,4 +18,4 @@ UniformDistribution::UniformDistribution(int min, int max, int seed)
 }
 
 } // namespace utilities
-} // namespace lib
+} // namespace sgl

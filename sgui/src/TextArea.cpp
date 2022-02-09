@@ -9,7 +9,7 @@
 
 #include <cassert>
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -45,7 +45,7 @@ void TextArea::SetColor(unsigned char r, unsigned char g, unsigned char b, unsig
     mTxtB = b;
     mTxtA = a;
 
-    for(lib::graphic::Renderable * txt : mTxtLines)
+    for(sgl::graphic::Renderable * txt : mTxtLines)
         txt->SetColor(r, g, b, a);
 }
 
@@ -58,13 +58,13 @@ void TextArea::SetColor(unsigned int color)
     mTxtB = (color & 0x0000FF00) >> 8;
     mTxtA = color & 0x000000FF;
 
-    for(lib::graphic::Renderable * txt : mTxtLines)
+    for(sgl::graphic::Renderable * txt : mTxtLines)
         txt->SetColor(color);
 }
 
 void TextArea::ClearText()
 {
-    for(lib::graphic::Renderable * txt : mTxtLines)
+    for(sgl::graphic::Renderable * txt : mTxtLines)
     {
         UnregisterRenderable(txt);
         delete txt;
@@ -172,14 +172,14 @@ void TextArea::CreateText()
 
 void TextArea::AddTextLine(const char * txt)
 {
-    auto line = new lib::graphic::Text(txt, mFont, false);
+    auto line = new sgl::graphic::Text(txt, mFont, false);
     RegisterRenderable(line);
     mTxtLines.push_back(line);
 }
 
 void TextArea::AddEmptyLine(int h)
 {
-    auto line = new lib::graphic::DummyRenderable;
+    auto line = new sgl::graphic::DummyRenderable;
     line->SetHeight(h);
     RegisterRenderable(line);
     mTxtLines.push_back(line);
@@ -198,7 +198,7 @@ void TextArea::HandlePositionChanged()
     {
         int totH = 0;
 
-        for(lib::graphic::Renderable * txt : mTxtLines)
+        for(sgl::graphic::Renderable * txt : mTxtLines)
             totH += txt->GetHeight();
 
         if(ALIGN_V_CENTER == mAlignV)
@@ -211,7 +211,7 @@ void TextArea::HandlePositionChanged()
     // set positions based on horizontal alignment
     if(ALIGN_H_LEFT == mAlignH)
     {
-        for(lib::graphic::Renderable * txt : mTxtLines)
+        for(sgl::graphic::Renderable * txt : mTxtLines)
         {
             txt->SetPosition(x, y);
 
@@ -220,7 +220,7 @@ void TextArea::HandlePositionChanged()
     }
     else if(ALIGN_H_CENTER == mAlignH)
     {
-        for(lib::graphic::Renderable * txt : mTxtLines)
+        for(sgl::graphic::Renderable * txt : mTxtLines)
         {
             x = x0 + (GetWidth() - txt->GetWidth()) * 0.5f;
 
@@ -232,7 +232,7 @@ void TextArea::HandlePositionChanged()
     // ALIGN_H_RIGHT
     else
     {
-        for(lib::graphic::Renderable * txt : mTxtLines)
+        for(sgl::graphic::Renderable * txt : mTxtLines)
         {
             x = x0 + GetWidth() - txt->GetWidth();
 
@@ -244,4 +244,4 @@ void TextArea::HandlePositionChanged()
 }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

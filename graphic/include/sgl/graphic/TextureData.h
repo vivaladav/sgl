@@ -5,7 +5,7 @@
 struct SDL_Surface;
 struct SDL_Texture;
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -48,4 +48,4 @@ inline int TextureData::GetWidth() const { return mWidth; }
 inline int TextureData::GetHeight() const { return mHeight; }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

@@ -4,7 +4,7 @@
 
 #include <SDL2/SDL.h>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -62,4 +62,4 @@ void Renderable::SetColor(unsigned int color)
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

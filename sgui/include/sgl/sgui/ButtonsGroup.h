@@ -3,7 +3,7 @@
 #include "sgl/sgui/AbstractButtonsGroup.h"
 #include "sgl/sgui/Widget.h"
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -29,4 +29,4 @@ private:
 };
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

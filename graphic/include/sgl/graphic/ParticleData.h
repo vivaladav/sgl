@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -15,4 +15,4 @@ struct ParticleData
 };
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

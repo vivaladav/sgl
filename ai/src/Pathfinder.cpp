@@ -5,7 +5,7 @@
 
 #include <algorithm>
 
-namespace lib
+namespace sgl
 {
 namespace ai
 {
@@ -202,5 +202,5 @@ PathNode * Pathfinder::GetNewNode(int row, int col, int g, int h, PathNode * par
     return n;
 }
 
-} // namespace graphic
 } // namespace ai
+} // namespace sgl

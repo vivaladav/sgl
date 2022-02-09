@@ -8,7 +8,7 @@
 
 #include <cassert>
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -174,7 +174,7 @@ void PushButton::HandleStateDisabled()
      SetState(DISABLED);
 }
 
-void PushButton::HandleMouseButtonDown(lib::core::MouseButtonEvent & event)
+void PushButton::HandleMouseButtonDown(sgl::core::MouseButtonEvent & event)
 {
     if(!IsEnabled())
         return ;
@@ -256,4 +256,4 @@ void PushButton::PositionLabel()
 }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

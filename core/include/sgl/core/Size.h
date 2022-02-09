@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -19,4 +19,4 @@ using Sized = Size<int>;
 using Sizef = Size<float>;
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

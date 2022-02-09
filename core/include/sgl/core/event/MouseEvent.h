@@ -2,7 +2,7 @@
 
 #include "Event.h"
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -23,4 +23,4 @@ protected:
 inline MouseEvent::MouseEvent() {}
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

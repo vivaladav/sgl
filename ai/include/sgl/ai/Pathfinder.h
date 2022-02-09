@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace lib
+namespace sgl
 {
 namespace ai
 {
@@ -84,5 +84,5 @@ inline int Pathfinder::CostToGoal(int r0, int c0) const
     return (abs(r0 - mR1) + abs(c0 - mC1)) * mCostHor;
 }
 
-} // namespace graphic
 } // namespace ai
+} // namespace sgl

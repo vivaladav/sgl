@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -21,4 +21,4 @@ inline void Event::SetConsumed() { mConsumed = true; }
 inline bool Event::IsConsumed() const { return mConsumed; }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

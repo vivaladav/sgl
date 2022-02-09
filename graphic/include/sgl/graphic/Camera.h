@@ -2,7 +2,7 @@
 
 #include <functional>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -88,4 +88,4 @@ inline Camera * Camera::GetDefaultCamera() { return mDefault; }
 inline Camera * Camera::GetDummyCamera() { return mDummy; }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

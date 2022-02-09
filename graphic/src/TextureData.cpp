@@ -9,7 +9,7 @@
 #include <cassert>
 #include <iostream>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -78,5 +78,5 @@ void TextureData::SetTextureQuality(TextureQuality q)
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl
 

@@ -3,7 +3,7 @@
 #include <random>
 #include <vector>
 
-namespace lib
+namespace sgl
 {
 namespace utilities
 {
@@ -40,4 +40,4 @@ private:
 };
 
 } // namespace utilities
-} // namespace lib
+} // namespace sgl

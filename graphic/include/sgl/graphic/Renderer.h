@@ -2,7 +2,7 @@
 
 struct SDL_Renderer;
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -57,4 +57,4 @@ inline int Renderer::GetWidth() const { return mW; }
 inline int Renderer::GetHeight() const { return mH; }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

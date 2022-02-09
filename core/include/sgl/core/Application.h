@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -54,4 +54,4 @@ inline int Application::GetNumArguments() const { return mArgc; }
 inline const std::vector<std::string> & Application::GetArguments() const { return mArgv; }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

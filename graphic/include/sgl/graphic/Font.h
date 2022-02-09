@@ -4,7 +4,7 @@
 
 typedef struct _TTF_Font TTF_Font;
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -48,5 +48,5 @@ inline int Font::GetSize() const { return mSize; }
 inline TTF_Font * Font::GetSysFont() const { return mSysFont; }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl
 

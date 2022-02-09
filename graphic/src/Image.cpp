@@ -7,7 +7,7 @@
 
 #include <cassert>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -41,4 +41,4 @@ bool Image::Load(const char * file)
 
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

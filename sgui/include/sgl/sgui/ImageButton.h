@@ -4,7 +4,7 @@
 
 #include <array>
 
-namespace lib
+namespace sgl
 {
 
 namespace graphic
@@ -16,20 +16,20 @@ namespace graphic
 namespace sgui
 {
 
-class ImageButton : public lib::sgui::PushButton
+class ImageButton : public PushButton
 {
 public:
     ImageButton(const std::array<unsigned int, NUM_VISUAL_STATES> & texIds,
-                const char * spriteFile, lib::sgui::Widget * parent);
+                const char * spriteFile, Widget *parent);
 
 protected:
-    void OnStateChanged(lib::sgui::PushButton::VisualState state) override;
+    void OnStateChanged(sgl::sgui::PushButton::VisualState state) override;
 
 private:
-    std::array<lib::graphic::Texture *, NUM_VISUAL_STATES> mTexs;
+    std::array<sgl::graphic::Texture *, NUM_VISUAL_STATES> mTexs;
 
-    lib::graphic::Image * mBody = nullptr;
+    sgl::graphic::Image * mBody = nullptr;
 };
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

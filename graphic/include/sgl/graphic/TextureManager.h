@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -65,4 +65,4 @@ inline TextureQuality TextureManager::GetNewTextureQuality() const { return mTex
 inline void TextureManager::SetNewTextureQuality(TextureQuality q) { mTexQuality = q; }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

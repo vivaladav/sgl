@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -14,4 +14,4 @@ const int MouseEvent::BUTTON_X1     = SDL_BUTTON_X1;
 const int MouseEvent::BUTTON_X2     = SDL_BUTTON_X2;
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

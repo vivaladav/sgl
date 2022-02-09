@@ -2,7 +2,7 @@
 
 #include <vector>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -34,4 +34,4 @@ protected:
 // ==================== INLINE FUNCTIONS ====================
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

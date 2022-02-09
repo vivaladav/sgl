@@ -1,6 +1,6 @@
 #include "sgl/sgui/ProgressBar.h"
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -97,4 +97,4 @@ void ProgressBar::Complete()
 }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

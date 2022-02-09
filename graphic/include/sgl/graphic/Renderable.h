@@ -2,7 +2,7 @@
 
 struct SDL_Rect;
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -75,4 +75,4 @@ inline void Renderable::SetColor(unsigned char r, unsigned char g, unsigned char
 inline void Renderable::SetCamera(Camera * cam) { mCamera = cam; }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

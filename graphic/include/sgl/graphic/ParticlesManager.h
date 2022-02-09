@@ -2,7 +2,7 @@
 
 #include <map>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -36,4 +36,4 @@ inline void ParticlesManager::UnregisterUpdater(unsigned int key)
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

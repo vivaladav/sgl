@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace lib
+namespace sgl
 {
 
 namespace graphic
@@ -174,4 +174,4 @@ inline unsigned char Widget::MixAlphaAndAlpha(unsigned char a) const
 }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

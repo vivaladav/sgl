@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 
-namespace lib
+namespace sgl
 {
 namespace utilities
 {
@@ -33,4 +33,4 @@ private:
 inline State * StateManager::GetActiveState() const { return mActive; }
 
 } // namespace utilities
-} // namespace lib
+} // namespace sgl

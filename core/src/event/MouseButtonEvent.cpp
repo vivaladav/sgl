@@ -2,10 +2,10 @@
 
 #include <SDL2/SDL.h>
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

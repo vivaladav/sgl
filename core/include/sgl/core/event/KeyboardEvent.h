@@ -2,7 +2,7 @@
 
 #include "Event.h"
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -322,4 +322,4 @@ inline bool KeyboardEvent::IsModGuiDown() const { return mModGuiDown; }
 inline bool KeyboardEvent::IsModShiftDown() const { return mModShiftDown; }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

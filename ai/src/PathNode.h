@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lib
+namespace sgl
 {
 namespace ai
 {
@@ -71,5 +71,5 @@ inline bool PathNode::operator<(const PathNode & other) const
 inline PathNode * PathNode::GetParent() const { return mParent; }
 inline void PathNode::SetParent(PathNode * p) { mParent = p; }
 
-} // namespace graphic
 } // namespace ai
+} // namespace sgl

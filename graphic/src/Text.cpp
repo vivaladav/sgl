@@ -12,7 +12,7 @@
 #include <iostream>
 #include <string>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -93,4 +93,4 @@ Text::~Text()
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

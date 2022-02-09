@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace lib
+namespace sgl
 {
 
 namespace graphic
@@ -36,4 +36,4 @@ private:
 };
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

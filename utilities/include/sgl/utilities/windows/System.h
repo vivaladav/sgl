@@ -2,7 +2,7 @@
 
 #include "sgl/utilities/ISystem.h"
 
-namespace lib
+namespace sgl
 {
 namespace utilities
 {
@@ -14,4 +14,4 @@ public:
 };
 
 } // namespace utilities
-} // namespace lib
+} // namespace sgl

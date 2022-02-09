@@ -5,7 +5,7 @@
 
 #include <cassert>
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -79,4 +79,4 @@ void Image::HandlePositionChanged()
 }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

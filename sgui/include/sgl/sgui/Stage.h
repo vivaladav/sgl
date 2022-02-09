@@ -4,7 +4,7 @@
 #include "sgl/core/event/MouseEventListener.h"
 #include "sgl/sgui/WidgetContainer.h"
 
-namespace lib
+namespace sgl
 {
 
 namespace graphic { class Font; }
@@ -67,4 +67,4 @@ inline void Stage::Render()
 }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

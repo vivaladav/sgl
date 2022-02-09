@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -60,4 +60,4 @@ Window::~Window()
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

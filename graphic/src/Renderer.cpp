@@ -11,7 +11,7 @@
 #include <cassert>
 #include <iostream>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -133,4 +133,4 @@ void Renderer::ClearClipping()
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

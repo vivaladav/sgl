@@ -6,7 +6,7 @@
 
 #include <SDL2/SDL.h>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -87,5 +87,5 @@ void Texture::SetColor(unsigned char r, unsigned char g, unsigned char b, unsign
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl
 

@@ -8,7 +8,7 @@ struct SDL_Rect;
 struct SDL_Surface;
 struct SDL_Texture;
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -50,4 +50,4 @@ private:
 inline bool Texture::HasData() const { return mTexData != nullptr; }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

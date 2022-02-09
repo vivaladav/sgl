@@ -2,7 +2,7 @@
 
 #include "MouseEvent.h"
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -43,4 +43,4 @@ inline int MouseButtonEvent::GetY() const { return mY; }
 inline int MouseButtonEvent::GetButton() const { return mButton; }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

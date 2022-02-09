@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -13,4 +13,4 @@ enum TextureQuality : int
 };
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

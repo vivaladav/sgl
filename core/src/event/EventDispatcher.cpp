@@ -13,12 +13,12 @@
 #include <algorithm>
 #include <cassert>
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
 
-void EventDispatcher::AddApplicationListener(lib::core::ApplicationEventListener * el)
+void EventDispatcher::AddApplicationListener(sgl::core::ApplicationEventListener * el)
 {
     // do not add NULL
     if(!el)
@@ -34,7 +34,7 @@ void EventDispatcher::AddApplicationListener(lib::core::ApplicationEventListener
     }
 }
 
-void EventDispatcher::AddKeyboardListener(lib::core::KeyboardEventListener * el)
+void EventDispatcher::AddKeyboardListener(sgl::core::KeyboardEventListener * el)
 {
     // do not add NULL
     if(!el)
@@ -50,7 +50,7 @@ void EventDispatcher::AddKeyboardListener(lib::core::KeyboardEventListener * el)
     }
 }
 
-void EventDispatcher::AddMouseListener(lib::core::MouseEventListener * el)
+void EventDispatcher::AddMouseListener(sgl::core::MouseEventListener * el)
 {
     // do not add NULL
     if(!el)
@@ -204,5 +204,5 @@ void EventDispatcher::Update()
 }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl
 

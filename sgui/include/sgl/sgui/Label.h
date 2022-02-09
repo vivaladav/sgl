@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace lib
+namespace sgl
 {
 
 namespace graphic
@@ -43,4 +43,4 @@ private:
 inline const std::string & Label::GetText() const { return mStr; }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

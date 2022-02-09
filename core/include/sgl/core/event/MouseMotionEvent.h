@@ -2,7 +2,7 @@
 
 #include "MouseEvent.h"
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -51,4 +51,4 @@ inline int MouseMotionEvent::GetDeltaX() const { return mDeltaX; }
 inline int MouseMotionEvent::GetDeltaY() const { return mDeltaY; }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

@@ -2,7 +2,7 @@
 
 #include "TexturedRenderable.h"
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -49,4 +49,4 @@ inline void Particle::SetDone()
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

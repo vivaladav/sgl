@@ -4,7 +4,7 @@
 
 #include <random>
 
-namespace lib
+namespace sgl
 {
 namespace utilities
 {
@@ -36,4 +36,4 @@ inline void UniformDistribution::SetParameters(int min, int max)
 inline int UniformDistribution::GetNextValue() { return mDistribution(mGenerator); }
 
 } // namespace utilities
-} // namespace lib
+} // namespace sgl

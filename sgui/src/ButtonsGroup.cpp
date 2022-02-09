@@ -4,7 +4,7 @@
 
 #include <cassert>
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -36,4 +36,4 @@ void ButtonsGroup::OnButtonAdded(PushButton * button)
 }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

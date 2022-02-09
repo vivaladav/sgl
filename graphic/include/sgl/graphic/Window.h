@@ -2,7 +2,7 @@
 
 struct SDL_Window;
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -54,4 +54,4 @@ inline int Window::GetWidth() const { return mW; }
 inline int Window::GetHeight() const { return mH; }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

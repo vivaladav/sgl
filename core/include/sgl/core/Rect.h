@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -21,4 +21,4 @@ using Rectd = Rect<int>;
 using Rectf = Rect<float>;
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

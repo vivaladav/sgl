@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <string>
 
-namespace lib
+namespace sgl
 {
 namespace utilities
 {
@@ -76,4 +76,4 @@ bool System::OpenUrlInBrowser(const std::string & url)
 }
 
 } // namespace utilities
-} // namespace lib
+} // namespace sgl

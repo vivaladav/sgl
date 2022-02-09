@@ -2,7 +2,7 @@
 
 #include <vector>
 
-namespace lib
+namespace sgl
 {
 
 namespace core
@@ -63,4 +63,4 @@ inline int WidgetContainer::GetNumChildren() const { return mWidgets.size(); }
 inline bool WidgetContainer::HasFocus() const { return mFocus; }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

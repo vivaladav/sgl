@@ -8,7 +8,7 @@
 
 #include <algorithm>
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -243,4 +243,4 @@ void WidgetContainer::PropagateFocus()
 
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

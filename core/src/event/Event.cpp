@@ -1,6 +1,6 @@
 #include "sgl/core/event/Event.h"
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -8,4 +8,4 @@ namespace core
 Event::~Event() { }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

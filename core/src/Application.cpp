@@ -8,7 +8,7 @@
 #include <chrono>
 #include <iostream>
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -113,4 +113,4 @@ void Application::Exit()
 }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

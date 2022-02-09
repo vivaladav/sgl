@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -53,4 +53,4 @@ void Stage::OnKeyUp(core::KeyboardEvent & event)
 }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

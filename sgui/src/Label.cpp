@@ -6,7 +6,7 @@
 
 #include <cassert>
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -87,4 +87,4 @@ void Label::HandlePositionChanged()
 }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

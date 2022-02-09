@@ -3,7 +3,7 @@
 #include <functional>
 #include <vector>
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -61,4 +61,4 @@ inline unsigned int AbstractButtonsGroup::GetNumButtons() const { return mButton
 inline void AbstractButtonsGroup::SetFunctionOnToggle(const ToggleFun & f) { mOnToggle = f; }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

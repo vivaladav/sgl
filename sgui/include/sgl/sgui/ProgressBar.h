@@ -4,7 +4,7 @@
 
 #include <functional>
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -59,4 +59,4 @@ inline void ProgressBar::SetFunctionOnCompleted(const std::function<void()> & f)
 inline bool ProgressBar::IsCompleted() const { return mCompleted; }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

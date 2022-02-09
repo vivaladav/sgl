@@ -2,7 +2,7 @@
 
 #include "Renderable.h"
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -14,4 +14,4 @@ public:
 };
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

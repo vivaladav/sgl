@@ -2,7 +2,7 @@
 
 #include "EventDispatcher.h"
 
-namespace lib
+namespace sgl
 {
 namespace core
 {
@@ -18,4 +18,4 @@ void MouseEventListener::OnMouseButtonUp(MouseButtonEvent &) { }
 void MouseEventListener::OnMouseMotion(MouseMotionEvent &) { }
 
 } // namespace core
-} // namespace lib
+} // namespace sgl

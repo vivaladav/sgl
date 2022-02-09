@@ -2,7 +2,7 @@
 
 #include "sgl/graphic/TexturedRenderable.h"
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -27,5 +27,5 @@ inline int Text::GetPaddingTop() const { return mPaddingTop; }
 inline int Text::GetPaddingBottom() const { return mPaddingBottom; }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl
 

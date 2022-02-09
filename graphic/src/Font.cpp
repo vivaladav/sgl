@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -57,4 +57,4 @@ Font::~Font()
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

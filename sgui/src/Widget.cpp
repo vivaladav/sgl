@@ -8,7 +8,7 @@
 
 #include <algorithm>
 
-namespace lib
+namespace sgl
 {
 namespace sgui
 {
@@ -333,4 +333,4 @@ void Widget::PropagateParentPositionChanged(int dx, int dy)
 }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

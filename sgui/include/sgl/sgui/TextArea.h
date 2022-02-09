@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace lib
+namespace sgl
 {
 
 namespace graphic
@@ -105,4 +105,4 @@ inline void TextArea::setTextAlignmentVertical(Alignment vert)
 inline const std::string & TextArea::GetText() const { return mStr; }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl

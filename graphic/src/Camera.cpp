@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -128,4 +128,4 @@ void Camera::DestroyDummyCamera()
 }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

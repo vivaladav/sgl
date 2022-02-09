@@ -2,7 +2,7 @@
 
 #include "Renderable.h"
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -58,4 +58,4 @@ inline int TexturedRenderable::GetRotatedWidth() const { return mRotW; }
 inline int TexturedRenderable::GetRotatedHeight() const { return mRotH; }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

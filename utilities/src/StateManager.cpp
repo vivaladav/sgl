@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-namespace lib
+namespace sgl
 {
 namespace utilities
 {
@@ -99,4 +99,4 @@ void StateManager::UpdateActive()
 }
 
 } // namespace utilities
-} // namespace lib
+} // namespace sgl

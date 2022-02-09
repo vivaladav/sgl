@@ -2,7 +2,7 @@
 
 #include "sgl/graphic/TexturedRenderable.h"
 
-namespace lib
+namespace sgl
 {
 namespace graphic
 {
@@ -20,4 +20,4 @@ public:
 inline Image::Image() { }
 
 } // namespace graphic
-} // namespace lib
+} // namespace sgl

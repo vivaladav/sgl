@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace lib
+namespace sgl
 {
 
 namespace graphic
@@ -67,8 +67,8 @@ protected:
     void HandleStateEnabled() override;
     void HandleStateDisabled() override;
 
-    void HandleMouseButtonDown(lib::core::MouseButtonEvent & event) override;
-    void HandleMouseButtonUp(lib::core::MouseButtonEvent & event) override;
+    void HandleMouseButtonDown(sgl::core::MouseButtonEvent & event) override;
+    void HandleMouseButtonUp(sgl::core::MouseButtonEvent & event) override;
 
     void HandleMouseOver() override;
     void HandleMouseOut() override;
@@ -135,4 +135,4 @@ inline const std::string & PushButton::GetText() const { return mText; }
 inline PushButton::VisualState PushButton::GetState() const { return mState; }
 
 } // namespace sgui
-} // namespace lib
+} // namespace sgl
