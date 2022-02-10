@@ -67,6 +67,11 @@ void TextureData::SetColor(unsigned char r, unsigned char g, unsigned char b, un
     SDL_SetTextureAlphaMod(mData, a);
 }
 
+void TextureData::SetScaleMode(int sm)
+{
+    SDL_SetTextureScaleMode(mData, static_cast<SDL_ScaleMode>(sm));
+}
+
 void TextureData::SetTextureQuality(TextureQuality q)
 {
     if(TextureQuality::BEST == q)

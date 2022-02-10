@@ -12,5 +12,12 @@ enum TextureQuality : int
     BEST
 };
 
+enum TextureScaleMode : int
+{
+    TSCALE_NEAREST,
+    TSCALE_LINEAR,
+    TSCALE_BEST
+};
+
 } // namespace graphic
 } // namespace sgl

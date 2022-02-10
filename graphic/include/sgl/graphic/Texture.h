@@ -15,6 +15,7 @@ namespace graphic
 
 class TextureData;
 
+enum TextureScaleMode : int;
 enum TextureQuality : int;
 
 class Texture
@@ -38,6 +39,11 @@ public:
 
     void SetAlpha(unsigned char a);
     void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+
+    // NOTE this will affect all the textures generated from the same file
+    // which means that setting a scale mode for 1 sprite will affect all the ones
+    // sharing the same texture
+    void SetScaleMode(int sm);
 
 private:
     std::shared_ptr<TextureData> mTexData;

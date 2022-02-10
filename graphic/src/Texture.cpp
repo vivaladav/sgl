@@ -1,6 +1,5 @@
 #include "sgl/graphic/Texture.h"
 
-#include "sgl/graphic/GraphicConstants.h"
 #include "sgl/graphic/Renderer.h"
 #include "sgl/graphic/TextureData.h"
 
@@ -85,6 +84,8 @@ void Texture::SetColor(unsigned char r, unsigned char g, unsigned char b, unsign
 {
     mTexData->SetColor(r, g, b, a);
 }
+
+void Texture::SetScaleMode(int sm) { mTexData->SetScaleMode(sm); }
 
 } // namespace graphic
 } // namespace sgl
