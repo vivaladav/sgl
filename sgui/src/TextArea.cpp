@@ -160,6 +160,12 @@ void TextArea::CreateText()
         {
             std::string sub = mStr.substr(ind0, lastIndOk - ind0);
 
+            // avoid empty sub strings
+            if(sub.empty())
+                return ;
+
+            TTF_SizeUTF8(mFont->GetSysFont(), sub.c_str(), &lineW, &lineH);
+
             AddTextLine(sub.c_str());
 
             ind0 = ++lastIndOk;
