@@ -14,6 +14,18 @@ AbstractButtonsGroup::AbstractButtonsGroup()
 {
 }
 
+void AbstractButtonsGroup::SetExclusive(bool val)
+{
+    // value already set
+    if(mExclusive == val)
+        return ;
+
+    mExclusive = val;
+
+    for(PushButton * btn : mButtons)
+        btn->SetExclusive(val);
+}
+
 void AbstractButtonsGroup::SetButtonChecked(unsigned int index, bool val)
 {
     const int ind = static_cast<int>(index);

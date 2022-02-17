@@ -232,7 +232,10 @@ void PushButton::HandleButtonUp()
         return ;
 
     // set default state then handle click
-    SetState(NORMAL);
+    if(IsMouseOver())
+        SetState(MOUSE_OVER);
+    else
+        SetState(NORMAL);
 
     Click();
 }

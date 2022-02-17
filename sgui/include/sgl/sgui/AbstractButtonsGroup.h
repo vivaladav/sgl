@@ -46,6 +46,8 @@ private:
     bool mExclusive = true;
 };
 
+inline bool AbstractButtonsGroup::IsExclusive() const { return mExclusive; }
+
 inline int AbstractButtonsGroup::GetIndexChecked() const{ return mIndChecked; }
 
 inline PushButton * AbstractButtonsGroup::GetButton(unsigned int ind) const
