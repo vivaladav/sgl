@@ -122,11 +122,12 @@ void WidgetContainer::PropagateMouseButtonDown(core::MouseButtonEvent & event)
             if(w->IsScreenPointInside(x, y))
             {
                 w->PropagateMouseButtonDown(event);
-                w->HandleMouseButtonDown(event);
 
                 // stop propagation if event is consumed
                 if(event.IsConsumed())
                     break;
+
+                w->HandleMouseButtonDown(event);
             }
         }
     }
@@ -144,11 +145,12 @@ void WidgetContainer::PropagateMouseButtonUp(core::MouseButtonEvent & event)
             if(w->IsScreenPointInside(x, y))
             {
                 w->PropagateMouseButtonUp(event);
-                w->HandleMouseButtonUp(event);
 
                 // stop propagation if event is consumed
                 if(event.IsConsumed())
                     break;
+
+                w->HandleMouseButtonUp(event);
             }
         }
     }
@@ -169,11 +171,11 @@ void WidgetContainer::PropagateMouseMotion(core::MouseMotionEvent & event)
 
                 w->SetMouseOver();
 
-                w->HandleMouseMotion(event);
-
                 // stop propagation if event is consumed
                 if(event.IsConsumed())
                     break;
+
+                w->HandleMouseMotion(event);
             }
             else
                 w->SetMouseOut();
@@ -191,12 +193,12 @@ void WidgetContainer::PropagateKeyDown(core::KeyboardEvent & event)
         {
             w->PropagateKeyDown(event);
 
-            if(w->HasFocus())
-                w->HandleKeyDown(event);
-
             // stop propagation if event is consumed
             if(event.IsConsumed())
                 break;
+
+            if(w->HasFocus())
+                w->HandleKeyDown(event);
         }
     }
 }
@@ -211,12 +213,12 @@ void WidgetContainer::PropagateKeyUp(core::KeyboardEvent & event)
         {
             w->PropagateKeyUp(event);
 
-            if(w->HasFocus())
-                w->HandleKeyUp(event);
-
             // stop propagation if event is consumed
             if(event.IsConsumed())
                 break;
+
+            if(w->HasFocus())
+                w->HandleKeyUp(event);
         }
     }
 }
