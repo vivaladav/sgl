@@ -115,8 +115,10 @@ void WidgetContainer::PropagateMouseButtonDown(core::MouseButtonEvent & event)
     const int x = event.GetX();
     const int y = event.GetY();
 
-    for(Widget * w : mWidgets)
+    for(auto it = mWidgets.rbegin(); it != mWidgets.rend(); ++it)
     {
+        Widget * w = *it;
+
         if(w->IsEnabled() && w->IsVisible()) // TODO remove this when implemented rendering and active lists
         {
             if(w->IsScreenPointInside(x, y))
@@ -138,8 +140,10 @@ void WidgetContainer::PropagateMouseButtonUp(core::MouseButtonEvent & event)
     const int x = event.GetX();
     const int y = event.GetY();
 
-    for(Widget * w : mWidgets)
+    for(auto it = mWidgets.rbegin(); it != mWidgets.rend(); ++it)
     {
+        Widget * w = *it;
+
         if(w->IsEnabled() && w->IsVisible()) // TODO remove this when implemented rendering and active lists
         {
             if(w->IsScreenPointInside(x, y))
@@ -161,19 +165,21 @@ void WidgetContainer::PropagateMouseMotion(core::MouseMotionEvent & event)
     const int x = event.GetX();
     const int y = event.GetY();
 
-    for(Widget * w : mWidgets)
+    for(auto it = mWidgets.rbegin(); it != mWidgets.rend(); ++it)
     {
+        Widget * w = *it;
+
         if(w->IsEnabled() && w->IsVisible()) // TODO remove this when implemented rendering and active lists
         {
             if(w->IsScreenPointInside(x, y))
             {
                 w->PropagateMouseMotion(event);
 
-                w->SetMouseOver();
-
                 // stop propagation if event is consumed
                 if(event.IsConsumed())
                     break;
+
+                w->SetMouseOver();
 
                 w->HandleMouseMotion(event);
             }
@@ -185,10 +191,10 @@ void WidgetContainer::PropagateMouseMotion(core::MouseMotionEvent & event)
 
 void WidgetContainer::PropagateKeyDown(core::KeyboardEvent & event)
 {
-    // TODO handle keyboard focus
-
-    for(Widget * w : mWidgets)
+    for(auto it = mWidgets.rbegin(); it != mWidgets.rend(); ++it)
     {
+        Widget * w = *it;
+
         if(w->IsEnabled() && w->IsVisible()) // TODO remove this when implemented rendering and active lists
         {
             w->PropagateKeyDown(event);
@@ -205,10 +211,10 @@ void WidgetContainer::PropagateKeyDown(core::KeyboardEvent & event)
 
 void WidgetContainer::PropagateKeyUp(core::KeyboardEvent & event)
 {
-    // TODO handle keyboard focus
-
-    for(Widget * w : mWidgets)
+    for(auto it = mWidgets.rbegin(); it != mWidgets.rend(); ++it)
     {
+        Widget * w = *it;
+
         if(w->IsEnabled() && w->IsVisible()) // TODO remove this when implemented rendering and active lists
         {
             w->PropagateKeyUp(event);
