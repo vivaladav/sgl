@@ -37,8 +37,8 @@ protected:
     void AddChild(Widget * w);
     void RemoveChild(Widget * w);
 
-    void HandleChildEnableChanged(Widget * child);
-    void HandleChildVisibleChanged(Widget * child);
+    virtual void HandleChildEnableChanged(Widget * child);
+    virtual void HandleChildVisibleChanged(Widget * child);
 
     void PropagateMouseButtonDown(core::MouseButtonEvent & event);
     void PropagateMouseButtonUp(core::MouseButtonEvent & event);
