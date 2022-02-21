@@ -26,6 +26,7 @@ public:
     void MoveX(float delta);
     void MoveY(float delta);
 
+    void ClearFunctionOnMove();
     void SetFunctionOnMove(const std::function<void ()> &f);
 
     void ResetPosition();
@@ -75,6 +76,7 @@ inline void Camera::SetSize(int w, int h)
     mHeight = h;
 }
 
+inline void Camera::ClearFunctionOnMove() { mFuncOnMove = []{}; }
 inline void Camera::SetFunctionOnMove(const std::function<void()> & f)
 {
     mFuncOnMove = f;
