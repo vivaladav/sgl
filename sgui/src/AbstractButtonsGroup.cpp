@@ -30,11 +30,16 @@ void AbstractButtonsGroup::SetButtonChecked(unsigned int index, bool val)
 {
     const int ind = static_cast<int>(index);
 
-    if(index >= mButtons.size() || ind == mIndChecked)
+    if(index >= mButtons.size())
         return ;
 
     PushButton * button = mButtons[index];
 
+    // already set
+    if(button->IsChecked() == val)
+        return ;
+
+    // update only button if enabled
     if(button->IsEnabled())
         button->SetChecked(val);
 }
