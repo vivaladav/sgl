@@ -22,11 +22,22 @@ public:
 public:
     ButtonsGroup(Orientation orient, Widget * parent = nullptr);
 
+    void SetSpacing(int spacing);
+
     void OnButtonAdded(PushButton * button) override;
+    void OnButtonRemoved(PushButton * button) override;
+    void OnButtonsCleared() override;
+
+private:
+    void RepositionButtons();
 
 private:
     Orientation mOrient;
+
+    int mSpacing = 0;
 };
+
+inline void ButtonsGroup::SetSpacing(int spacing) { mSpacing = spacing; }
 
 } // namespace sgui
 } // namespace sgl
