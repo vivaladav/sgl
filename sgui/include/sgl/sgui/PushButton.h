@@ -3,8 +3,8 @@
 #include "sgl/sgui/Widget.h"
 
 #include <functional>
+#include <map>
 #include <string>
-#include <vector>
 
 namespace sgl
 {
@@ -53,8 +53,10 @@ public:
 
     void Click();
 
-    void AddOnClickFunction(const std::function<void()> & f);
-    void AddOnToggleFunction(const std::function<void(bool)> & f);
+    unsigned int AddOnClickFunction(const std::function<void()> & f);
+    void RemoveClickFunction(unsigned int fId);
+    unsigned int AddOnToggleFunction(const std::function<void(bool)> & f);
+    void RemoveToggleFunction(unsigned int fId);
 
     const std::string & GetText() const;
 
@@ -90,8 +92,8 @@ private:
 private:
     std::string mText;
 
-    std::vector<std::function<void()>> mOnClick;
-    std::vector<std::function<void(bool)>> mOnToggle;
+    std::map<unsigned int, std::function<void()>> mOnClick;
+    std::map<unsigned int, std::function<void(bool)>> mOnToggle;
 
     graphic::Font * mFontLabel = nullptr;
 
@@ -120,15 +122,6 @@ inline bool PushButton::IsChecked() const { return mChecked; }
 
 inline bool PushButton::IsExclusive() const { return mExclusive; }
 inline void PushButton::SetExclusive(bool val) { mExclusive = val; }
-
-inline void PushButton::AddOnClickFunction(const std::function<void()> & f)
-{
-    mOnClick.push_back(f);
-}
-inline void PushButton::AddOnToggleFunction(const std::function<void(bool)> & f)
-{
-    mOnToggle.push_back(f);
-}
 
 inline const std::string & PushButton::GetText() const { return mText; }
 

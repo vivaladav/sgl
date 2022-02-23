@@ -52,6 +52,24 @@ void AbstractButtonsGroup::SetButtonEnabled(unsigned int index, bool val)
     }
 }
 
+void AbstractButtonsGroup::ClearButtons()
+{
+    for(PushButton * b : mButtons)
+    {
+        const unsigned int fId = mToggleFunctions[b];
+        mToggleFunctions.erase(b);
+
+        b->RemoveToggleFunction(fId);
+        b->SetParent(nullptr);
+    }
+
+    mIndChecked = -1;
+
+    mButtons.clear();
+
+    OnButtonsCleared();
+}
+
 void AbstractButtonsGroup::AddButton(PushButton * button)
 {
     assert(button);
@@ -64,7 +82,7 @@ void AbstractButtonsGroup::AddButton(PushButton * button)
 
     if(mExclusive)
     {
-        button->AddOnToggleFunction([this, buttonIndex](bool checked)
+        const unsigned int fId = button->AddOnToggleFunction([this, buttonIndex](bool checked)
         {
             if(buttonIndex == mIndChecked)
                 return ;
@@ -76,6 +94,8 @@ void AbstractButtonsGroup::AddButton(PushButton * button)
 
             mOnToggle(buttonIndex, checked);
         });
+
+        mToggleFunctions.emplace(button, fId);
     }
 
     mButtons.emplace_back(button);
@@ -84,7 +104,29 @@ void AbstractButtonsGroup::AddButton(PushButton * button)
     OnButtonAdded(button);
 }
 
+void AbstractButtonsGroup::RemoveButton(PushButton * button)
+{
+    auto it = mButtons.begin();
+
+    while(it != mButtons.end())
+    {
+        if(*it == button)
+        {
+            mButtons.erase(it);
+            mToggleFunctions.erase(button);
+
+            OnButtonRemoved(button);
+
+            return ;
+        }
+
+        ++it;
+    }
+}
+
 void AbstractButtonsGroup::OnButtonAdded(PushButton *) { }
+void AbstractButtonsGroup::OnButtonRemoved(PushButton *) { }
+void AbstractButtonsGroup::OnButtonsCleared() { }
 
 } // namespace sgui
 } // namespace sgl

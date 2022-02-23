@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <unordered_map>
 #include <vector>
 
 namespace sgl
@@ -26,7 +27,9 @@ public:
 
     void SetButtonEnabled(unsigned int index, bool val);
 
+    void ClearButtons();
     void AddButton(PushButton * button);
+    void RemoveButton(PushButton * button);
     PushButton * GetButton(unsigned int ind) const;
 
     unsigned int GetNumButtons() const;
@@ -35,8 +38,11 @@ public:
 
 private:
     virtual void OnButtonAdded(PushButton * button);
+    virtual void OnButtonRemoved(PushButton * button);
+    virtual void OnButtonsCleared();
 
 private:
+    std::unordered_map<PushButton *, unsigned int> mToggleFunctions;
     std::vector<PushButton *> mButtons;
 
     std::function<void(unsigned int, bool)> mOnToggle;

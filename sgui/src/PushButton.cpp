@@ -23,6 +23,9 @@ PushButton::PushButton(Widget * parent)
 {
     RegisterRenderable(mBg);
     RegisterRenderable(mLabel);
+
+    static int ids = 0;
+    SetWidgetId(++ids);
 }
 
 void PushButton::SetBackground(const char * file)
@@ -114,8 +117,8 @@ void PushButton::SetChecked(bool val)
         mChecked = val;
         HandleCheckedChanged(mChecked);
 
-        for(auto & f : mOnToggle)
-            f(mChecked);
+        for(auto & it : mOnToggle)
+            it.second(mChecked);
     }
 }
 
@@ -128,13 +131,49 @@ void PushButton::Click()
 
         HandleCheckedChanged(mChecked);
 
-        for(auto & f : mOnToggle)
-            f(mChecked);
+        for(auto & it : mOnToggle)
+            it.second(mChecked);
     }
     // standard button
     else
-        for(auto & f : mOnClick)
-            f();
+        for(auto & it: mOnClick)
+            it.second();
+}
+
+unsigned int PushButton::AddOnClickFunction(const std::function<void()> & f)
+{
+    static unsigned int num = 0;
+
+    int fId = ++num;
+    mOnClick.emplace(fId, f);
+
+    return fId;
+}
+
+void PushButton::RemoveClickFunction(unsigned int fId)
+{
+    auto it = mOnClick.find(fId);
+
+    if(it != mOnClick.end())
+        mOnClick.erase(it);
+}
+
+unsigned int PushButton::AddOnToggleFunction(const std::function<void(bool)> & f)
+{
+    static unsigned int num = 0;
+
+    int fId = ++num;
+    mOnToggle.emplace(fId, f);
+
+    return fId;
+}
+
+void PushButton::RemoveToggleFunction(unsigned int fId)
+{
+    auto it = mOnToggle.find(fId);
+
+    if(it != mOnToggle.end())
+        mOnToggle.erase(it);
 }
 
 void PushButton::SetCurrBg(graphic::Renderable * bg)
