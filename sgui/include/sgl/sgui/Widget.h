@@ -64,6 +64,7 @@ public:
     void SetAlpha(unsigned char alpha);
 
     void SetCamera(graphic::Camera * cam);
+    graphic::Camera * GetCamera() const;
 
 protected:
     void SetSize(int w, int h);
@@ -155,6 +156,8 @@ inline int Widget::GetWidth() const { return mWidth; }
 inline int Widget::GetHeight() const { return mHeight; }
 
 inline unsigned char Widget::GetAlpha() const { return mA; }
+
+inline graphic::Camera * Widget::GetCamera() const { return mCamera; }
 
 inline unsigned int Widget::MixColorAndAlpha(unsigned int color) const
 {
