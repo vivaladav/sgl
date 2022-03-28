@@ -14,7 +14,7 @@ namespace sgui
 {
 
 PushButton::PushButton(Widget * parent)
-    : Widget(parent)
+    : AbstractButton(parent)
     , mFontLabel(Stage::Instance()->GetDefaultFont())
     , mBg(new graphic::DummyRenderable)
     , mLabel(new graphic::DummyRenderable)
@@ -107,72 +107,6 @@ void PushButton::SetLabelFont(graphic::Font * font)
     }
 }
 
-void PushButton::SetChecked(bool val)
-{
-    if(val != mChecked)
-    {
-        mChecked = val;
-        HandleCheckedChanged(mChecked);
-
-        for(auto & it : mOnToggle)
-            it.second(mChecked);
-    }
-}
-
-void PushButton::Click()
-{
-    // checkable button
-    if(mCheckable)
-    {
-        mChecked = !mChecked;
-
-        HandleCheckedChanged(mChecked);
-
-        for(auto & it : mOnToggle)
-            it.second(mChecked);
-    }
-    // standard button
-    else
-        for(auto & it: mOnClick)
-            it.second();
-}
-
-unsigned int PushButton::AddOnClickFunction(const std::function<void()> & f)
-{
-    static unsigned int num = 0;
-
-    int fId = ++num;
-    mOnClick.emplace(fId, f);
-
-    return fId;
-}
-
-void PushButton::RemoveClickFunction(unsigned int fId)
-{
-    auto it = mOnClick.find(fId);
-
-    if(it != mOnClick.end())
-        mOnClick.erase(it);
-}
-
-unsigned int PushButton::AddOnToggleFunction(const std::function<void(bool)> & f)
-{
-    static unsigned int num = 0;
-
-    int fId = ++num;
-    mOnToggle.emplace(fId, f);
-
-    return fId;
-}
-
-void PushButton::RemoveToggleFunction(unsigned int fId)
-{
-    auto it = mOnToggle.find(fId);
-
-    if(it != mOnToggle.end())
-        mOnToggle.erase(it);
-}
-
 void PushButton::SetCurrBg(graphic::Renderable * bg)
 {
     mCurrBg = bg;
@@ -196,94 +130,6 @@ void PushButton::HandlePositionChanged()
     mCurrBg->SetPosition(GetScreenX(), GetScreenY());
 
     PositionLabel();
-}
-
-void PushButton::HandleStateEnabled()
-{
-    if(IsChecked())
-        SetState(CHECKED);
-    else
-        SetState(NORMAL);
-}
-void PushButton::HandleStateDisabled()
-{
-     SetState(DISABLED);
-}
-
-void PushButton::HandleMouseButtonDown(sgl::core::MouseButtonEvent & event)
-{
-    if(!IsEnabled())
-        return ;
-
-    HandleButtonDown();
-
-    event.SetConsumed();
-}
-
-void PushButton::HandleMouseButtonUp(core::MouseButtonEvent & event)
-{
-    if(!IsEnabled())
-        return ;
-
-    HandleButtonUp();
-
-    event.SetConsumed();
-}
-
-void PushButton::HandleMouseOver()
-{
-    if(!IsEnabled() || IsChecked())
-        return ;
-
-    SetState(MOUSE_OVER);
-}
-
-void PushButton::HandleMouseOut()
-{
-    if(!IsEnabled() || IsChecked())
-        return ;
-
-    SetState(NORMAL);
-}
-
-void PushButton::HandleCheckedChanged(bool checked)
-{
-    SetState(checked ? CHECKED : NORMAL);
-}
-
-void PushButton::OnStateChanged(VisualState state) { }
-
-void PushButton::HandleButtonDown()
-{
-    if(IsCheckable())
-        SetState(CHECKED);
-    else
-        SetState(PUSHED);
-}
-
-void PushButton::HandleButtonUp()
-{
-    // do not uncheck if exclusive (in button group)
-    if(mExclusive && mChecked)
-        return ;
-
-    // set default state then handle click
-    if(IsMouseOver())
-        SetState(MOUSE_OVER);
-    else
-        SetState(NORMAL);
-
-    Click();
-}
-
-void PushButton::SetState(VisualState state)
-{
-    if(mState == state)
-        return ;
-
-    mState = state;
-
-    OnStateChanged(state);
 }
 
 void PushButton::PositionLabel()

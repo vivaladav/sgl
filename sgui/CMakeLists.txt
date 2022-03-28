@@ -5,6 +5,7 @@ find_package(SDL2 REQUIRED)
 
 add_library(
     sgui
+    include/sgl/sgui/AbstractButton.h
     include/sgl/sgui/AbstractButtonsGroup.h
     include/sgl/sgui/ButtonsGroup.h
     include/sgl/sgui/Image.h
@@ -16,6 +17,7 @@ add_library(
     include/sgl/sgui/TextArea.h
     include/sgl/sgui/WidgetContainer.h
     include/sgl/sgui/Widget.h
+    src/AbstractButton.cpp
     src/AbstractButtonsGroup.cpp
     src/ButtonsGroup.cpp
     src/Image.cpp
