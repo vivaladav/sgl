@@ -23,9 +23,6 @@ PushButton::PushButton(Widget * parent)
 {
     RegisterRenderable(mBg);
     RegisterRenderable(mLabel);
-
-    static int ids = 0;
-    SetWidgetId(++ids);
 }
 
 void PushButton::SetBackground(const char * file)

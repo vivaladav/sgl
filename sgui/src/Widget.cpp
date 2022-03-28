@@ -17,6 +17,9 @@ Widget::Widget(Widget * parent)
     : mCamera(graphic::Camera::GetDummyCamera())
 {
     SetParent(parent);
+
+    static unsigned int ids = 0;
+    mId = ++ids;
 }
 
 Widget::~Widget()

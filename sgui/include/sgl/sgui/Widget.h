@@ -34,8 +34,7 @@ public:
 
     void SetResizePolicy(ResizePolicy policy);
 
-    void SetWidgetId(int wid);
-    int GetWidgetId() const;
+    unsigned int GetWidgetId() const;
 
     Widget * GetParent() const;
     void SetParent(Widget * parent);
@@ -113,7 +112,7 @@ private:
 
     ResizePolicy mResizePol = GROW_ONLY;
 
-    int mId = -1;
+    unsigned int mId = 0;
 
     int mRelX = 0;
     int mRelY = 0;
@@ -136,8 +135,7 @@ private:
 
 inline void Widget::SetResizePolicy(ResizePolicy policy) { mResizePol = policy; }
 
-inline void Widget::SetWidgetId(int wid) { mId = wid; }
-inline int Widget::GetWidgetId() const { return mId; }
+inline unsigned int Widget::GetWidgetId() const { return mId; }
 
 inline Widget * Widget::GetParent() const { return mParent; }
 
