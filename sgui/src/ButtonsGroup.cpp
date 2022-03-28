@@ -1,6 +1,6 @@
 #include "sgl/sgui/ButtonsGroup.h"
 
-#include "sgl/sgui/PushButton.h"
+#include "sgl/sgui/AbstractButton.h"
 
 #include <cassert>
 
@@ -15,7 +15,7 @@ ButtonsGroup::ButtonsGroup(Orientation orient, Widget * parent)
 {
 }
 
-void ButtonsGroup::OnButtonAdded(PushButton * button)
+void ButtonsGroup::OnButtonAdded(AbstractButton * button)
 {
     const int w = GetWidth();
     const int h = GetHeight();
@@ -38,7 +38,7 @@ void ButtonsGroup::OnButtonAdded(PushButton * button)
     button->SetPosition(x, y);
 }
 
-void ButtonsGroup::OnButtonRemoved(PushButton * button)
+void ButtonsGroup::OnButtonRemoved(AbstractButton * button)
 {
     RepositionButtons();
 }

@@ -26,7 +26,7 @@ ImageButton::ImageButton(const std::array<unsigned int, NUM_VISUAL_STATES> & tex
     SetState(NORMAL);
 }
 
-void ImageButton::OnStateChanged(sgl::sgui::PushButton::VisualState state)
+void ImageButton::OnStateChanged(sgl::sgui::AbstractButton::VisualState state)
 {
     mBody->SetTexture(mTexs[state]);
     // reset BG to make changes visible

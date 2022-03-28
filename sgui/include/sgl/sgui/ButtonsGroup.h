@@ -8,7 +8,7 @@ namespace sgl
 namespace sgui
 {
 
-class PushButton;
+class AbstractButton;
 
 class ButtonsGroup : public AbstractButtonsGroup, public Widget
 {
@@ -24,8 +24,8 @@ public:
 
     void SetSpacing(int spacing);
 
-    void OnButtonAdded(PushButton * button) override;
-    void OnButtonRemoved(PushButton * button) override;
+    void OnButtonAdded(AbstractButton * button) override;
+    void OnButtonRemoved(AbstractButton * button) override;
     void OnButtonsCleared() override;
 
 private:

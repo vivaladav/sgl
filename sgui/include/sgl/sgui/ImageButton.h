@@ -23,7 +23,7 @@ public:
                 const char * spriteFile, Widget *parent);
 
 protected:
-    void OnStateChanged(sgl::sgui::PushButton::VisualState state) override;
+    void OnStateChanged(sgl::sgui::AbstractButton::VisualState state) override;
 
 private:
     std::array<sgl::graphic::Texture *, NUM_VISUAL_STATES> mTexs;

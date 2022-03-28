@@ -1,6 +1,6 @@
 #include "sgl/sgui/AbstractButtonsGroup.h"
 
-#include "sgl/sgui/PushButton.h"
+#include "sgl/sgui/AbstractButton.h"
 
 #include <cassert>
 
@@ -22,7 +22,7 @@ void AbstractButtonsGroup::SetExclusive(bool val)
 
     mExclusive = val;
 
-    for(PushButton * btn : mButtons)
+    for(AbstractButton * btn : mButtons)
         btn->SetExclusive(val);
 }
 
@@ -33,7 +33,7 @@ void AbstractButtonsGroup::SetButtonChecked(unsigned int index, bool val)
     if(index >= mButtons.size())
         return ;
 
-    PushButton * button = mButtons[index];
+    AbstractButton * button = mButtons[index];
 
     // already set
     if(button->IsChecked() == val)
@@ -48,7 +48,7 @@ void AbstractButtonsGroup::SetButtonEnabled(unsigned int index, bool val)
 {
     if(index < mButtons.size())
     {
-        PushButton * button = mButtons[index];
+        AbstractButton * button = mButtons[index];
 
         if(!val && button->IsChecked())
             button->SetChecked(false);
@@ -59,7 +59,7 @@ void AbstractButtonsGroup::SetButtonEnabled(unsigned int index, bool val)
 
 void AbstractButtonsGroup::ClearButtons()
 {
-    for(PushButton * b : mButtons)
+    for(AbstractButton * b : mButtons)
     {
         const unsigned int fId = mToggleFunctions[b];
         mToggleFunctions.erase(b);
@@ -75,7 +75,7 @@ void AbstractButtonsGroup::ClearButtons()
     OnButtonsCleared();
 }
 
-void AbstractButtonsGroup::AddButton(PushButton * button)
+void AbstractButtonsGroup::AddButton(AbstractButton * button)
 {
     assert(button);
 
@@ -109,7 +109,7 @@ void AbstractButtonsGroup::AddButton(PushButton * button)
     OnButtonAdded(button);
 }
 
-void AbstractButtonsGroup::RemoveButton(PushButton * button)
+void AbstractButtonsGroup::RemoveButton(AbstractButton * button)
 {
     auto it = mButtons.begin();
 
@@ -129,8 +129,8 @@ void AbstractButtonsGroup::RemoveButton(PushButton * button)
     }
 }
 
-void AbstractButtonsGroup::OnButtonAdded(PushButton *) { }
-void AbstractButtonsGroup::OnButtonRemoved(PushButton *) { }
+void AbstractButtonsGroup::OnButtonAdded(AbstractButton *) { }
+void AbstractButtonsGroup::OnButtonRemoved(AbstractButton *) { }
 void AbstractButtonsGroup::OnButtonsCleared() { }
 
 } // namespace sgui

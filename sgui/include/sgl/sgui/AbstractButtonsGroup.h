@@ -9,7 +9,7 @@ namespace sgl
 namespace sgui
 {
 
-class PushButton;
+class AbstractButton;
 
 class AbstractButtonsGroup
 {
@@ -28,22 +28,22 @@ public:
     void SetButtonEnabled(unsigned int index, bool val);
 
     void ClearButtons();
-    void AddButton(PushButton * button);
-    void RemoveButton(PushButton * button);
-    PushButton * GetButton(unsigned int ind) const;
+    void AddButton(AbstractButton * button);
+    void RemoveButton(AbstractButton * button);
+    AbstractButton *GetButton(unsigned int ind) const;
 
     unsigned int GetNumButtons() const;
 
     void SetFunctionOnToggle(const ToggleFun & f);
 
 private:
-    virtual void OnButtonAdded(PushButton * button);
-    virtual void OnButtonRemoved(PushButton * button);
+    virtual void OnButtonAdded(AbstractButton * button);
+    virtual void OnButtonRemoved(AbstractButton * button);
     virtual void OnButtonsCleared();
 
 private:
-    std::unordered_map<PushButton *, unsigned int> mToggleFunctions;
-    std::vector<PushButton *> mButtons;
+    std::unordered_map<AbstractButton *, unsigned int> mToggleFunctions;
+    std::vector<AbstractButton *> mButtons;
 
     std::function<void(unsigned int, bool)> mOnToggle;
 
@@ -56,7 +56,7 @@ inline bool AbstractButtonsGroup::IsExclusive() const { return mExclusive; }
 
 inline int AbstractButtonsGroup::GetIndexChecked() const{ return mIndChecked; }
 
-inline PushButton * AbstractButtonsGroup::GetButton(unsigned int ind) const
+inline AbstractButton * AbstractButtonsGroup::GetButton(unsigned int ind) const
 {
     if(ind < mButtons.size())
         return mButtons[ind];
