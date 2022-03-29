@@ -31,6 +31,8 @@ public:
     int GetActiveItemIndex() const;
     void SetActiveItem(unsigned int index);
 
+    void SetOnActiveChanged(const std::function<void(int)> & f);
+
 protected:
     void SetLabelFont(graphic::Font * font);
     void SetLabelColor(unsigned int color);
@@ -44,6 +46,8 @@ private:
 
 private:
     std::vector<ComboBoxItem *> mItems;
+
+    std::function<void(int)> mOnActiveChanged;
 
     graphic::Image * mBody = nullptr;
     graphic::Text * mLabel = nullptr;
@@ -62,6 +66,7 @@ inline const ComboBoxItem * ComboBox::GetActiveItem() const
 
 inline int ComboBox::GetActiveItemIndex() const { return mActiveItem; }
 
+inline void ComboBox::SetOnActiveChanged(const std::function<void(int)> & f) { mOnActiveChanged = f; }
 
 } // namespace sgui
 } // namespace sgl
