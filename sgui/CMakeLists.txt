@@ -8,6 +8,8 @@ add_library(
     include/sgl/sgui/AbstractButton.h
     include/sgl/sgui/AbstractButtonsGroup.h
     include/sgl/sgui/ButtonsGroup.h
+    include/sgl/sgui/ComboBox.h
+    include/sgl/sgui/ComboBoxItem.h
     include/sgl/sgui/Image.h
     include/sgl/sgui/ImageButton.h
     include/sgl/sgui/Label.h
@@ -20,6 +22,8 @@ add_library(
     src/AbstractButton.cpp
     src/AbstractButtonsGroup.cpp
     src/ButtonsGroup.cpp
+    src/ComboBox.cpp
+    src/ComboBoxItem.cpp
     src/Image.cpp
     src/ImageButton.cpp
     src/Label.cpp
