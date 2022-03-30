@@ -24,7 +24,7 @@ ComboBox::ComboBox(Widget * parent)
             item->SetVisible(checked);
     });
 
-    SetState(NORMAL);
+    InitState(NORMAL);
 }
 
 void ComboBox::AddItem(ComboBoxItem * item)

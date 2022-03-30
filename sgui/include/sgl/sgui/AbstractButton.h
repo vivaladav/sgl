@@ -64,6 +64,7 @@ protected:
 
     virtual void OnStateChanged(VisualState state);
 
+    void InitState(VisualState state);
     void SetState(VisualState state);
 
 private:
@@ -89,6 +90,8 @@ inline bool AbstractButton::IsChecked() const { return mChecked; }
 
 inline bool AbstractButton::IsExclusive() const { return mExclusive; }
 inline void AbstractButton::SetExclusive(bool val) { mExclusive = val; }
+
+inline void AbstractButton::InitState(VisualState state) { mState = state; }
 
 } // namespace sgui
 } // namespace sgl
