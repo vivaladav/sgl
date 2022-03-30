@@ -90,9 +90,12 @@ void ComboBox::HandlePositionChanged()
     mBody->SetPosition(x0, y0);
 
     // position LABEL
-    const int labelX = x0 + (w0 - mLabel->GetWidth()) * 0.5f;
-    const int labelY = y0 + (h0 - mLabel->GetHeight()) * 0.5f;
-    mLabel->SetPosition(labelX, labelY);
+    if(mLabel)
+    {
+        const int labelX = x0 + (w0 - mLabel->GetWidth()) * 0.5f;
+        const int labelY = y0 + (h0 - mLabel->GetHeight()) * 0.5f;
+        mLabel->SetPosition(labelX, labelY);
+    }
 
     // position ITEMS
     int y = y0 + h0;
