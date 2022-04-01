@@ -3,6 +3,7 @@
 #include "sgl/graphic/Image.h"
 #include "sgl/graphic/Text.h"
 #include "sgl/sgui/ComboBoxItem.h"
+#include "sgl/sgui/Stage.h"
 
 namespace sgl
 {
@@ -22,6 +23,14 @@ ComboBox::ComboBox(Widget * parent)
     {
         for(ComboBoxItem * item : mItems)
             item->SetVisible(checked);
+
+        if(checked)
+        {
+            auto stage = sgl::sgui::Stage::Instance();
+
+            for(ComboBoxItem * item : mItems)
+                stage->MoveChildToFront(item);
+        }
     });
 
     InitState(NORMAL);
@@ -33,6 +42,8 @@ void ComboBox::AddItem(ComboBoxItem * item)
 
     item->SetVisible(false);
     mItems.push_back(item);
+
+    item->SetParent(nullptr);
 
     item->AddOnClickFunction([this, numItems]
     {
