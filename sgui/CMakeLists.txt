@@ -15,6 +15,7 @@ add_library(
     include/sgl/sgui/Label.h
     include/sgl/sgui/ProgressBar.h
     include/sgl/sgui/PushButton.h
+    include/sgl/sgui/Slider.h
     include/sgl/sgui/Stage.h
     include/sgl/sgui/TextArea.h
     include/sgl/sgui/WidgetContainer.h
@@ -29,6 +30,7 @@ add_library(
     src/Label.cpp
     src/ProgressBar.cpp
     src/PushButton.cpp
+    src/Slider.cpp
     src/Stage.cpp
     src/TextArea.cpp
     src/Widget.cpp
