@@ -4,7 +4,7 @@
 #include "sgl/core/event/MouseMotionEvent.h"
 #include "sgl/graphic/Image.h"
 
-#include <iostream>
+#include <cmath>
 
 namespace sgl
 {
@@ -26,6 +26,22 @@ Slider::Slider(Orientation o, Widget * parent)
     RegisterRenderable(mButton);
 }
 
+void Slider::SetMinMax(int min, int max)
+{
+    mMin = min;
+    mMax = max;
+
+    if(mValue < mMin)
+        mValue = mMin;
+    else if(mValue > mMax)
+        mValue = mMax;
+    else
+        return ;
+
+    HandleValueChanged(mValue);
+    mOnValChanged(mValue);
+}
+
 bool Slider::IsScreenPointInside(int x, int y)
 {
     // always inside while dragging so to allow control anywhere the mouse is
@@ -43,34 +59,10 @@ void Slider::HandleMouseButtonDown(core::MouseButtonEvent & event)
 
     // HORIZONTAL SLIDER
     if(HORIZONTAL == mOrientation)
-    {
-        const int x = event.GetX();
-
-        const int barX0 = mBar->GetX();
-        const int barX1 = barX0 + mBarWidth;
-
-        int val = -1;
-
-        if(x <= barX0)
-            val = 0;
-        else if(x >= barX1)
-            val = 100;
-        else
-            val = 100 * (x - barX0) / mBarWidth;
-
-        if(mValue != val)
-        {
-            mValue = val;
-
-            HandleValueChanged(val);
-            mOnValChanged(val);
-        }
-    }
+        HandleMousePositionX(event.GetX());
     // VERTICAL SLIDER
     else
-    {
-
-    }
+        HandleMousePositionY(event.GetY());
 
     event.SetConsumed();
 }
@@ -87,39 +79,60 @@ void Slider::HandleMouseMotion(core::MouseMotionEvent & event)
 
     // HORIZONTAL SLIDER
     if(HORIZONTAL == mOrientation)
-    {
-        const int x = event.GetX();
-
-        const int barX0 = mBar->GetX();
-        const int barX1 = barX0 + mBarWidth;
-
-        int val = -1;
-
-        if(x <= barX0)
-            val = 0;
-        else if(x >= barX1)
-            val = 100;
-        else
-            val = 100 * (x - barX0) / mBarWidth;
-
-        if(mValue != val)
-        {
-            mValue = val;
-
-            HandleValueChanged(val);
-            mOnValChanged(val);
-        }
-    }
+         HandleMousePositionX(event.GetX());
     // VERTICAL SLIDER
     else
-    {
-
-    }
+        HandleMousePositionY(event.GetY());
 }
 
 void Slider::HandleMouseOut()
 {
     mDragging = false;
+}
+
+void Slider::HandleMousePositionX(int x)
+{
+    const int barX0 = mBar->GetX();
+    const int barX1 = barX0 + mBarWidth;
+
+    HandleMousePosition(x, barX0, barX1);
+}
+
+void Slider::HandleMousePositionY(int y)
+{
+    const int barY0 = mBar->GetY();
+    const int barY1 = barY0 + mBarHeight;
+
+    HandleMousePosition(y, barY0, barY1);
+}
+
+void Slider::HandleMousePosition(int pos, int pos0, int pos1)
+{
+    const float segments = static_cast<float>(mMax - mMin) / static_cast<float>(mStep);
+    const float segmentSizePerc = 100.f / segments;
+
+    float perc = 0.f;
+
+    if(pos <= pos0)
+        perc = 0.f;
+    else if(pos >= pos1)
+        perc = 100.f;
+    else
+        perc = 100.f * (pos - pos0) / static_cast<float>(mBarWidth);
+
+    const int segmentInd = static_cast<int>(std::roundf(perc / segmentSizePerc));
+
+    mValuePerc = segmentInd * segmentSizePerc;
+
+    const int val = mMin + segmentInd * mStep;
+
+    if(mValue != val)
+    {
+        mValue = val;
+
+        HandleValueChanged(val);
+        mOnValChanged(val);
+    }
 }
 
 void Slider::OnStateChanged(VisualState) { }

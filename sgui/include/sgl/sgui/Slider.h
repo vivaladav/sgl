@@ -43,7 +43,11 @@ public:
     Orientation GetOrientation() const;
     VisualState GetState() const;
 
+    void SetMinMax(int min, int max);
     int GetValue() const;
+    int GetValuePerc() const;
+
+    void SetStep(int val);
 
     void SetOnValueChanged(const std::function<void(int)> & f);
 
@@ -54,13 +58,17 @@ protected:
     void HandleMouseButtonUp(core::MouseButtonEvent & event) override;
     void HandleMouseMotion(core::MouseMotionEvent & event) override;
     void HandleMouseOut() override;
+    void HandleMousePositionX(int x);
+    void HandleMousePositionY(int y);
+    void HandleMousePosition(int pos, int pos0, int pos1);
 
     virtual void OnStateChanged(VisualState state);
 
     virtual void HandleValueChanged(int val);
 
     int GetBarFullWidth() const;
-    void SetBarFullWidth(int val);
+    int GetBarFullHeight() const;
+    void SetBarFullSize(int w, int h);
 
 protected:
     graphic::Image * mBg = nullptr;
@@ -75,10 +83,12 @@ private:
     VisualState mState = NORMAL;
 
     int mBarWidth = 0;
+    int mBarHeight = 0;
 
     int mMin = 0;
     int mMax = 100;
     int mValue = 0;
+    int mValuePerc = 0;
     int mStep = 1;
 
     bool mDragging = false;
@@ -88,11 +98,19 @@ inline Slider::Orientation Slider::GetOrientation() const { return mOrientation;
 inline Slider::VisualState Slider::GetState() const { return mState; }
 
 inline int Slider::GetValue() const { return mValue; }
+inline int Slider::GetValuePerc() const { return mValuePerc; }
+
+inline void Slider::SetStep(int val) { mStep = val; }
 
 inline void Slider::SetOnValueChanged(const std::function<void(int)> & f) { mOnValChanged = f; }
 
 inline int Slider::GetBarFullWidth() const { return mBarWidth; }
-inline void Slider::SetBarFullWidth(int val) { mBarWidth = val; }
+inline int Slider::GetBarFullHeight() const { return mBarHeight; }
+inline void Slider::SetBarFullSize(int w, int h)
+{
+    mBarWidth = w;
+    mBarHeight = h;
+}
 
 } // namespace sgui
 } // namespace sgl
