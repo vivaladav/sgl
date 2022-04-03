@@ -54,7 +54,7 @@ public:
     void SetY(int y);
 
     bool IsMouseOver() const;
-    bool IsScreenPointInside(int x, int y);
+    virtual bool IsScreenPointInside(int x, int y);
 
     int GetWidth() const;
     int GetHeight() const;

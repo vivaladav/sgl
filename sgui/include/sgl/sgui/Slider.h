@@ -47,10 +47,13 @@ public:
 
     void SetOnValueChanged(const std::function<void(int)> & f);
 
+    bool IsScreenPointInside(int x, int y) override;
+
 protected:
     void HandleMouseButtonDown(core::MouseButtonEvent & event) override;
     void HandleMouseButtonUp(core::MouseButtonEvent & event) override;
     void HandleMouseMotion(core::MouseMotionEvent & event) override;
+    void HandleMouseOut() override;
 
     virtual void OnStateChanged(VisualState state);
 
@@ -76,6 +79,7 @@ private:
     int mMin = 0;
     int mMax = 100;
     int mValue = 0;
+    int mStep = 1;
 
     bool mDragging = false;
 };

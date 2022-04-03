@@ -266,6 +266,13 @@ void Widget::SetY(int y)
 
 bool Widget::IsScreenPointInside(int x, int y)
 {
+    // check children widgets first in case there's some special case (like Slider)
+    for(Widget * w : mWidgets)
+    {
+        if(w->IsScreenPointInside(x, y))
+            return true;
+    }
+
     return x > mScreenX && x < (mScreenX + mWidth) && y > mScreenY && y < (mScreenY + mHeight);
 }
 
