@@ -20,7 +20,7 @@ class ImageButton : public PushButton
 {
 public:
     ImageButton(const std::array<unsigned int, NUM_VISUAL_STATES> & texIds,
-                const char * spriteFile, Widget *parent);
+                const char * spriteFile, Widget * parent);
 
 protected:
     void OnStateChanged(sgl::sgui::AbstractButton::VisualState state) override;
