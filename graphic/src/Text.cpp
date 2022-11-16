@@ -1,7 +1,6 @@
 #include "sgl/graphic/Text.h"
 
 #include "sgl/graphic/Font.h"
-#include "sgl/graphic/Renderer.h"
 #include "sgl/graphic/Texture.h"
 #include "sgl/graphic/TextureManager.h"
 

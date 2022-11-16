@@ -1,6 +1,5 @@
 #include "sgl/sgui/PushButton.h"
 
-#include "sgl/core/event/MouseButtonEvent.h"
 #include "sgl/graphic/DummyRenderable.h"
 #include "sgl/graphic/Image.h"
 #include "sgl/graphic/Text.h"

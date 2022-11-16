@@ -2,7 +2,6 @@
 
 #include "sgl/core/event/MouseButtonEvent.h"
 #include "sgl/core/event/MouseMotionEvent.h"
-#include "sgl/sgui/Widget.h"
 
 #include <algorithm>
 

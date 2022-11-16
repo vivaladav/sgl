@@ -1,6 +1,5 @@
 #include "sgl/graphic/Texture.h"
 
-#include "sgl/graphic/Renderer.h"
 #include "sgl/graphic/TextureData.h"
 
 #include <SDL2/SDL.h>
