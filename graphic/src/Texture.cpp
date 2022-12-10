@@ -25,7 +25,7 @@ Texture::Texture(SDL_Surface * data, TextureQuality q)
 Texture::Texture(const char * file, TextureQuality q)
     : mSrcRect(new SDL_Rect)
 {
-    mTexData = mTexData = std::make_shared<TextureData>(file, q);
+    mTexData = std::make_shared<TextureData>(file, q);
 
     ResetSourceRect();
 }
