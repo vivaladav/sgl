@@ -6,6 +6,7 @@ find_package(SDL2 REQUIRED)
 add_library(
     core
     include/sgl/core/Application.h
+    include/sgl/core/DataPackage.h
     include/sgl/core/Point.h
     include/sgl/core/Rect.h
     include/sgl/core/Size.h
@@ -19,6 +20,7 @@ add_library(
     include/sgl/core/event/MouseEventListener.h
     include/sgl/core/event/MouseMotionEvent.h
     src/Application.cpp
+    src/DataPackage.cpp
     src/event/ApplicationEventListener.cpp
     src/event/Event.cpp
     src/event/EventDispatcher.h
