@@ -59,7 +59,8 @@ namespace core
             return ;
         }
 
-        mData.emplace(fileId, data);
+        Data block {data, sizeData};
+        mData.emplace(fileId, block);
     }
 
 
@@ -69,14 +70,27 @@ namespace core
 DataPackage::~DataPackage()
 {
     for(auto & it : mData)
-        delete it.second;
+        delete it.second.data;
 }
 
 char * DataPackage::GetData(const char * fileId) const
 {
-    char * data = nullptr;
+    auto it = mData.find(fileId);
 
-    return data;
+    if(it != mData.end())
+        return it->second.data;
+    else
+        return 0;
+}
+
+int DataPackage::GetDataSize(const char * fileId) const
+{
+    auto it = mData.find(fileId);
+
+    if(it != mData.end())
+        return it->second.size;
+    else
+        return 0;
 }
 
 int DataPackage::GetFileSize(const char * filename)

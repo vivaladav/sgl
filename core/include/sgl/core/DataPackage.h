@@ -15,6 +15,7 @@ public:
     ~DataPackage();
 
     char * GetData(const char * fileId) const;
+    int GetDataSize(const char * fileId) const;
 
     bool IsValid() const;
 
@@ -22,7 +23,15 @@ private:
     int GetFileSize(const char * filename);
 
 private:
-    std::unordered_map<std::string, char *> mData;
+    struct Data
+    {
+        Data(char * d, int s) : data(d), size(s) {}
+
+        char * data = nullptr;
+        int size = 0;
+    };
+
+    std::unordered_map<std::string, Data> mData;
 
     bool mValid = false;
 };

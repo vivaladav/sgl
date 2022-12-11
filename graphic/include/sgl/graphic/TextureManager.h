@@ -9,6 +9,9 @@
 
 namespace sgl
 {
+
+namespace core { class DataPackage; }
+
 namespace graphic
 {
 
@@ -25,6 +28,7 @@ public:
     static void Destroy();
 
     // standard Textures
+    void RegisterTexture(const core::DataPackage & package, const char * file);
     Texture * GetTexture(const char * file);
     void DestroyTexture(const char * file);
     void DestroyTextures();

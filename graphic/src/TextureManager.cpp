@@ -1,8 +1,11 @@
 #include "sgl/graphic/TextureManager.h"
 
+#include "sgl/core/DataPackage.h"
 #include "sgl/graphic/GraphicConstants.h"
 #include "sgl/graphic/Texture.h"
 #include "sgl/graphic/TextureData.h"
+
+#include <SDL2/SDL.h>
 
 #include <iostream>
 
@@ -29,6 +32,29 @@ void TextureManager::Destroy()
 TextureManager::TextureManager()
     : mTexQuality(TextureQuality::GOOD)
 {
+}
+
+void TextureManager::RegisterTexture(const core::DataPackage & package, const char * file)
+{
+    auto res = mTextures.find(file);
+
+    // texture already created
+    if(res != mTextures.end())
+        return ;
+
+    // get data from package
+    const char * data = package.GetData(file);
+    const int sizeData = package.GetDataSize(file);
+
+    if(!data)
+        return ;
+
+    SDL_RWops * rwdata = SDL_RWFromConstMem(data, sizeData);
+
+    auto tex = new Texture(rwdata, mTexQuality);
+    mTextures.emplace(file, tex);
+
+    SDL_RWclose(rwdata);
 }
 
 Texture * TextureManager::GetTexture(const char * file)
