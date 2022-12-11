@@ -2,6 +2,7 @@
 
 #include <string>
 
+struct SDL_RWops;
 struct SDL_Surface;
 struct SDL_Texture;
 
@@ -16,6 +17,7 @@ class TextureData
 {
 public:
     TextureData(SDL_Surface * data, TextureQuality q);
+    TextureData(SDL_RWops * rwdata, TextureQuality q);
     TextureData(const char * file, TextureQuality q);
     ~TextureData();
 

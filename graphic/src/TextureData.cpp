@@ -27,6 +27,24 @@ TextureData::TextureData(SDL_Surface * data, TextureQuality q)
     mHeight = data->h;
 }
 
+TextureData::TextureData(SDL_RWops * rwdata, TextureQuality q)
+{
+    assert(rwdata);
+
+    // sest quality BEFORE creating a new texture
+    SetTextureQuality(q);
+
+    mData = IMG_LoadTexture_RW(Renderer::Instance()->mSysRenderer, rwdata, 0);
+
+    if(!mData)
+    {
+        std::cerr << "IMG_LoadTexture_RW: " << IMG_GetError() << std::endl;
+        return ;
+    }
+
+    SDL_QueryTexture(mData, nullptr, nullptr, &mWidth, &mHeight);
+}
+
 TextureData::TextureData(const char * file, TextureQuality q)
     : mFilePath(file)
 {
@@ -35,20 +53,15 @@ TextureData::TextureData(const char * file, TextureQuality q)
     // sest quality BEFORE creating a new texture
     SetTextureQuality(q);
 
-    SDL_Surface * img = IMG_Load(file);
+    mData = IMG_LoadTexture(Renderer::Instance()->mSysRenderer, file);
 
-    if(!img)
+    if(!mData)
     {
-        std::cerr << "IMG_Load: " << IMG_GetError() << std::endl;
+        std::cerr << "IMG_LoadTexture_RW: " << IMG_GetError() << std::endl;
         return ;
     }
 
-    mData = SDL_CreateTextureFromSurface(Renderer::Instance()->mSysRenderer, img);
-
-    mWidth = img->w;
-    mHeight = img->h;
-
-    SDL_FreeSurface(img);
+    SDL_QueryTexture(mData, nullptr, nullptr, &mWidth, &mHeight);
 }
 
 TextureData::~TextureData()

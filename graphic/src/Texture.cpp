@@ -22,6 +22,14 @@ Texture::Texture(SDL_Surface * data, TextureQuality q)
     ResetSourceRect();
 }
 
+Texture::Texture(SDL_RWops * rwdata, TextureQuality q)
+    : mSrcRect(new SDL_Rect)
+{
+    mTexData = std::make_shared<TextureData>(rwdata, q);
+
+    ResetSourceRect();
+}
+
 Texture::Texture(const char * file, TextureQuality q)
     : mSrcRect(new SDL_Rect)
 {

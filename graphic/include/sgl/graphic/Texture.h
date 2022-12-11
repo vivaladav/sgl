@@ -5,6 +5,7 @@
 #include <memory>
 
 struct SDL_Rect;
+struct SDL_RWops;
 struct SDL_Surface;
 struct SDL_Texture;
 
@@ -23,6 +24,7 @@ class Texture
 public:
     Texture();
     Texture(SDL_Surface * data, TextureQuality q);
+    Texture(SDL_RWops * rwdata, TextureQuality q);
     Texture(const char * file, TextureQuality q);
     Texture(const std::shared_ptr<TextureData> & data);
     ~Texture();
