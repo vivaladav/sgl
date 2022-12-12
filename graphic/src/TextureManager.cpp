@@ -8,7 +8,6 @@
 #include <SDL2/SDL.h>
 
 #include <iostream>
-#include <memory>
 
 namespace sgl
 {
@@ -53,7 +52,11 @@ void TextureManager::RegisterTexture(const core::DataPackage & package, const ch
     const int sizeData = package.GetDataSize(file);
 
     if(!data)
+    {
+        std::cout << "TextureManager::RegisterTexture - ERR: failed to get data from package for "
+                  << file << std::endl;
         return ;
+    }
 
     SDL_RWops * rwdata = SDL_RWFromConstMem(data, sizeData);
 
@@ -100,6 +103,39 @@ void TextureManager::DestroyTextures()
     mTextures.clear();
 }
 
+void TextureManager::RegisterSprite(const core::DataPackage & package, const char * file,
+                                    const std::vector<core::Rectd> & srcRects)
+{
+    const std::string strFile(file);
+
+    auto res = mSprites.find(strFile);
+
+    // vector with Textures already created
+    if(res != mSprites.end())
+    {
+        std::cout << "TextureManager::RegisterSprite - ERR: Sprite " << file
+                  << " already registered" << std::endl;
+        return ;
+    }
+
+    // create shared data from package
+    const char * data = package.GetData(file);
+    const int sizeData = package.GetDataSize(file);
+
+    if(!data)
+    {
+        std::cout << "TextureManager::RegisterTexture - ERR: failed to get data from package for "
+                  << file << std::endl;
+        return ;
+    }
+
+    SDL_RWops * rwdata = SDL_RWFromConstMem(data, sizeData);
+    std::shared_ptr<TextureData> texData = std::make_shared<TextureData>(rwdata, mTexQuality);
+
+    // create Textures with no data and add shared one
+    CreateSpritesFromData(strFile, texData, srcRects);
+}
+
 void TextureManager::RegisterSprite(const char * file, const std::vector<core::Rectd> & srcRects)
 {
     const std::string strFile(file);
@@ -114,24 +150,10 @@ void TextureManager::RegisterSprite(const char * file, const std::vector<core::R
         return ;
     }
 
-    const unsigned int numRects = srcRects.size();
+    // create shared data and textures
+    std::shared_ptr<TextureData> texData = std::make_shared<TextureData>(file, mTexQuality);
 
-    std::vector<Texture *> textures;
-
-    // create Textures with no data and add shared one
-    std::shared_ptr<TextureData> data = std::make_shared<TextureData>(file, mTexQuality);
-
-    for(unsigned int i = 0; i < numRects; ++i)
-    {
-        auto tex = new Texture;
-        tex->SetSourceRect(srcRects[i]);
-        tex->SetData(data);
-
-        textures.push_back(tex);
-    }
-
-    // store textures in map
-    mSprites.emplace(strFile, textures);
+    CreateSpritesFromData(strFile, texData, srcRects);
 }
 
 Texture * TextureManager::GetSprite(const char * file, unsigned int spriteId)
@@ -163,6 +185,26 @@ void TextureManager::DestroySprites()
     }
 
     mSprites.clear();
+}
+
+void TextureManager::CreateSpritesFromData(const std::string & file, const std::shared_ptr<TextureData> & texData,
+                                           const std::vector<core::Rectd> & srcRects)
+{
+    const unsigned int numRects = srcRects.size();
+
+    std::vector<Texture *> textures;
+
+    for(unsigned int i = 0; i < numRects; ++i)
+    {
+        auto tex = new Texture;
+        tex->SetSourceRect(srcRects[i]);
+        tex->SetData(texData);
+
+        textures.push_back(tex);
+    }
+
+    // store textures in map
+    mSprites.emplace(file, textures);
 }
 
 } // namespace graphic

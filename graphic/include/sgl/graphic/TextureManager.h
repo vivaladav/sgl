@@ -2,6 +2,7 @@
 
 #include "sgl/core/Rect.h"
 
+#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -33,6 +34,8 @@ public:
     void DestroyTextures();
 
     // sprite Textures
+    void RegisterSprite(const core::DataPackage & package, const char * file,
+                        const std::vector<core::Rectd> & srcRects);
     void RegisterSprite(const char * file, const std::vector<core::Rectd> & srcRects);
     Texture * GetSprite(const char * file, unsigned int spriteId);
     void DestroySprites();
@@ -43,6 +46,9 @@ public:
 private:
     TextureManager();
     ~TextureManager();
+
+    void CreateSpritesFromData(const std::string & file, const std::shared_ptr<TextureData> & texData,
+                               const std::vector<core::Rectd> & srcRects);
 
 private:
     static TextureManager *  mInstance;
