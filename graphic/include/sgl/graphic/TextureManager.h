@@ -2,7 +2,6 @@
 
 #include "sgl/core/Rect.h"
 
-#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -51,8 +50,6 @@ private:
     std::unordered_map<std::string, Texture *> mTextures;
 
     std::unordered_map<std::string, std::vector<Texture *>> mSprites;
-
-    std::unordered_map<std::string, std::shared_ptr<TextureData>> mTexturesData;
 
     TextureQuality mTexQuality;
 };

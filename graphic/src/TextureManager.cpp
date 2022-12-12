@@ -8,6 +8,7 @@
 #include <SDL2/SDL.h>
 
 #include <iostream>
+#include <memory>
 
 namespace sgl
 {
@@ -36,11 +37,16 @@ TextureManager::TextureManager()
 
 void TextureManager::RegisterTexture(const core::DataPackage & package, const char * file)
 {
-    auto res = mTextures.find(file);
+    const std::string strFile(file);
+    auto res = mTextures.find(strFile);
 
     // texture already created
     if(res != mTextures.end())
+    {
+        std::cout << "TextureManager::RegisterTexture - ERR: file from package " << file
+                  << " already registered" << std::endl;
         return ;
+    }
 
     // get data from package
     const char * data = package.GetData(file);
@@ -52,7 +58,7 @@ void TextureManager::RegisterTexture(const core::DataPackage & package, const ch
     SDL_RWops * rwdata = SDL_RWFromConstMem(data, sizeData);
 
     auto tex = new Texture(rwdata, mTexQuality);
-    mTextures.emplace(file, tex);
+    mTextures.emplace(strFile, tex);
 
     SDL_RWclose(rwdata);
 }
@@ -112,20 +118,20 @@ void TextureManager::RegisterSprite(const char * file, const std::vector<core::R
 
     std::vector<Texture *> textures;
 
-    // create Textures with no data
+    // create Textures with no data and add shared one
+    std::shared_ptr<TextureData> data = std::make_shared<TextureData>(file, mTexQuality);
+
     for(unsigned int i = 0; i < numRects; ++i)
     {
         auto tex = new Texture;
         tex->SetSourceRect(srcRects[i]);
+        tex->SetData(data);
 
         textures.push_back(tex);
     }
 
     // store textures in map
     mSprites.emplace(strFile, textures);
-
-    // create null entry for data
-    mTexturesData.emplace(strFile, nullptr);
 }
 
 Texture * TextureManager::GetSprite(const char * file, unsigned int spriteId)
@@ -139,36 +145,13 @@ Texture * TextureManager::GetSprite(const char * file, unsigned int spriteId)
     if(mSprites.end() == res)
         return nullptr;
 
-    // find texture data
-    auto resData = mTexturesData.find(strFile);
-
-    // no texture data found (this should never happen
-    if(mTexturesData.end() == resData)
-        return nullptr;
-
     const std::vector<Texture *> & textures = res->second;
 
     // no sprite found
     if(spriteId >= textures.size())
         return nullptr;
 
-    Texture * tex = textures[spriteId];
-
-    // handle data
-    if(!tex->HasData())
-    {
-        std::shared_ptr<TextureData> data = resData->second;
-
-        if(nullptr == data)
-        {
-            data = std::make_shared<TextureData>(file, mTexQuality);
-            resData->second = data;
-        }
-
-        tex->SetData(data);
-    }
-
-    return tex;
+    return textures[spriteId];
 }
 
 void TextureManager::DestroySprites()
@@ -180,8 +163,6 @@ void TextureManager::DestroySprites()
     }
 
     mSprites.clear();
-
-    mTexturesData.clear();
 }
 
 } // namespace graphic
