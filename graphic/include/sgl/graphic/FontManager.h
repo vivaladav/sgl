@@ -3,8 +3,13 @@
 #include <string>
 #include <unordered_map>
 
+struct SDL_RWops;
+
 namespace sgl
 {
+
+namespace core { class DataPackage; }
+
 namespace graphic
 {
 
@@ -17,6 +22,7 @@ public:
     static FontManager * Instance();
     static void Destroy();
 
+    void RegisterFont(const core::DataPackage & package, const char * file);
     Font * GetFont(const char * file, int size, int style);
 
     void ClearFonts();
@@ -28,6 +34,7 @@ private:
 private:
     static FontManager * mInstance;
 
+    std::unordered_map<std::string, SDL_RWops *> mFontsData;
     std::unordered_map<std::string, Font *> mFonts;
 };
 

@@ -36,6 +36,21 @@ core::Sized Font::GetTextSize(const char * text)
     return size;
 }
 
+Font::Font(SDL_RWops * data, int size, int style)
+    : mSize(size)
+{
+    mSysFont = TTF_OpenFontRW(data, 0, mSize);
+
+    if(!mSysFont)
+    {
+        std::cout << "TTF_OpenFontRW ERROR: " << TTF_GetError() << std::endl;
+        return ;
+    }
+
+    if(style != NORMAL)
+        TTF_SetFontStyle(mSysFont, style);
+}
+
 Font::Font(const char * file, int size, int style)
     : mSize(size)
 {

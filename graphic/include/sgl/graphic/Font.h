@@ -2,6 +2,7 @@
 
 #include "sgl/core/Size.h"
 
+struct SDL_RWops;
 typedef struct _TTF_Font TTF_Font;
 
 namespace sgl
@@ -29,6 +30,7 @@ public:
     TTF_Font * GetSysFont() const;
 
 private:
+    Font(SDL_RWops * data, int size, int style);
     Font(const char * file, int size, int style);
     ~Font();
 
