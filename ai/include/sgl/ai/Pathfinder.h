@@ -18,6 +18,7 @@ class Pathfinder
 public:
     enum PathOptions : unsigned int
     {
+        NO_OPTION           = 0x0,
         INCLUDE_START       = 0x1,
         ALLOW_DIAGONALS     = 0x2,
 
