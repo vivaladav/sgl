@@ -17,7 +17,6 @@ namespace sgui
 {
 
 class Stage;
-class VisibilityChangeEvent;
 
 class Widget : public WidgetContainer
 {
@@ -43,8 +42,7 @@ public:
     void SetEnabled(bool val);
     bool IsEnabled() const;
 
-    void SetVisible(bool val);
-    bool IsVisible() const;
+    void SetVisible(bool val) final;
 
     int GetX() const;
     int GetY() const;
@@ -103,9 +101,6 @@ private:
     void HandleParentPositionChanged(int dx, int dy);
     void PropagateParentPositionChanged(int dx, int dy);
 
-    virtual void HandleVisibilityChanged(VisibilityChangeEvent & event);
-    void PropagateVisibilityChanged(VisibilityChangeEvent & event);
-
 private:
     std::vector<graphic::Renderable *> mRenderables;
 
@@ -130,7 +125,6 @@ private:
     unsigned char mA = 255;
 
     bool mEnabled = true;
-    bool mVisible = true;
     bool mMouseOver = false;
 
     // access private methods for events and rendering
@@ -144,8 +138,6 @@ inline unsigned int Widget::GetWidgetId() const { return mId; }
 inline Widget * Widget::GetParent() const { return mParent; }
 
 inline bool Widget::IsEnabled() const { return mEnabled; }
-
-inline bool Widget::IsVisible() const { return mVisible; }
 
 inline int Widget::GetX() const { return mRelX; }
 inline int Widget::GetY() const { return mRelY; }

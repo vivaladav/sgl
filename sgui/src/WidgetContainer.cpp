@@ -5,6 +5,7 @@
 #include "sgl/core/event/MouseMotionEvent.h"
 #include "sgl/sgui/Stage.h"
 #include "sgl/sgui/Widget.h"
+#include "sgl/sgui/event/VisibilityChangeEvent.h"
 
 #include <algorithm>
 
@@ -86,6 +87,19 @@ void WidgetContainer::SetFocus()
 
     for(Widget * w : mWidgets)
         w->PropagateFocus();
+}
+
+void WidgetContainer::SetVisible(bool val)
+{
+    if(val == mVisible)
+        return ;
+
+    mVisible = val;
+
+    // handle visibility changed
+    VisibilityChangeEvent e(val);
+    HandleVisibilityChanged(e);
+    PropagateVisibilityChanged(e);
 }
 
 void WidgetContainer::AddChild(Widget * w)
@@ -226,6 +240,19 @@ void WidgetContainer::PropagateKeyUp(core::KeyboardEvent & event)
             if(w->HasFocus())
                 w->HandleKeyUp(event);
         }
+    }
+}
+
+void WidgetContainer::HandleVisibilityChanged(VisibilityChangeEvent & event)
+{
+}
+
+void WidgetContainer::PropagateVisibilityChanged(VisibilityChangeEvent & event)
+{
+    for(Widget * w : mWidgets)
+    {
+        w->HandleVisibilityChanged(event);
+        w->PropagateVisibilityChanged(event);
     }
 }
 

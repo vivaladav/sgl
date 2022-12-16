@@ -15,6 +15,7 @@ namespace core
 namespace sgui
 {
 
+class VisibilityChangeEvent;
 class Widget;
 
 class WidgetContainer
@@ -33,6 +34,9 @@ public:
     void SetFocus();
     bool HasFocus() const;
 
+    virtual void SetVisible(bool val);
+    bool IsVisible() const;
+
 protected:
     void AddChild(Widget * w);
     void RemoveChild(Widget * w);
@@ -47,6 +51,9 @@ protected:
     void PropagateKeyDown(core::KeyboardEvent & event);
     void PropagateKeyUp(core::KeyboardEvent & event);
 
+    virtual void HandleVisibilityChanged(VisibilityChangeEvent & event);
+    void PropagateVisibilityChanged(VisibilityChangeEvent & event);
+
     void PropagateRender();
 
     void PropagateFocus();
@@ -56,11 +63,14 @@ protected:
 
 private:
     bool mFocus = false;
+    bool mVisible = true;
 };
 
 inline int WidgetContainer::GetNumChildren() const { return mWidgets.size(); }
 
 inline bool WidgetContainer::HasFocus() const { return mFocus; }
+
+inline bool WidgetContainer::IsVisible() const { return mVisible; }
 
 } // namespace sgui
 } // namespace sgl
