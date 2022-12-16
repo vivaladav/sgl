@@ -4,6 +4,7 @@
 #include "sgl/graphic/Text.h"
 #include "sgl/sgui/ComboBoxItem.h"
 #include "sgl/sgui/Stage.h"
+#include "sgl/sgui/event/VisibilityChangeEvent.h"
 
 namespace sgl
 {
@@ -133,6 +134,14 @@ void ComboBox::UpdateText()
     HandlePositionChanged();
 
     OnStateChanged(GetState());
+}
+
+void ComboBox::HandleVisibilityChanged(VisibilityChangeEvent & event)
+{
+    const bool visible = event.IsVisible();
+
+    if(!visible)
+        SetChecked(visible);
 }
 
 } // namespace sgui

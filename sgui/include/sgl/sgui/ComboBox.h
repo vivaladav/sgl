@@ -44,6 +44,8 @@ protected:
 private:
     void UpdateText();
 
+    void HandleVisibilityChanged(VisibilityChangeEvent & event) override;
+
 private:
     std::vector<ComboBoxItem *> mItems;
 
