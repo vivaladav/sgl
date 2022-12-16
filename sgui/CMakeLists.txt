@@ -20,6 +20,7 @@ add_library(
     include/sgl/sgui/TextArea.h
     include/sgl/sgui/WidgetContainer.h
     include/sgl/sgui/Widget.h
+    include/sgl/sgui/event/VisibilityChangeEvent.h
     src/AbstractButton.cpp
     src/AbstractButtonsGroup.cpp
     src/ButtonsGroup.cpp
@@ -35,6 +36,7 @@ add_library(
     src/TextArea.cpp
     src/Widget.cpp
     src/WidgetContainer.cpp
+    src/event/VisibilityChangeEvent.cpp
 )
 
 target_link_libraries(

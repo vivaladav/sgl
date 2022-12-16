@@ -17,6 +17,7 @@ namespace sgui
 {
 
 class Stage;
+class VisibilityChangeEvent;
 
 class Widget : public WidgetContainer
 {
@@ -101,6 +102,9 @@ private:
 
     void HandleParentPositionChanged(int dx, int dy);
     void PropagateParentPositionChanged(int dx, int dy);
+
+    virtual void HandleVisibilityChanged(VisibilityChangeEvent & event);
+    void PropagateVisibilityChanged(VisibilityChangeEvent & event);
 
 private:
     std::vector<graphic::Renderable *> mRenderables;

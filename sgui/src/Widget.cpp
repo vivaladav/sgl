@@ -5,6 +5,7 @@
 #include "sgl/graphic/Camera.h"
 #include "sgl/graphic/Renderable.h"
 #include "sgl/sgui/Stage.h"
+#include "sgl/sgui/event/VisibilityChangeEvent.h"
 
 #include <algorithm>
 
@@ -114,6 +115,11 @@ void Widget::SetVisible(bool val)
     }
     else
         mStage->HandleChildVisibleChanged(this);
+
+
+    VisibilityChangeEvent e(val);
+    HandleVisibilityChanged(e);
+    PropagateVisibilityChanged(e);
 }
 
 void Widget::SetAlpha(unsigned char alpha)
@@ -339,6 +345,19 @@ void Widget::PropagateParentPositionChanged(int dx, int dy)
     {
         w->HandleParentPositionChanged(dx, dy);
         w->PropagateParentPositionChanged(dx, dy);
+    }
+}
+
+void Widget::HandleVisibilityChanged(VisibilityChangeEvent & event)
+{
+}
+
+void Widget::PropagateVisibilityChanged(VisibilityChangeEvent & event)
+{
+    for(Widget * w : mWidgets)
+    {
+        w->HandleVisibilityChanged(event);
+        w->PropagateVisibilityChanged(event);
     }
 }
 
