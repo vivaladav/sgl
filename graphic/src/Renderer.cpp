@@ -18,13 +18,13 @@ namespace graphic
 
 Renderer * Renderer::mInstance = nullptr;
 
-Renderer * Renderer::Create(Window * win)
+Renderer * Renderer::Create(Window * win, bool vsync)
 {
     assert(win);
 
     if(!mInstance)
     {
-        mInstance = new Renderer(win);
+        mInstance = new Renderer(win, vsync);
 
         // create dummy and default camera for all Renderables
         Camera::CreateDefaultCamera();
@@ -43,13 +43,16 @@ void Renderer::Destroy()
     Camera::DestroyDummyCamera();
 }
 
-Renderer::Renderer(Window * win)
+Renderer::Renderer(Window * win, bool vsync)
 {
     mW = win->GetWidth();
     mH = win->GetHeight();
 
+    unsigned int flags = vsync ? SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+                               : SDL_RENDERER_ACCELERATED;
+
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "best");
-    mSysRenderer = SDL_CreateRenderer(win->mSysWin, -1, SDL_RENDERER_ACCELERATED);
+    mSysRenderer = SDL_CreateRenderer(win->mSysWin, -1, flags);
 
     // -- init SDL_image --
     atexit(IMG_Quit);

@@ -12,7 +12,7 @@ class Window;
 class Renderer
 {
 public:
-    static Renderer * Create(Window * win);
+    static Renderer * Create(Window * win, bool vsync);
     static Renderer * Instance();
     static void Destroy();
 
@@ -35,7 +35,7 @@ public:
     void ClearClipping();
 
 private:
-    Renderer(Window * win);
+    Renderer(Window * win, bool vsync);
     ~Renderer();
 
 private:
