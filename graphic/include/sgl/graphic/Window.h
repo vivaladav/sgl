@@ -39,7 +39,9 @@ public:
 
     int GetNumDisplays() const;
     int GetNumDisplayModes(unsigned int display) const;
+    DisplayMode GetCurrentDisplayMode();
     DisplayMode GetDisplayMode(unsigned int display, unsigned int index) const;
+    bool SetDisplayMode(unsigned int display, unsigned int index, bool updateWindowSize = true);
 
 private:
     Window(const char * title, int w, int h);

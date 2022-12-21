@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL.h>
 
+#include <iostream>
+
 namespace sgl
 {
 namespace graphic
@@ -43,12 +45,61 @@ void Window::SetFullscreen(bool f)
     SDL_SetWindowFullscreen(mSysWin, flag);
 }
 
+DisplayMode Window::GetCurrentDisplayMode()
+{
+    DisplayMode mode;
+
+    if(nullptr == mSysWin)
+        return mode;
+
+    SDL_DisplayMode m;
+    const int res = SDL_GetWindowDisplayMode(mSysWin, &m);
+
+    if(0 == res)
+    {
+        mode.width = m.w;
+        mode.height = m.h;
+        mode.refresh = m.refresh_rate;
+    }
+
+    return mode;
+}
+
 DisplayMode Window::GetDisplayMode(unsigned int display, unsigned int index) const
 {
     if(display < mDisplayModes.size() && index < mDisplayModes[display].size())
         return mDisplayModes[display][index];
     else
         return {};
+}
+
+bool Window::SetDisplayMode(unsigned int display, unsigned int index, bool updateWindowSize)
+{
+    SDL_DisplayMode mode;
+
+    int res = SDL_GetDisplayMode(display, index, &mode);
+
+    if(res != 0)
+    {
+        std::cout << "ERROR - Window::SetDisplayMode - getting display mode: " << SDL_GetError() << std::endl;
+        return false;
+    }
+
+    res = SDL_SetWindowDisplayMode(mSysWin, &mode);
+
+    if(res != 0)
+    {
+        std::cout << "ERROR - Window::SetDisplayMode - setting display mode: " << SDL_GetError() << std::endl;
+        return false;
+    }
+
+    std::cout << "Window::SetDisplayMode - set display " << mode.w << "x" << mode.h
+              << " @ " << mode.refresh_rate << std::endl;
+
+    if(updateWindowSize)
+        SetSize(mode.w, mode.h);
+
+    return true;
 }
 
 Window::Window(const char * title, int w, int h)
