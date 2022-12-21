@@ -43,10 +43,20 @@ void Window::SetFullscreen(bool f)
     SDL_SetWindowFullscreen(mSysWin, flag);
 }
 
+DisplayMode Window::GetDisplayMode(unsigned int display, unsigned int index) const
+{
+    if(display < mDisplayModes.size() && index < mDisplayModes[display].size())
+        return mDisplayModes[display][index];
+    else
+        return {};
+}
+
 Window::Window(const char * title, int w, int h)
     : mW(w)
     , mH(h)
 {
+    UpdateDisplayModes();
+
     const int posX = SDL_WINDOWPOS_CENTERED;
     const int posY = SDL_WINDOWPOS_CENTERED;
     const int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_FOCUS;
@@ -57,6 +67,27 @@ Window::Window(const char * title, int w, int h)
 Window::~Window()
 {
     SDL_DestroyWindow(mSysWin);
+}
+
+void Window::UpdateDisplayModes()
+{
+    mNumDisplays = SDL_GetNumVideoDisplays();
+
+    mDisplayModes.resize(mNumDisplays);
+
+    for(int d = 0; d < mNumDisplays; ++d)
+    {
+        const int numModes = SDL_GetNumDisplayModes(d);
+
+        for(int m = 0; m < numModes; ++m)
+        {
+            SDL_DisplayMode dm;
+
+            SDL_GetDisplayMode(d, m, &dm);
+
+            mDisplayModes[d].emplace_back(d, dm.w, dm.h, dm.refresh_rate);
+        }
+    }
 }
 
 } // namespace graphic
