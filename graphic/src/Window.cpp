@@ -108,11 +108,19 @@ Window::Window(const char * title, int w, int h)
 {
     UpdateDisplayModes();
 
+    // requested default size
+    if(0 == w || 0 == h)
+    {
+        const DisplayMode dm = GetDisplayMode(0, 0);
+        mW = dm.width;
+        mH = dm.height;
+    }
+
     const int posX = SDL_WINDOWPOS_CENTERED;
     const int posY = SDL_WINDOWPOS_CENTERED;
     const int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_FOCUS;
 
-    mSysWin = SDL_CreateWindow(title, posX, posY, w, h, flags);
+    mSysWin = SDL_CreateWindow(title, posX, posY, mW, mH, flags);
 }
 
 Window::~Window()
