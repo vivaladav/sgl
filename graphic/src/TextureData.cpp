@@ -3,8 +3,14 @@
 #include "sgl/graphic/GraphicConstants.h"
 #include "sgl/graphic/Renderer.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#ifdef LINUX
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_image.h>
+#else
+    #include <SDL.h>
+    #include <SDL_image.h>
+#endif
+
 
 #include <cassert>
 #include <iostream>

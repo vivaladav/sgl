@@ -3,8 +3,6 @@
 #include "sgl/graphic/Texture.h"
 #include "sgl/graphic/TextureManager.h"
 
-#include <SDL2/SDL.h>
-
 #include <cassert>
 
 namespace sgl

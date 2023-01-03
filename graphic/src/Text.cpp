@@ -4,8 +4,14 @@
 #include "sgl/graphic/Texture.h"
 #include "sgl/graphic/TextureManager.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#ifdef LINUX
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_ttf.h>
+#else
+    #include <SDL.h>
+    #include <SDL_ttf.h>
+#endif
+
 
 #include <cassert>
 #include <iostream>

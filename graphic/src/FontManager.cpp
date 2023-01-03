@@ -3,7 +3,11 @@
 #include "sgl/core/DataPackage.h"
 #include "sgl/graphic/Font.h"
 
-#include <SDL2/SDL.h>
+#ifdef LINUX
+    #include <SDL2/SDL.h>
+#else
+    #include <SDL.h>
+#endif
 
 #include <iostream>
 

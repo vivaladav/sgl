@@ -8,7 +8,11 @@
 #include "sgl/core/event/MouseEventListener.h"
 #include "sgl/core/event/MouseMotionEvent.h"
 
-#include <SDL2/SDL.h>
+#ifdef LINUX
+    #include <SDL2/SDL.h>
+#else
+    #include <SDL.h>
+#endif
 
 #include <algorithm>
 #include <cassert>

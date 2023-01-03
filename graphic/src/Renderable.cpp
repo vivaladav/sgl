@@ -2,7 +2,11 @@
 
 #include "sgl/graphic/Camera.h"
 
-#include <SDL2/SDL.h>
+#ifdef LINUX
+    #include <SDL2/SDL.h>
+#else
+    #include <SDL.h>
+#endif
 
 namespace sgl
 {

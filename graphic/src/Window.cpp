@@ -1,6 +1,10 @@
 #include "sgl/graphic/Window.h"
 
-#include <SDL2/SDL.h>
+#ifdef LINUX
+    #include <SDL2/SDL.h>
+#else
+    #include <SDL.h>
+#endif
 
 #include <iostream>
 

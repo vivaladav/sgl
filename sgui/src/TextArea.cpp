@@ -4,8 +4,13 @@
 #include "sgl/graphic/Font.h"
 #include "sgl/graphic/Text.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#ifdef LINUX
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_ttf.h>
+#else
+    #include <SDL.h>
+    #include <SDL_ttf.h>
+#endif
 
 #include <cassert>
 

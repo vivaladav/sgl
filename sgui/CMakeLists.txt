@@ -2,6 +2,7 @@ project(libSGui LANGUAGES CXX)
 
 # SDL 2
 find_package(SDL2 REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
 add_library(
     sgui
@@ -43,6 +44,8 @@ target_link_libraries(
     sgui
     PUBLIC core
     PUBLIC graphic
+    PRIVATE SDL2::SDL2
+    PRIVATE SDL2_ttf::SDL2_ttf
 )
 
 target_include_directories(

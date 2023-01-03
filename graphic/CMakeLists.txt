@@ -2,6 +2,8 @@ project(libGraphic LANGUAGES CXX)
 
 # SDL 2
 find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
 add_library(
     graphic
@@ -47,8 +49,8 @@ target_include_directories(
 
 target_link_libraries(
     graphic
-    PRIVATE SDL2
-    PRIVATE SDL2_image
-    PRIVATE SDL2_ttf
+    PRIVATE SDL2::SDL2
+    PRIVATE SDL2_image::SDL2_image
+    PRIVATE SDL2_ttf::SDL2_ttf
     PUBLIC core
 )
