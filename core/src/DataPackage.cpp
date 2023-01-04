@@ -70,7 +70,7 @@ namespace core
 DataPackage::~DataPackage()
 {
     for(auto & it : mData)
-        delete it.second.data;
+        delete[] it.second.data;
 }
 
 char * DataPackage::GetData(const char * fileId) const
