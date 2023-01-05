@@ -31,6 +31,9 @@ public:
 public:
     AbstractButton(Widget * parent = nullptr);
 
+    int GetShortcutKey() const;
+    void SetShortcutKey(int key);
+
     VisualState GetState() const;
 
     bool IsCheckable() const;
@@ -53,9 +56,11 @@ protected:
 
     void HandleMouseButtonDown(sgl::core::MouseButtonEvent & event) override;
     void HandleMouseButtonUp(sgl::core::MouseButtonEvent & event) override;
-
     void HandleMouseOver() override;
     void HandleMouseOut() override;
+
+    void HandleKeyDown(sgl::core::KeyboardEvent & event) override;
+    void HandleKeyUp(sgl::core::KeyboardEvent & event) override;
 
     void HandleButtonDown();
     void HandleButtonUp();
@@ -73,10 +78,15 @@ private:
 
     VisualState mState = NULL_STATE;
 
+    int mShortcutKey = -1;
+
     bool mCheckable = false;
     bool mChecked = false;
     bool mExclusive = false;
 };
+
+inline int AbstractButton::GetShortcutKey() const { return mShortcutKey; }
+inline void AbstractButton::SetShortcutKey(int key) { mShortcutKey = key; }
 
 inline AbstractButton::VisualState AbstractButton::GetState() const { return mState; }
 

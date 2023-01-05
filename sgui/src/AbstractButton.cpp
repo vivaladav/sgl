@@ -1,5 +1,6 @@
 #include "sgl/sgui/AbstractButton.h"
 
+#include "sgl/core/event/KeyboardEvent.h"
 #include "sgl/core/event/MouseButtonEvent.h"
 
 namespace sgl
@@ -124,6 +125,26 @@ void AbstractButton::HandleMouseOut()
         return ;
 
     SetState(NORMAL);
+}
+
+void AbstractButton::HandleKeyDown(sgl::core::KeyboardEvent & event)
+{
+    if(event.GetKey() == mShortcutKey)
+    {
+        HandleButtonDown();
+
+        event.SetConsumed();
+    }
+}
+
+void AbstractButton::HandleKeyUp(sgl::core::KeyboardEvent & event)
+{
+    if(event.GetKey() == mShortcutKey)
+    {
+        HandleButtonUp();
+
+        event.SetConsumed();
+    }
 }
 
 void AbstractButton::HandleCheckedChanged(bool checked)
