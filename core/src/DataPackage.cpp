@@ -16,16 +16,16 @@ namespace core
 
     std::ifstream ifs(filename, std::ios::binary);
 
-    int sizeRead = 0;
+    int totRead = 0;
 
-    while(sizeRead < sizeFile)
+    while(totRead < sizeFile)
     {
         // SIZE of file ID
         int sizeId = 0;
         int sizeRead = sizeof(sizeId);
 
         if(ifs.read(reinterpret_cast<char*>(&sizeId), sizeRead))
-            sizeRead += sizeRead;
+            totRead += sizeRead;
         else
             return;
 
@@ -34,7 +34,7 @@ namespace core
         sizeRead = sizeId;
 
         if(ifs.read(&fileId[0], sizeRead))
-            sizeRead += sizeRead;
+            totRead += sizeRead;
         else
             return ;
 
@@ -43,7 +43,7 @@ namespace core
         sizeRead = sizeof(sizeData);
 
         if(ifs.read(reinterpret_cast<char*>(&sizeData), sizeRead))
-            sizeRead += sizeRead;
+            totRead += sizeRead;
         else
             return ;
 
@@ -51,8 +51,8 @@ namespace core
         auto data = new char[sizeData];
         sizeRead = sizeData;
 
-        if(ifs.read(data, sizeData))
-                sizeRead += sizeRead;
+        if(ifs.read(data, sizeRead))
+            totRead += sizeRead;
         else
         {
             delete[] data;
@@ -62,7 +62,6 @@ namespace core
         Data block {data, sizeData};
         mData.emplace(fileId, block);
     }
-
 
     mValid = true;
 }
