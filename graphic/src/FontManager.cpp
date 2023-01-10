@@ -72,15 +72,18 @@ Font * FontManager::GetFont(const char * file, int size, int style)
     if(res != mFonts.end())
         return res->second;
 
-
-
     // font not found -> create it from existing data if available
     Font * font = nullptr;
 
     auto resData = mFontsData.find(file);
 
     if(resData != mFontsData.end())
+    {
+        // NOTE apparently this is needed to get a valid font when passing
+        // the same SDL_RWops multiple times
+        SDL_RWseek(resData->second, 0, RW_SEEK_SET);
         font = new Font(resData->second, size, style);
+    }
     // no existing data, try to create the font from file
     else
         font = new Font(file, size, style);
