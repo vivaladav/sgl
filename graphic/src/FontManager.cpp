@@ -32,6 +32,29 @@ void FontManager::Destroy()
     mInstance = nullptr;
 }
 
+void FontManager::RegisterDataPackage(const char * file)
+{
+    auto package = new core::DataPackage(file);
+
+    if(!package->IsValid())
+    {
+        delete package;
+        return ;
+    }
+
+    const std::string strFile(file);
+    mDataPackages.emplace(strFile, package);
+}
+
+void FontManager::RegisterFont(const char * package, const char * file)
+{
+    const std::string strPackage(package);
+    auto res = mDataPackages.find(strPackage);
+
+    if(res != mDataPackages.end())
+        RegisterFont(*(res->second), file);
+}
+
 void FontManager::RegisterFont(const core::DataPackage & package, const char * file)
 {
     const std::string strFile(file);
@@ -112,6 +135,15 @@ void FontManager::ClearFonts()
         delete it.second;
 
     mFonts.clear();
+}
+
+FontManager::~FontManager()
+{
+    ClearFonts();
+
+    // destroy data packages
+    for(auto & it : mDataPackages)
+        delete it.second;
 }
 
 } // namespace graphic
