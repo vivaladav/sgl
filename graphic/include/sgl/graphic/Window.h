@@ -1,15 +1,21 @@
 #pragma once
 
+#include "sgl/core/event/WindowEventHandler.h"
+
 #include <vector>
 
 struct SDL_Window;
 
 namespace sgl
 {
+
+namespace core { class Application; }
+
 namespace graphic
 {
 
 class Renderer;
+class WindowEventListener;
 
 struct DisplayMode
 {
@@ -22,10 +28,10 @@ struct DisplayMode
     int refresh = 0;
 };
 
-class Window
+class Window : public core::WindowEventHandler
 {
 public:
-    static Window * Create(const char * title, int w, int h);
+    static Window * Create(const char * title, int w, int h, core::Application * app);
     static Window * Instance();
     static void Destroy();
 
@@ -43,14 +49,20 @@ public:
     DisplayMode GetDisplayMode(unsigned int display, unsigned int index) const;
     bool SetDisplayMode(unsigned int display, unsigned int index, bool updateWindowSize = true);
 
+    void AddWindowListener(WindowEventListener * el);
+    void RemoveWindowListener(WindowEventListener * el);
+    void HandleEvent(const union SDL_Event & event) override;
+
 private:
-    Window(const char * title, int w, int h);
+    Window(const char * title, int w, int h, core::Application * app);
     ~Window();
 
     void UpdateDisplayModes();
 
 private:
     static Window * mInstance;
+
+    std::vector<WindowEventListener *> mWindowListeners;
 
     std::vector<std::vector<DisplayMode>> mDisplayModes;
     int mNumDisplays = 0;
@@ -59,6 +71,7 @@ private:
     int mH = 0;
 
     SDL_Window * mSysWin = nullptr;
+    unsigned int mSysWinId = 0;
 
     bool mFullscreen = false;
 

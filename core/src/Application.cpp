@@ -76,6 +76,11 @@ void Application::RemoveMouseListener(MouseEventListener * listener)
     mEventDispatcher->RemoveMouseListener(listener);
 }
 
+void Application::SetWindowEventHandler(WindowEventHandler * handler)
+{
+    mEventDispatcher->SetWindowEventHandler(handler);
+}
+
 // ===== execution =====
 void Application::Run()
 {

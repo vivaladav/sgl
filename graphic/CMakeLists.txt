@@ -25,6 +25,8 @@ add_library(
     include/sgl/graphic/TextureData.h
     include/sgl/graphic/TextureManager.h
     include/sgl/graphic/Window.h
+    include/sgl/graphic/event/WindowEvent.h
+    include/sgl/graphic/event/WindowEventListener.h
     src/Camera.cpp
     src/DummyRenderable.cpp
     src/Font.cpp
@@ -40,6 +42,7 @@ add_library(
     src/TexturedRenderable.cpp
     src/TextureManager.cpp
     src/Window.cpp
+    src/event/WindowEventListener.cpp
 )
 
 target_include_directories(

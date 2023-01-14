@@ -7,6 +7,7 @@
 #include "sgl/core/event/MouseButtonEvent.h"
 #include "sgl/core/event/MouseEventListener.h"
 #include "sgl/core/event/MouseMotionEvent.h"
+#include "sgl/core/event/WindowEventHandler.h"
 
 #ifdef LINUX
     #include <SDL2/SDL.h>
@@ -183,6 +184,14 @@ void EventDispatcher::Update()
                     if(e.IsConsumed())
                         break;
                 }
+            }
+            break;
+
+            // delegate handling window events to Window
+            case SDL_WINDOWEVENT:
+            {
+                if(mWindowEventHandler)
+                    mWindowEventHandler->HandleEvent(event);
             }
             break;
 

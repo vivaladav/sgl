@@ -12,6 +12,7 @@ class ApplicationEventListener;
 class EventDispatcher;
 class KeyboardEventListener;
 class MouseEventListener;
+class WindowEventHandler;
 
 class Application
 {
@@ -32,6 +33,8 @@ public:
     void RemoveApplicationListener(ApplicationEventListener * el);
     void RemoveKeyboardListener(KeyboardEventListener * el);
     void RemoveMouseListener(MouseEventListener * el);
+
+    void SetWindowEventHandler(WindowEventHandler * handler);
 
     // -- execution --
     void Run();
