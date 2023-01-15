@@ -2,6 +2,7 @@
 
 #include "sgl/core/event/MouseButtonEvent.h"
 #include "sgl/core/event/MouseMotionEvent.h"
+#include "sgl/sgui/Widget.h"
 
 #include <algorithm>
 
@@ -24,6 +25,17 @@ void Stage::Destroy()
 {
     delete mInstance;
     mInstance = nullptr;
+}
+
+void Stage::Update(float delta)
+{
+    // delete widget scheduled for destruction
+    for(Widget * w : mWidgetsToDelete)
+        delete w;
+
+    mWidgetsToDelete.clear();
+
+    // TODO propagate update to all children
 }
 
 void Stage::OnMouseButtonDown(core::MouseButtonEvent & event)

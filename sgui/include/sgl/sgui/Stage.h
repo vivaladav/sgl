@@ -25,7 +25,10 @@ public:
     graphic::Font * GetDefaultFont();
     void SetDefaultFont(graphic::Font * font);
 
+    void DeleteLater(Widget * w);
+
     void Render();
+    void Update(float delta);
 
 private:
     Stage() = default;
@@ -41,6 +44,8 @@ private:
 private:
     static Stage * mInstance;
 
+    std::vector<Widget *> mWidgetsToDelete;
+
     graphic::Font * mDefaultFont = nullptr;
 
     // access private methods to notify changes
@@ -51,6 +56,8 @@ inline Stage * Stage::Instance() { return mInstance; }
 
 inline graphic::Font * Stage::GetDefaultFont() { return mDefaultFont; }
 inline void Stage::SetDefaultFont(graphic::Font * font) { mDefaultFont = font; }
+
+inline void Stage::DeleteLater(Widget * w) { mWidgetsToDelete.push_back(w); }
 
 inline void Stage::Render()
 {
