@@ -278,6 +278,8 @@ void WidgetContainer::PropagateFocus()
 
 void WidgetContainer::PropagateUpdate(float delta)
 {
+    mLifeTime += delta;
+
     for(Widget * w : mWidgets)
     {
         w->OnUpdate(delta);
