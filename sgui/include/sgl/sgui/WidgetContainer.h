@@ -58,6 +58,8 @@ protected:
 
     void PropagateFocus();
 
+    void PropagateUpdate(float delta);
+
 protected:
     std::vector<Widget *> mWidgets;
 

@@ -285,6 +285,8 @@ void Widget::OnRender()
         elem->Render();
 }
 
+void Widget::OnUpdate(float delta) { }
+
 void Widget::SetScreenPosition(int x, int y)
 {
     mScreenX = x;

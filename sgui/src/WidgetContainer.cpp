@@ -276,6 +276,14 @@ void WidgetContainer::PropagateFocus()
         w->PropagateFocus();
 }
 
+void WidgetContainer::PropagateUpdate(float delta)
+{
+    for(Widget * w : mWidgets)
+    {
+        w->OnUpdate(delta);
+        w->PropagateUpdate(delta);
+    }
+}
 
 } // namespace sgui
 } // namespace sgl

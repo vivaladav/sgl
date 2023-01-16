@@ -35,7 +35,8 @@ void Stage::Update(float delta)
 
     mWidgetsToDelete.clear();
 
-    // TODO propagate update to all children
+    // propagate update
+    PropagateUpdate(delta);
 }
 
 void Stage::OnMouseButtonDown(core::MouseButtonEvent & event)

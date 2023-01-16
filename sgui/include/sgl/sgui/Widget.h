@@ -91,6 +91,7 @@ protected:
     virtual void HandlePositionChanged();
 
     virtual void OnRender();
+    virtual void OnUpdate(float delta);
 
 private:
     void SetScreenPosition(int x, int y);
