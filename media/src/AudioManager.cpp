@@ -1,5 +1,8 @@
 #include "sgl/media/AudioManager.h"
 
+#include "sgl/media/Music.h"
+#include "sgl/media/Sound.h"
+
 #ifdef LINUX
     #include <SDL2/SDL.h>
     #include <SDL2/SDL_mixer.h>
@@ -31,53 +34,76 @@ void AudioManager::Destroy()
     mInstance = nullptr;
 }
 
-bool AudioManager::PlaySound(const char * filename)
+// -- SFX --
+Sound * AudioManager::CreateSound(const char * filename)
 {
-    Mix_Chunk * chunk = Mix_LoadWAV(filename);
+    std::string strFile(filename);
 
-    if(nullptr == chunk)
+    auto it = mSounds.find(strFile);
+
+    if(it != mSounds.end())
+        return it->second;
+
+    auto sound = new Sound(filename);
+
+    if(sound->IsValid())
     {
-        std::cout << "AudioManager::PlaySound ERROR: " << SDL_GetError() << std::endl;
-        return false;
+        mSounds.emplace(strFile, sound);
+        return sound;
     }
-
-    std::cout << "AudioManager::PlaySound master volume: " << Mix_MasterVolume(-1) << std::endl;
-    std::cout << "AudioManager::PlaySound channels volume: " << Mix_Volume(-1, -1) << std::endl;
-    std::cout << "AudioManager::PlaySound chunk volume: " << Mix_VolumeChunk(chunk, -1) << std::endl;
-
-    if(Mix_PlayChannel(-1, chunk, 0) == -1)
-        std::cout << "AudioManager::PlaySound ERROR: " << SDL_GetError() << std::endl;
-
-    // can't be called until chunk is played
-    //Mix_FreeChunk(chunk);
-
-    std::cout << "AudioManager::PlaySound OK" << std::endl;
-
-    return true;
+    else
+    {
+        delete sound;
+        return nullptr;
+    }
 }
 
-bool AudioManager::PlayMusic(const char * filename)
+Sound * AudioManager::GetSound(const char * filename)
 {
-    Mix_Music * music = Mix_LoadMUS(filename);
+    std::string strFile(filename);
 
-    if(nullptr == music)
+    auto it = mSounds.find(strFile);
+
+    if(it != mSounds.end())
+        return it->second;
+    else
+        return nullptr;
+}
+
+// -- MUSIC --
+Music * AudioManager::CreateMusic(const char * filename)
+{
+    std::string strFile(filename);
+
+    auto it = mMusic.find(strFile);
+
+    if(it != mMusic.end())
+        return it->second;
+
+    auto music = new Music(filename);
+
+    if(music->IsValid())
     {
-        std::cout << "AudioManager::PlayMusic ERROR: " << SDL_GetError() << std::endl;
-        return false;
+        mMusic.emplace(strFile, music);
+        return music;
     }
+    else
+    {
+        delete music;
+        return nullptr;
+    }
+}
 
-    std::cout << "AudioManager::PlayMusic master volume: " << Mix_MasterVolume(-1) << std::endl;
-    std::cout << "AudioManager::PlayMusic channels volume: " << Mix_Volume(-1, -1) << std::endl;
-    std::cout << "AudioManager::PlayMusic music channel volume: " << Mix_VolumeMusic(-1) << std::endl;
-    std::cout << "AudioManager::PlayMusic music volume: " << Mix_GetMusicVolume(music) << std::endl;
-    std::cout << "AudioManager::PlayMusic music duration: " << Mix_MusicDuration(music) << std::endl;
+Music * AudioManager::GetMusic(const char * filename)
+{
+    std::string strFile(filename);
 
-    if(Mix_PlayMusic(music, 0) == -1)
-        std::cout << "AudioManager::PlayMusic ERROR: " << SDL_GetError() << std::endl;
+    auto it = mMusic.find(strFile);
 
-    std::cout << "AudioManager::PlayMusic OK" << std::endl;
-
-    return true;
+    if(it != mMusic.end())
+        return it->second;
+    else
+        return nullptr;
 }
 
 void AudioManager::StopMusic()
@@ -118,7 +144,18 @@ AudioManager::AudioManager()
 
 AudioManager::~AudioManager()
 {
+    // delete all music
+    for(const auto & it : mMusic)
+        delete it.second;
+
+    // delete all sounds
+    for(const auto & it : mSounds)
+        delete it.second;
+
+    // close audio device
     Mix_CloseAudio();
+
+    // shut down
     Mix_Quit();
 }
 

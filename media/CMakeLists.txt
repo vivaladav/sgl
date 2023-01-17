@@ -7,7 +7,11 @@ find_package(SDL2_mixer REQUIRED)
 add_library(
     media
     include/sgl/media/AudioManager.h
+    include/sgl/media/Music.h
+    include/sgl/media/Sound.h
     src/AudioManager.cpp
+    src/Music.cpp
+    src/Sound.cpp
 )
 
 target_include_directories(
