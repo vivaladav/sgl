@@ -5,6 +5,9 @@
 
 namespace sgl
 {
+
+namespace core { class DataPackage; }
+
 namespace media
 {
 
@@ -22,10 +25,12 @@ public:
 
     // -- SFX --
     Sound * CreateSound(const char * filename);
+    Sound * CreateSound(const core::DataPackage * package, const char * filename);
     Sound * GetSound(const char * filename);
 
     // -- MUSIC --
     Music * CreateMusic(const char * filename);
+    Music * CreateMusic(const core::DataPackage * package, const char * filename);
     Music * GetMusic(const char * filename);
 
     void StopMusic();

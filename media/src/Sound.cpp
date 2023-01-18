@@ -1,5 +1,7 @@
 #include "sgl/media/Sound.h"
 
+#include "sgl/core/DataPackage.h"
+
 #ifdef LINUX
     #include <SDL2/SDL.h>
     #include <SDL2/SDL_mixer.h>
@@ -21,7 +23,39 @@ Sound::Sound(const char * filename)
 
     if(nullptr == mData)
     {
-        std::cout << "Sound::Sound ERROR: " << SDL_GetError() << std::endl;
+        std::cout << "Sound::Sound(const char *) ERROR: " << SDL_GetError() << std::endl;
+        mValid = false;
+        return ;
+    }
+
+    std::cout << "Sound::Sound master volume: " << Mix_MasterVolume(-1) << std::endl;
+    std::cout << "Sound::Sound channels volume: " << Mix_Volume(-1, -1) << std::endl;
+    std::cout << "Sound::Sound chunk volume: " << Mix_VolumeChunk(mData, -1) << std::endl;
+
+    mValid = true;
+}
+
+Sound::Sound(const core::DataPackage * package, const char * filename)
+{
+    // create shared data from package
+    const char * data = package->GetData(filename);
+    const int sizeData = package->GetDataSize(filename);
+
+    if(!data)
+    {
+        std::cout << "Sound::Sound(DataPackage) - ERR: failed to get data from package for "
+                  << filename << std::endl;
+        return ;
+    }
+
+    SDL_RWops * rwdata = SDL_RWFromConstMem(data, sizeData);
+
+    // create sound data
+    mData = Mix_LoadWAV_RW(rwdata, 0);
+
+    if(nullptr == mData)
+    {
+        std::cout << "Sound::Sound(DataPackage) ERROR: " << SDL_GetError() << std::endl;
         mValid = false;
         return ;
     }

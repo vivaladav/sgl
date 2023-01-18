@@ -1,5 +1,7 @@
 #include "sgl/media/Music.h"
 
+#include "sgl/core/DataPackage.h"
+
 #ifdef LINUX
     #include <SDL2/SDL.h>
     #include <SDL2/SDL_mixer.h>
@@ -23,7 +25,41 @@ Music::Music(const char * filename)
 
     if(nullptr == mData)
     {
-        std::cout << "Music::Music ERROR: " << SDL_GetError() << std::endl;
+        std::cout << "Music::Music(const char *) ERROR: " << SDL_GetError() << std::endl;
+        mValid = false;
+        return ;
+    }
+
+    std::cout << "Music::Music master volume: " << Mix_MasterVolume(-1) << std::endl;
+    std::cout << "Music::Music channels volume: " << Mix_Volume(-1, -1) << std::endl;
+    std::cout << "Music::Music music channel volume: " << Mix_VolumeMusic(-1) << std::endl;
+    std::cout << "Music::Music music volume: " << Mix_GetMusicVolume(SYSTEM_MUSIC(mData)) << std::endl;
+    std::cout << "Music::Music music duration: " << Mix_MusicDuration(SYSTEM_MUSIC(mData)) << std::endl;
+
+    mValid = true;
+}
+
+Music::Music(const core::DataPackage * package, const char * filename)
+{
+    // create shared data from package
+    const char * data = package->GetData(filename);
+    const int sizeData = package->GetDataSize(filename);
+
+    if(!data)
+    {
+        std::cout << "Sound::Sound(DataPackage) - ERR: failed to get data from package for "
+                  << filename << std::endl;
+        return ;
+    }
+
+    SDL_RWops * rwdata = SDL_RWFromConstMem(data, sizeData);
+
+    // create music data
+    mData = Mix_LoadMUS_RW(rwdata, 0);
+
+    if(nullptr == mData)
+    {
+        std::cout << "Music::Music(DataPackage) ERROR: " << SDL_GetError() << std::endl;
         mValid = false;
         return ;
     }

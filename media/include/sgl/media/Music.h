@@ -2,6 +2,9 @@
 
 namespace sgl
 {
+
+namespace core { class DataPackage; }
+
 namespace media
 {
 
@@ -9,6 +12,7 @@ class Music
 {
 public:
     Music(const char * filename);
+    Music(const core::DataPackage * package, const char * filename);
     ~Music();
 
     bool IsValid() const;

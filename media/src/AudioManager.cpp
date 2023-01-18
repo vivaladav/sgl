@@ -37,18 +37,37 @@ void AudioManager::Destroy()
 // -- SFX --
 Sound * AudioManager::CreateSound(const char * filename)
 {
-    std::string strFile(filename);
+    Sound * sound = GetSound(filename);
 
-    auto it = mSounds.find(strFile);
+    if(sound != nullptr)
+        return sound;
 
-    if(it != mSounds.end())
-        return it->second;
-
-    auto sound = new Sound(filename);
+    sound = new Sound(filename);
 
     if(sound->IsValid())
     {
-        mSounds.emplace(strFile, sound);
+        mSounds.emplace(std::string(filename), sound);
+        return sound;
+    }
+    else
+    {
+        delete sound;
+        return nullptr;
+    }
+}
+
+Sound * AudioManager::CreateSound(const core::DataPackage * package, const char * filename)
+{
+    Sound * sound = GetSound(filename);
+
+    if(sound != nullptr)
+        return sound;
+
+    sound = new Sound(package, filename);
+
+    if(sound->IsValid())
+    {
+        mSounds.emplace(std::string(filename), sound);
         return sound;
     }
     else
@@ -73,18 +92,37 @@ Sound * AudioManager::GetSound(const char * filename)
 // -- MUSIC --
 Music * AudioManager::CreateMusic(const char * filename)
 {
-    std::string strFile(filename);
+    Music * music = GetMusic(filename);
 
-    auto it = mMusic.find(strFile);
+    if(music != nullptr)
+        return music;
 
-    if(it != mMusic.end())
-        return it->second;
-
-    auto music = new Music(filename);
+    music = new Music(filename);
 
     if(music->IsValid())
     {
-        mMusic.emplace(strFile, music);
+        mMusic.emplace(std::string(filename), music);
+        return music;
+    }
+    else
+    {
+        delete music;
+        return nullptr;
+    }
+}
+
+Music * AudioManager::CreateMusic(const core::DataPackage * package, const char * filename)
+{
+    Music * music = GetMusic(filename);
+
+    if(music != nullptr)
+        return music;
+
+    music = new Music(package, filename);
+
+    if(music->IsValid())
+    {
+        mMusic.emplace(std::string(filename), music);
         return music;
     }
     else
