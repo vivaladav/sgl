@@ -43,6 +43,15 @@ public:
     Music * GetMusic(const char * filename);
     Music * GetMusic(std::size_t fileId);
 
+    // -- VOLUME --
+    unsigned int GetVolumeAudio() const;
+    unsigned int GetVolumeMusic() const;
+    unsigned int GetVolumeSound() const;
+
+    void SetVolumeAudio(unsigned int perc);
+    void SetVolumeMusic(unsigned int perc);
+    void SetVolumeSound(unsigned int perc);
+
 private:
     AudioManager();
     ~AudioManager();

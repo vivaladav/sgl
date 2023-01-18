@@ -62,6 +62,7 @@ Sound::Sound(const core::DataPackage * package, const char * filename)
         return ;
     }
 
+    std::cout << "Sound::Sound num channels: " << Mix_AllocateChannels(-1) << std::endl;
     std::cout << "Sound::Sound master volume: " << Mix_MasterVolume(-1) << std::endl;
     std::cout << "Sound::Sound channels volume: " << Mix_Volume(-1, -1) << std::endl;
     std::cout << "Sound::Sound chunk volume: " << Mix_VolumeChunk(mData, -1) << std::endl;

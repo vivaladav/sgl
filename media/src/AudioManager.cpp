@@ -177,6 +177,57 @@ Music * AudioManager::GetMusic(std::size_t fileId)
         return nullptr;
 }
 
+unsigned int AudioManager::GetVolumeAudio() const
+{
+    const int vol = Mix_MasterVolume(-1);
+    return vol * 100 / MIX_MAX_VOLUME;
+}
+
+unsigned int AudioManager::GetVolumeMusic() const
+{
+   const int vol = Mix_VolumeMusic(-1);
+   return vol * 100 / MIX_MAX_VOLUME;
+}
+
+unsigned int AudioManager::GetVolumeSound() const
+{
+    const int vol = Mix_Volume(-1, -1);
+    return vol * 100 / MIX_MAX_VOLUME;
+}
+
+void AudioManager::SetVolumeAudio(unsigned int perc)
+{
+    const int maxPerc = 100;
+
+    if(perc < maxPerc)
+        perc = maxPerc;
+
+    const int vol = MIX_MAX_VOLUME * maxPerc / perc;
+    Mix_MasterVolume(vol);
+}
+
+void AudioManager::SetVolumeMusic(unsigned int perc)
+{
+    const int maxPerc = 100;
+
+    if(perc < maxPerc)
+        perc = maxPerc;
+
+    const int vol = MIX_MAX_VOLUME * maxPerc / perc;
+    Mix_VolumeMusic(vol);
+}
+
+void AudioManager::SetVolumeSound(unsigned int perc)
+{
+    const int maxPerc = 100;
+
+    if(perc < maxPerc)
+        perc = maxPerc;
+
+    const int vol = MIX_MAX_VOLUME * maxPerc / perc;
+    Mix_Volume(-1, vol);
+}
+
 AudioManager::AudioManager()
     : mPlayer(new AudioPlayer(this))
 {
