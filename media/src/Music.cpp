@@ -10,6 +10,7 @@
     #include <SDL_mixer.h>
 #endif
 
+#include <functional>
 #include <iostream>
 
 #define SYSTEM_MUSIC(ptr) static_cast<Mix_Music *>(ptr)
@@ -20,6 +21,7 @@ namespace media
 {
 
 Music::Music(const char * filename)
+    : mId(std::hash<std::string>{}(std::string(filename)))
 {
     mData = Mix_LoadMUS(filename);
 
@@ -40,6 +42,7 @@ Music::Music(const char * filename)
 }
 
 Music::Music(const core::DataPackage * package, const char * filename)
+    : mId(std::hash<std::string>{}(std::string(filename)))
 {
     // create shared data from package
     const char * data = package->GetData(filename);

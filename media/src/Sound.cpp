@@ -18,6 +18,7 @@ namespace media
 {
 
 Sound::Sound(const char * filename)
+    : mId(std::hash<std::string>{}(std::string(filename)))
 {
     mData = Mix_LoadWAV(filename);
 
@@ -36,6 +37,7 @@ Sound::Sound(const char * filename)
 }
 
 Sound::Sound(const core::DataPackage * package, const char * filename)
+    : mId(std::hash<std::string>{}(std::string(filename)))
 {
     // create shared data from package
     const char * data = package->GetData(filename);

@@ -37,16 +37,21 @@ void AudioManager::Destroy()
 // -- SFX --
 Sound * AudioManager::CreateSound(const char * filename)
 {
-    Sound * sound = GetSound(filename);
+    // check if sound is already available
+    const std::string strFile(filename);
+    const std::size_t fileId = GetFileId(strFile);
+
+    Sound * sound = GetSound(fileId);
 
     if(sound != nullptr)
         return sound;
 
+    // sound not found -> create it
     sound = new Sound(filename);
 
     if(sound->IsValid())
     {
-        mSounds.emplace(std::string(filename), sound);
+        mSounds.emplace(fileId, sound);
         return sound;
     }
     else
@@ -58,16 +63,21 @@ Sound * AudioManager::CreateSound(const char * filename)
 
 Sound * AudioManager::CreateSound(const core::DataPackage * package, const char * filename)
 {
-    Sound * sound = GetSound(filename);
+    // check if sound is already available
+    const std::string strFile(filename);
+    const std::size_t fileId = GetFileId(strFile);
+
+    Sound * sound = GetSound(fileId);
 
     if(sound != nullptr)
         return sound;
 
+    // sound not found -> create it
     sound = new Sound(package, filename);
 
     if(sound->IsValid())
     {
-        mSounds.emplace(std::string(filename), sound);
+        mSounds.emplace(fileId, sound);
         return sound;
     }
     else
@@ -79,9 +89,15 @@ Sound * AudioManager::CreateSound(const core::DataPackage * package, const char 
 
 Sound * AudioManager::GetSound(const char * filename)
 {
-    std::string strFile(filename);
+    const std::string strFile(filename);
+    const std::size_t fileId = GetFileId(strFile);
 
-    auto it = mSounds.find(strFile);
+    return GetSound(fileId);
+}
+
+Sound * AudioManager::GetSound(std::size_t fileId)
+{
+    auto it = mSounds.find(fileId);
 
     if(it != mSounds.end())
         return it->second;
@@ -92,16 +108,21 @@ Sound * AudioManager::GetSound(const char * filename)
 // -- MUSIC --
 Music * AudioManager::CreateMusic(const char * filename)
 {
-    Music * music = GetMusic(filename);
+    // check if music is already available
+    const std::string strFile(filename);
+    const std::size_t fileId = GetFileId(strFile);
+
+    Music * music = GetMusic(fileId);
 
     if(music != nullptr)
         return music;
 
+    // music not found -> create it
     music = new Music(filename);
 
     if(music->IsValid())
     {
-        mMusic.emplace(std::string(filename), music);
+        mMusic.emplace(fileId, music);
         return music;
     }
     else
@@ -113,16 +134,21 @@ Music * AudioManager::CreateMusic(const char * filename)
 
 Music * AudioManager::CreateMusic(const core::DataPackage * package, const char * filename)
 {
-    Music * music = GetMusic(filename);
+    // check if music is already available
+    const std::string strFile(filename);
+    const std::size_t fileId = GetFileId(strFile);
+
+    Music * music = GetMusic(fileId);
 
     if(music != nullptr)
         return music;
 
+    // music not found -> create it
     music = new Music(package, filename);
 
     if(music->IsValid())
     {
-        mMusic.emplace(std::string(filename), music);
+        mMusic.emplace(fileId, music);
         return music;
     }
     else
@@ -134,9 +160,15 @@ Music * AudioManager::CreateMusic(const core::DataPackage * package, const char 
 
 Music * AudioManager::GetMusic(const char * filename)
 {
-    std::string strFile(filename);
+    const std::string strFile(filename);
+    const std::size_t fileId = GetFileId(strFile);
 
-    auto it = mMusic.find(strFile);
+    return GetMusic(fileId);
+}
+
+Music * AudioManager::GetMusic(std::size_t fileId)
+{
+    auto it = mMusic.find(fileId);
 
     if(it != mMusic.end())
         return it->second;
