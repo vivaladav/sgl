@@ -12,6 +12,7 @@ namespace core { class DataPackage; }
 namespace media
 {
 
+class AudioPlayer;
 class Music;
 class Sound;
 
@@ -26,20 +27,21 @@ public:
 
     std::size_t GetFileId(const std::string & filename);
 
+    AudioPlayer * GetPlayer() const;
+
     // -- SFX --
     Sound * CreateSound(const char * filename);
     Sound * CreateSound(const core::DataPackage * package, const char * filename);
+
     Sound * GetSound(const char * filename);
     Sound * GetSound(std::size_t fileId);
 
     // -- MUSIC --
     Music * CreateMusic(const char * filename);
     Music * CreateMusic(const core::DataPackage * package, const char * filename);
+
     Music * GetMusic(const char * filename);
     Music * GetMusic(std::size_t fileId);
-
-    void StopMusic();
-    void FadeOutMusic(int ms);
 
 private:
     AudioManager();
@@ -52,6 +54,8 @@ private:
     std::unordered_map<std::size_t, Music *> mMusic;
     std::unordered_map<std::size_t, Sound *> mSounds;
 
+    AudioPlayer * mPlayer = nullptr;
+
     bool mValid = false;
 };
 
@@ -63,6 +67,8 @@ inline std::size_t AudioManager::GetFileId(const std::string & filename)
 {
     return std::hash<std::string>{}(std::string(filename));
 }
+
+inline AudioPlayer * AudioManager::GetPlayer() const { return mPlayer; }
 
 } // namespace media
 } // namespace sgl

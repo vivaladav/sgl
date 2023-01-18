@@ -1,5 +1,6 @@
 #include "sgl/media/AudioManager.h"
 
+#include "sgl/media/AudioPlayer.h"
 #include "sgl/media/Music.h"
 #include "sgl/media/Sound.h"
 
@@ -176,17 +177,8 @@ Music * AudioManager::GetMusic(std::size_t fileId)
         return nullptr;
 }
 
-void AudioManager::StopMusic()
-{
-    Mix_HaltMusic();
-}
-
-void AudioManager::FadeOutMusic(int ms)
-{
-    Mix_FadeOutMusic(ms);
-}
-
 AudioManager::AudioManager()
+    : mPlayer(new AudioPlayer(this))
 {
     const int frequency = 48000;
     const unsigned short format = AUDIO_S32SYS;
@@ -214,6 +206,8 @@ AudioManager::AudioManager()
 
 AudioManager::~AudioManager()
 {
+    delete mPlayer;
+
     // delete all music
     for(const auto & it : mMusic)
         delete it.second;
