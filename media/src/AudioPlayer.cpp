@@ -10,12 +10,22 @@ namespace sgl
 namespace media
 {
 // -- MUSIC --
-void AudioPlayer::PlayMusic(const char * filename)
+void AudioPlayer::PlayMusic(const char * filename, bool restartSame)
 {
-    Music * music = mAm->GetMusic(filename);
+    const std::size_t musicId = mAm->GetFileId(filename);
 
-    if(music)
-        music->Play();
+    // music already playing and caller doesn't want to restart
+    if(!restartSame && musicId == mMusicPlayingId)
+        return ;
+
+    Music * music = mAm->GetMusic(musicId);
+
+    if(nullptr == music)
+        return ;
+
+    mMusicPlayingId = musicId;
+
+    music->Play();
 }
 
 // -- SOUNDS --

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstddef>
+
 namespace sgl
 {
 namespace media
@@ -13,7 +15,7 @@ class AudioPlayer
 {
 public:
     // -- MUSIC --
-    void PlayMusic(const char * filename);
+    void PlayMusic(const char * filename, bool restartSame = false);
 
     // -- SOUNDS --
     void PlaySound(const char * filename);
@@ -24,6 +26,8 @@ private:
 
 private:
     AudioManager * mAm = nullptr;
+
+    std::size_t mMusicPlayingId = 0;
 
     // only AudioManager can create and delete this
     friend class AudioManager;
