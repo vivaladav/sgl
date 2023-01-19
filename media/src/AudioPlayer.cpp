@@ -74,7 +74,7 @@ void AudioPlayer::SetMusicEnabled(bool val)
     mMusicEnabled = val;
 
     // stop music if playing
-    if(mMusicEnabled && mMusicPlayingId != 0)
+    if(!mMusicEnabled && mMusicPlayingId != 0)
         StopMusic();
 }
 
@@ -123,7 +123,7 @@ void AudioPlayer::SetSoundEnabled(bool val)
     mSoundEnabled = val;
 
     // stop music if playing
-    if(mSoundEnabled)
+    if(!mSoundEnabled)
         StopSounds();
 }
 
