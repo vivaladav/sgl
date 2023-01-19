@@ -13,6 +13,7 @@
 #endif
 
 #include <iostream>
+#include <cmath>
 
 namespace sgl
 {
@@ -180,29 +181,30 @@ Music * AudioManager::GetMusic(std::size_t fileId)
 unsigned int AudioManager::GetVolumeAudio() const
 {
     const int vol = Mix_MasterVolume(-1);
-    return vol * 100 / MIX_MAX_VOLUME;
+    return static_cast<int>(roundf(vol * 100.f / MIX_MAX_VOLUME));
 }
 
 unsigned int AudioManager::GetVolumeMusic() const
 {
    const int vol = Mix_VolumeMusic(-1);
-   return vol * 100 / MIX_MAX_VOLUME;
+   return static_cast<int>(roundf(vol * 100.f / MIX_MAX_VOLUME));
 }
 
 unsigned int AudioManager::GetVolumeSound() const
 {
     const int vol = Mix_Volume(-1, -1);
-    return vol * 100 / MIX_MAX_VOLUME;
+    return static_cast<int>(roundf(vol * 100.f / MIX_MAX_VOLUME));
 }
 
 void AudioManager::SetVolumeAudio(unsigned int perc)
 {
     const int maxPerc = 100;
 
-    if(perc < maxPerc)
+    if(perc > maxPerc)
         perc = maxPerc;
 
-    const int vol = MIX_MAX_VOLUME * maxPerc / perc;
+    const float fperc = static_cast<float>(perc);
+    const int vol = static_cast<int>(roundf(MIX_MAX_VOLUME * fperc / maxPerc));
     Mix_MasterVolume(vol);
 }
 
@@ -210,10 +212,11 @@ void AudioManager::SetVolumeMusic(unsigned int perc)
 {
     const int maxPerc = 100;
 
-    if(perc < maxPerc)
+    if(perc > maxPerc)
         perc = maxPerc;
 
-    const int vol = MIX_MAX_VOLUME * maxPerc / perc;
+    const float fperc = static_cast<float>(perc);
+    const int vol = static_cast<int>(roundf(MIX_MAX_VOLUME * fperc / maxPerc));
     Mix_VolumeMusic(vol);
 }
 
@@ -221,10 +224,11 @@ void AudioManager::SetVolumeSound(unsigned int perc)
 {
     const int maxPerc = 100;
 
-    if(perc < maxPerc)
+    if(perc > maxPerc)
         perc = maxPerc;
 
-    const int vol = MIX_MAX_VOLUME * maxPerc / perc;
+    const float fperc = static_cast<float>(perc);
+    const int vol = static_cast<int>(roundf(MIX_MAX_VOLUME * fperc / maxPerc));
     Mix_Volume(-1, vol);
 }
 
