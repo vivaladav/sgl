@@ -36,6 +36,8 @@ public:
     Sound * GetSound(const char * filename);
     Sound * GetSound(std::size_t fileId);
 
+    int GetNumSoundTracks() const;
+
     // -- MUSIC --
     Music * CreateMusic(const char * filename);
     Music * CreateMusic(const core::DataPackage * package, const char * filename);
@@ -65,6 +67,8 @@ private:
 
     AudioPlayer * mPlayer = nullptr;
 
+    int mSoundtracks = 16;
+
     bool mValid = false;
 };
 
@@ -78,6 +82,8 @@ inline std::size_t AudioManager::GetFileId(const std::string & filename)
 }
 
 inline AudioPlayer * AudioManager::GetPlayer() const { return mPlayer; }
+
+inline int AudioManager::GetNumSoundTracks() const { return mSoundtracks; }
 
 } // namespace media
 } // namespace sgl

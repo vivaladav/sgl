@@ -231,6 +231,7 @@ void AudioManager::SetVolumeSound(unsigned int perc)
 AudioManager::AudioManager()
     : mPlayer(new AudioPlayer(this))
 {
+    // init audio system
     const int frequency = 48000;
     const unsigned short format = AUDIO_S32SYS;
     const int channels = 2;
@@ -246,11 +247,15 @@ AudioManager::AudioManager()
     unsigned short currFormat = 0;
     int currChannels = 0;
 
+    // query audio system
     Mix_QuerySpec(&currFrequency, &currFormat, &currChannels);
+
+    mSoundtracks = Mix_AllocateChannels(mSoundtracks);
 
     std::cout << "AudioManager OK - freq: " << currFrequency << "/" << frequency
               << " - form: " << currFormat << "/" << format
-              << " - chan: " << currChannels << "/" << channels << std::endl;
+              << " - chan: " << currChannels << "/" << channels
+              << " - sound tracks: " << mSoundtracks << std::endl;
 
     mValid = true;
 }
