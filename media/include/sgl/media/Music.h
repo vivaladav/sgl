@@ -19,6 +19,8 @@ public:
 
     std::size_t GetId() const;
 
+    int GetDurationMs() const;
+
     bool IsValid() const;
 
     bool Play();
@@ -28,10 +30,14 @@ private:
 
     std::size_t mId = 0;
 
+    int mDuration = 0;
+
     bool mValid = false;
 };
 
 inline std::size_t Music::GetId() const { return mId; }
+
+inline int Music::GetDurationMs() const { return mDuration; }
 
 inline bool Music::IsValid() const { return mValid; }
 

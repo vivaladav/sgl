@@ -32,11 +32,13 @@ Music::Music(const char * filename)
         return ;
     }
 
+    mDuration = static_cast<int>(Mix_MusicDuration(SYSTEM_MUSIC(mData)) * 1000.0);
+
     std::cout << "Music::Music master volume: " << Mix_MasterVolume(-1) << std::endl;
     std::cout << "Music::Music channels volume: " << Mix_Volume(-1, -1) << std::endl;
     std::cout << "Music::Music music channel volume: " << Mix_VolumeMusic(-1) << std::endl;
     std::cout << "Music::Music music volume: " << Mix_GetMusicVolume(SYSTEM_MUSIC(mData)) << std::endl;
-    std::cout << "Music::Music music duration: " << Mix_MusicDuration(SYSTEM_MUSIC(mData)) << std::endl;
+    std::cout << "Music::Music music duration (ms): " << mDuration << std::endl;
 
     mValid = true;
 }
@@ -67,11 +69,13 @@ Music::Music(const core::DataPackage * package, const char * filename)
         return ;
     }
 
+    mDuration = static_cast<int>(Mix_MusicDuration(SYSTEM_MUSIC(mData)) * 1000.0);
+
     std::cout << "Music::Music master volume: " << Mix_MasterVolume(-1) << std::endl;
     std::cout << "Music::Music channels volume: " << Mix_Volume(-1, -1) << std::endl;
     std::cout << "Music::Music music channel volume: " << Mix_VolumeMusic(-1) << std::endl;
     std::cout << "Music::Music music volume: " << Mix_GetMusicVolume(SYSTEM_MUSIC(mData)) << std::endl;
-    std::cout << "Music::Music music duration: " << Mix_MusicDuration(SYSTEM_MUSIC(mData)) << std::endl;
+    std::cout << "Music::Music music duration (ms): " << mDuration << std::endl;
 
     mValid = true;
 }
