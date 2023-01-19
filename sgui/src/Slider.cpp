@@ -42,6 +42,19 @@ void Slider::SetMinMax(int min, int max)
     mOnValChanged(mValue);
 }
 
+void Slider::SetValue(int val)
+{
+    if(mValue == val)
+        return ;
+
+    mValue = val;
+
+    mValuePerc = (mValue - mMin) * 100 / (mMax - mMin);
+
+    HandleValueChanged(val);
+    mOnValChanged(val);
+}
+
 bool Slider::IsScreenPointInside(int x, int y)
 {
     // always inside while dragging so to allow control anywhere the mouse is

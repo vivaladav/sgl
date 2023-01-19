@@ -46,6 +46,7 @@ public:
     void SetMinMax(int min, int max);
     int GetValue() const;
     int GetValuePerc() const;
+    void SetValue(int val);
 
     void SetStep(int val);
 
