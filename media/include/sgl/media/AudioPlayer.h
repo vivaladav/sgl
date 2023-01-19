@@ -16,6 +16,9 @@ class AudioPlayer
 public:
     // -- MUSIC --
     void PlayMusic(const char * filename, bool restartSame = false);
+    void PauseMusic();
+    void ResumeMusic();
+    void StopMusic();
 
     // -- SOUNDS --
     void PlaySound(const char * filename);

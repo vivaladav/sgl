@@ -4,6 +4,14 @@
 #include "sgl/media/Music.h"
 #include "sgl/media/Sound.h"
 
+#ifdef LINUX
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_mixer.h>
+#else
+    #include <SDL.h>
+    #include <SDL_mixer.h>
+#endif
+
 namespace sgl
 {
 
@@ -26,6 +34,21 @@ void AudioPlayer::PlayMusic(const char * filename, bool restartSame)
     mMusicPlayingId = musicId;
 
     music->Play();
+}
+
+void AudioPlayer::PauseMusic()
+{
+    Mix_PauseMusic();
+}
+
+void AudioPlayer::ResumeMusic()
+{
+    Mix_ResumeMusic();
+}
+
+void AudioPlayer::StopMusic()
+{
+    Mix_HaltMusic();
 }
 
 // -- SOUNDS --
