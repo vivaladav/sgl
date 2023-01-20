@@ -11,7 +11,7 @@ namespace core
 class Timer
 {
 public:
-    Timer(int ms);
+    Timer(float sec);
     ~Timer();
 
     bool IsSingleShot() const;
@@ -28,13 +28,13 @@ public:
 private:
     std::map<unsigned int, std::function<void()>> mOnTimeout;
 
-    int mTimeoutTime = 0;
-    int mTime = 0;
+    float mTimeoutTime = 0.f;
+    float mTime = 0.f;
 
     bool mSingleShot = false;
 };
 
-inline Timer::Timer(int ms) : mTimeoutTime(ms)
+inline Timer::Timer(float sec) : mTimeoutTime(sec)
 {
 }
 
