@@ -12,6 +12,7 @@ class ApplicationEventListener;
 class EventDispatcher;
 class KeyboardEventListener;
 class MouseEventListener;
+class TimerManager;
 class WindowEventHandler;
 
 class Application
@@ -48,9 +49,9 @@ private:
     std::vector<std::string> mArgv;
 
     EventDispatcher * mEventDispatcher = nullptr;
+    TimerManager * mTimerManager = nullptr;
 
     bool mRunning = false;
-
 };
 
 inline int Application::GetNumArguments() const { return mArgc; }

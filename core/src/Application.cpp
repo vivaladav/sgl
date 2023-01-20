@@ -1,5 +1,6 @@
 #include "sgl/core/Application.h"
 
+#include "TimerManager.h"
 #include "event/EventDispatcher.h"
 
 #ifdef LINUX
@@ -33,11 +34,15 @@ Application::Application(int argc, char * argv[])
         std::cerr << "SDL init failed: " << SDL_GetError() << std::endl;
         exit(-1);
     }
+
+    mTimerManager = TimerManager::Create();
 }
 
 Application::~Application()
 {
     delete mEventDispatcher;
+
+    TimerManager::Destroy();
 }
 
 // ===== command line arguments =====
@@ -95,6 +100,8 @@ void Application::Run()
         auto t0 = std::chrono::high_resolution_clock::now();
 
         mEventDispatcher->Update();
+
+        mTimerManager->Update(delta);
 
         Update(delta);
 

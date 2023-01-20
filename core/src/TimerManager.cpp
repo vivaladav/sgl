@@ -1,0 +1,56 @@
+#include "TimerManager.h"
+
+#include "sgl/core/Timer.h"
+
+namespace sgl
+{
+namespace core
+{
+
+TimerManager * TimerManager::mInstance = nullptr;
+
+TimerManager * TimerManager::Create()
+{
+    if(!mInstance)
+        mInstance = new TimerManager;
+
+    return mInstance;
+}
+
+void TimerManager::Destroy()
+{
+    delete mInstance;
+    mInstance = nullptr;
+}
+
+void TimerManager::RemoveTimer(Timer * t)
+{
+    mTimersToRemove.push_back(t);
+}
+
+void TimerManager::Update(float delta)
+{
+    // remove expired timers
+    for(auto t : mTimersToRemove)
+    {
+        for(auto it = mTimers.begin(); it != mTimers.end(); ++it)
+        {
+            if(*it == t)
+            {
+                mTimers.erase(it);
+                return ;
+            }
+
+            ++it;
+        }
+    }
+
+    mTimersToRemove.clear();
+
+    // update timers
+    for(Timer * t : mTimers)
+        t->Update(delta);
+}
+
+} // namespace core
+} // namespace sgl

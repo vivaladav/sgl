@@ -11,6 +11,7 @@ add_library(
     include/sgl/core/Point.h
     include/sgl/core/Rect.h
     include/sgl/core/Size.h
+    include/sgl/core/Timer.h
     include/sgl/core/event/ApplicationEvent.h
     include/sgl/core/event/ApplicationEventListener.h
     include/sgl/core/event/Event.h
@@ -24,6 +25,9 @@ add_library(
     src/Application.cpp
     src/DataPackage.cpp
     src/Math.cpp
+    src/Timer.cpp
+    src/TimerManager.h
+    src/TimerManager.cpp
     src/event/ApplicationEventListener.cpp
     src/event/Event.cpp
     src/event/EventDispatcher.h
