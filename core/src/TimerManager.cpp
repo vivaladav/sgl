@@ -23,11 +23,6 @@ void TimerManager::Destroy()
     mInstance = nullptr;
 }
 
-void TimerManager::RemoveTimer(Timer * t)
-{
-    mTimersToRemove.push_back(t);
-}
-
 void TimerManager::Update(float delta)
 {
     // remove expired timers
@@ -38,7 +33,7 @@ void TimerManager::Update(float delta)
             if(*it == t)
             {
                 mTimers.erase(it);
-                return ;
+                break;
             }
 
             ++it;

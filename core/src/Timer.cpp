@@ -46,8 +46,10 @@ void Timer::Update(float delta)
 {
     mTime -= delta;
 
+    const float minDelta = 0.01f;
+
     // keep going
-    if(mTime > 0.f)
+    if(mTime > minDelta)
         return;
 
     // execute callbacks

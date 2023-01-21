@@ -35,6 +35,7 @@ private:
 inline TimerManager * TimerManager::Instance() { return mInstance; }
 
 inline void TimerManager::AddTimer(Timer * t) { mTimers.push_back(t); }
+inline void TimerManager::RemoveTimer(Timer * t) { mTimersToRemove.push_back(t); }
 
 } // namespace core
 } // namespace sgl
