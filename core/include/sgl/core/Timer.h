@@ -34,6 +34,8 @@ private:
     float mTimeoutTime = 0.f;
 
     bool mSingleShot = false;
+
+    bool mRunning = false;
 };
 
 inline Timer::Timer(float sec) : mTimeoutTime(sec)

@@ -9,7 +9,7 @@ namespace core
 
 Timer::~Timer()
 {
-    TimerManager::Instance()->RemoveTimer(this);
+    Stop();
 }
 
 unsigned int Timer::AddTimeoutFunction(const std::function<void()> & f)
@@ -34,12 +34,19 @@ void Timer::Start()
 {
     TimerManager::Instance()->AddTimer(this);
 
+    mRunning = true;
+
     mT0 = std::chrono::high_resolution_clock::now();
 }
 
 void Timer::Stop()
 {
+    if(!mRunning)
+        return ;
+
     TimerManager::Instance()->RemoveTimer(this);
+
+    mRunning = false;
 }
 
 void Timer::Update()
@@ -59,7 +66,7 @@ void Timer::Update()
 
     // stop updates if single shot
     if(mSingleShot)
-        TimerManager::Instance()->RemoveTimer(this);
+        Stop();
 
     // reset time
     mT0 = t1;
