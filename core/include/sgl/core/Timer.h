@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <functional>
 #include <map>
 
@@ -23,13 +24,14 @@ public:
     void Start();
     void Stop();
 
-    void Update(float delta);
+    void Update();
 
 private:
     std::map<unsigned int, std::function<void()>> mOnTimeout;
 
+    std::chrono::time_point<std::chrono::high_resolution_clock> mT0;
+
     float mTimeoutTime = 0.f;
-    float mTime = 0.f;
 
     bool mSingleShot = false;
 };

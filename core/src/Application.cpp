@@ -101,7 +101,7 @@ void Application::Run()
 
         mEventDispatcher->Update();
 
-        mTimerManager->Update(delta);
+        mTimerManager->Update();
 
         Update(delta);
 

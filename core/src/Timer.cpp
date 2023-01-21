@@ -32,9 +32,9 @@ void Timer::RemoveTimeoutFunction(unsigned int fId)
 
 void Timer::Start()
 {
-    mTime = mTimeoutTime;
-
     TimerManager::Instance()->AddTimer(this);
+
+    mT0 = std::chrono::high_resolution_clock::now();
 }
 
 void Timer::Stop()
@@ -42,15 +42,16 @@ void Timer::Stop()
     TimerManager::Instance()->RemoveTimer(this);
 }
 
-void Timer::Update(float delta)
+void Timer::Update()
 {
-    mTime -= delta;
-
     const float minDelta = 0.01f;
 
-    // keep going
-    if(mTime > minDelta)
-        return;
+    const auto t1 = std::chrono::high_resolution_clock::now();
+    const std::chrono::duration<float> elapsed = t1 - mT0;
+    const float d = mTimeoutTime - elapsed.count();
+
+    if(d > minDelta)
+        return ;
 
     // execute callbacks
     for(auto & it: mOnTimeout)
@@ -61,7 +62,7 @@ void Timer::Update(float delta)
         TimerManager::Instance()->RemoveTimer(this);
 
     // reset time
-    mTime = mTimeoutTime;
+    mT0 = t1;
 }
 
 } // namespace core

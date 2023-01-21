@@ -19,7 +19,7 @@ public:
     void AddTimer(Timer * t);
     void RemoveTimer(Timer * t);
 
-    void Update(float delta);
+    void Update();
 
 private:
     TimerManager() = default;

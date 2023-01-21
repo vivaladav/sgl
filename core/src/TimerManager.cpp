@@ -23,7 +23,7 @@ void TimerManager::Destroy()
     mInstance = nullptr;
 }
 
-void TimerManager::Update(float delta)
+void TimerManager::Update()
 {
     // remove expired timers
     for(auto t : mTimersToRemove)
@@ -44,7 +44,7 @@ void TimerManager::Update(float delta)
 
     // update timers
     for(Timer * t : mTimers)
-        t->Update(delta);
+        t->Update();
 }
 
 } // namespace core
