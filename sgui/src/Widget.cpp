@@ -4,6 +4,7 @@
 #include "sgl/core/event/MouseMotionEvent.h"
 #include "sgl/graphic/Camera.h"
 #include "sgl/graphic/Renderable.h"
+#include "sgl/graphic/Renderer.h"
 #include "sgl/sgui/Stage.h"
 
 #include <algorithm>
@@ -75,6 +76,17 @@ void Widget::SetParent(Widget * parent)
 
         mScreenX = mRelX;
         mScreenY = mRelY;
+    }
+}
+
+void Widget::SetTooltip(Widget * t)
+{
+    mTooltip = t;
+
+    if(mTooltip != nullptr)
+    {
+        mTooltip->SetParent(nullptr);
+        mTooltip->SetVisible(false);
     }
 }
 
@@ -287,6 +299,46 @@ void Widget::OnRender()
 
 void Widget::OnUpdate(float delta) { }
 
+void Widget::ShowTooltip(int mouseX)
+{
+    if(nullptr == mTooltip)
+        return ;
+
+    // position tooltip
+    const auto renderer = graphic::Renderer::Instance();
+    const int screenW = renderer->GetWidth();
+    const int screenH = renderer->GetHeight();
+    const int tooltipW = mTooltip->GetWidth();
+    const int tooltipH = mTooltip->GetHeight();
+    const int marginH = 20;
+    const int marginV = 10;
+
+    int x = mouseX + marginH;
+
+    if(x + tooltipW > screenW)
+    {
+        x = mouseX - marginH - tooltipW;
+
+        if(x < 0)
+            x = 0;
+    }
+
+    int y = GetScreenY() + GetHeight() + marginV;
+
+    if(y + tooltipH > screenH)
+    {
+        y = GetScreenY() - marginV - tooltipH;
+
+        if(y < 0)
+            y = 0;
+    }
+
+    mTooltip->SetPosition(x, y);
+
+    // make it visible
+    mTooltip->SetVisible(true);
+}
+
 void Widget::SetScreenPosition(int x, int y)
 {
     mScreenX = x;
@@ -305,13 +357,15 @@ void Widget::HandleMouseMotion(core::MouseMotionEvent &) { }
 void Widget::HandleKeyDown(core::KeyboardEvent &) { }
 void Widget::HandleKeyUp(core::KeyboardEvent &) { }
 
-void Widget::SetMouseOver()
+void Widget::SetMouseOver(int x, int y)
 {
     // mouse already over -> nothing to do
     if(mMouseOver)
         return;
 
     mMouseOver = true;
+
+    ShowTooltip(x);
 
     HandleMouseOver();
 }
@@ -327,6 +381,9 @@ void Widget::SetMouseOut()
     // propagate out to handle case of overlapping widgets
     for(Widget * w : mWidgets)
         w->SetMouseOut();
+
+    if(mTooltip)
+        mTooltip->SetVisible(false);
 
     HandleMouseOut();
 }

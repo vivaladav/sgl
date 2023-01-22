@@ -39,6 +39,8 @@ public:
     Widget * GetParent() const;
     void SetParent(Widget * parent);
 
+    void SetTooltip(Widget * t);
+
     void SetEnabled(bool val);
     bool IsEnabled() const;
 
@@ -94,9 +96,11 @@ protected:
     virtual void OnUpdate(float delta);
 
 private:
+    void ShowTooltip(int mouseX);
+
     void SetScreenPosition(int x, int y);
 
-    void SetMouseOver();
+    void SetMouseOver(int x, int y);
     void SetMouseOut();
 
     void HandleParentPositionChanged(int dx, int dy);
@@ -107,6 +111,8 @@ private:
 
     Stage * mStage = nullptr;
     Widget * mParent = nullptr;
+
+    Widget * mTooltip = nullptr;
 
     graphic::Camera * mCamera = nullptr;
 

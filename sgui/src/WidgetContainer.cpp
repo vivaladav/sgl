@@ -193,7 +193,7 @@ void WidgetContainer::PropagateMouseMotion(core::MouseMotionEvent & event)
                 if(event.IsConsumed())
                     break;
 
-                w->SetMouseOver();
+                w->SetMouseOver(x, y);
 
                 w->HandleMouseMotion(event);
             }
