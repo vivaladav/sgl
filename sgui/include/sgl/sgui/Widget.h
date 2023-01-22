@@ -2,6 +2,7 @@
 
 #include "sgl/sgui/WidgetContainer.h"
 
+#include <chrono>
 #include <vector>
 
 namespace sgl
@@ -40,6 +41,10 @@ public:
     void SetParent(Widget * parent);
 
     void SetTooltip(Widget * t);
+    int GetTooltipDelay() const;
+    void SetTooltipDelay(int ms);
+    int GetTooltipShowingTime() const;
+    void SetTooltipShowingTime(int ms);
 
     void SetEnabled(bool val);
     bool IsEnabled() const;
@@ -55,6 +60,7 @@ public:
     void SetY(int y);
 
     bool IsMouseOver() const;
+    int GetTimerOver() const;
     virtual bool IsScreenPointInside(int x, int y);
 
     int GetWidth() const;
@@ -97,6 +103,7 @@ protected:
 
 private:
     void ShowTooltip(int mouseX);
+    void HideTooltip();
 
     void SetScreenPosition(int x, int y);
 
@@ -113,6 +120,9 @@ private:
     Widget * mParent = nullptr;
 
     Widget * mTooltip = nullptr;
+    int mTooltipTimeDelayMs = 250;
+    int mTooltipTimeShowingMs = 2500;
+    bool mTooltipShowed = false;
 
     graphic::Camera * mCamera = nullptr;
 
@@ -131,6 +141,9 @@ private:
 
     unsigned char mA = 255;
 
+    std::chrono::time_point<std::chrono::high_resolution_clock> mTOver0;
+    int mTimeOverMs = 0;
+
     bool mEnabled = true;
     bool mMouseOver = false;
 
@@ -144,6 +157,11 @@ inline unsigned int Widget::GetWidgetId() const { return mId; }
 
 inline Widget * Widget::GetParent() const { return mParent; }
 
+inline int Widget::GetTooltipDelay() const { return mTooltipTimeDelayMs; }
+inline void Widget::SetTooltipDelay(int ms) { mTooltipTimeDelayMs = ms; }
+inline int Widget::GetTooltipShowingTime() const { return mTooltipTimeShowingMs; }
+inline void Widget::SetTooltipShowingTime(int ms) { mTooltipTimeShowingMs = ms; }
+
 inline bool Widget::IsEnabled() const { return mEnabled; }
 
 inline int Widget::GetX() const { return mRelX; }
@@ -152,6 +170,7 @@ inline int Widget::GetScreenX() const { return mScreenX; }
 inline int Widget::GetScreenY() const { return mScreenY; }
 
 inline bool Widget::IsMouseOver() const { return mMouseOver; }
+inline int Widget::GetTimerOver() const { return mTimeOverMs; }
 
 inline int Widget::GetWidth() const { return mWidth; }
 inline int Widget::GetHeight() const { return mHeight; }

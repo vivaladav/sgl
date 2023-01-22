@@ -9,6 +9,10 @@
 
 #include <algorithm>
 
+#include <cmath>
+
+#include <iostream>
+
 namespace sgl
 {
 namespace sgui
@@ -297,13 +301,33 @@ void Widget::OnRender()
         elem->Render();
 }
 
-void Widget::OnUpdate(float delta) { }
+void Widget::OnUpdate(float delta)
+{
+    if(IsMouseOver())
+    {
+        const auto t1 = std::chrono::high_resolution_clock::now();
+        const std::chrono::duration<float> durationOver = t1 - mTOver0;
+        const float sec2ms = 1000.f;
+        mTimeOverMs = static_cast<int>(std::roundf(sec2ms * durationOver.count()));
+
+        if(nullptr == mTooltip)
+            return ;
+
+        if(!mTooltip->IsVisible())
+        {
+            if(!mTooltipShowed && GetTimerOver() >= mTooltipTimeDelayMs)
+                ShowTooltip(GetScreenX());
+        }
+        else
+        {
+            if(GetTimerOver() >= mTooltipTimeDelayMs + mTooltipTimeShowingMs)
+                HideTooltip();
+        }
+    }
+}
 
 void Widget::ShowTooltip(int mouseX)
 {
-    if(nullptr == mTooltip)
-        return ;
-
     // position tooltip
     const auto renderer = graphic::Renderer::Instance();
     const int screenW = renderer->GetWidth();
@@ -337,6 +361,13 @@ void Widget::ShowTooltip(int mouseX)
 
     // make it visible
     mTooltip->SetVisible(true);
+
+    mTooltipShowed = true;
+}
+
+void Widget::HideTooltip()
+{
+    mTooltip->SetVisible(false);
 }
 
 void Widget::SetScreenPosition(int x, int y)
@@ -365,7 +396,7 @@ void Widget::SetMouseOver(int x, int y)
 
     mMouseOver = true;
 
-    ShowTooltip(x);
+    mTOver0 = std::chrono::high_resolution_clock::now();
 
     HandleMouseOver();
 }
@@ -383,7 +414,11 @@ void Widget::SetMouseOut()
         w->SetMouseOut();
 
     if(mTooltip)
-        mTooltip->SetVisible(false);
+    {
+        HideTooltip();
+        // clear showed flag
+        mTooltipShowed = false;
+    }
 
     HandleMouseOut();
 }
