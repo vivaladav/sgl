@@ -21,6 +21,9 @@ public:
     static Stage * Instance();
     static void Destroy();
 
+    int GetMouseX() const;
+    int GetMouseY() const;
+
     // temporary code
     graphic::Font * GetDefaultFont();
     void SetDefaultFont(graphic::Font * font);
@@ -48,11 +51,17 @@ private:
 
     graphic::Font * mDefaultFont = nullptr;
 
+    int mMouseX = -1;
+    int mMouseY = -1;
+
     // access private methods to notify changes
     friend class Widget;
 };
 
 inline Stage * Stage::Instance() { return mInstance; }
+
+inline int Stage::GetMouseX() const { return mMouseX; }
+inline int Stage::GetMouseY() const { return mMouseY; }
 
 inline graphic::Font * Stage::GetDefaultFont() { return mDefaultFont; }
 inline void Stage::SetDefaultFont(graphic::Font * font) { mDefaultFont = font; }

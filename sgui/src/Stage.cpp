@@ -51,6 +51,9 @@ void Stage::OnMouseButtonUp(core::MouseButtonEvent & event)
 
 void Stage::OnMouseMotion(core::MouseMotionEvent & event)
 {
+    mMouseX = event.GetX();
+    mMouseY = event.GetY();
+
     PropagateMouseMotion(event);
 }
 

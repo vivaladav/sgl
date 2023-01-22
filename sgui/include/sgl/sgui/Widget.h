@@ -102,12 +102,12 @@ protected:
     virtual void OnUpdate(float delta);
 
 private:
-    void ShowTooltip(int mouseX);
+    void ShowTooltip();
     void HideTooltip();
 
     void SetScreenPosition(int x, int y);
 
-    void SetMouseOver(int x, int y);
+    void SetMouseOver();
     void SetMouseOut();
 
     void HandleParentPositionChanged(int dx, int dy);

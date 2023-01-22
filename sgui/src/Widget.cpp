@@ -316,7 +316,7 @@ void Widget::OnUpdate(float delta)
         if(!mTooltip->IsVisible())
         {
             if(!mTooltipShowed && GetTimerOver() >= mTooltipTimeDelayMs)
-                ShowTooltip(GetScreenX());
+                ShowTooltip();
         }
         else
         {
@@ -326,7 +326,7 @@ void Widget::OnUpdate(float delta)
     }
 }
 
-void Widget::ShowTooltip(int mouseX)
+void Widget::ShowTooltip()
 {
     // position tooltip
     const auto renderer = graphic::Renderer::Instance();
@@ -334,6 +334,7 @@ void Widget::ShowTooltip(int mouseX)
     const int screenH = renderer->GetHeight();
     const int tooltipW = mTooltip->GetWidth();
     const int tooltipH = mTooltip->GetHeight();
+    const int mouseX = Stage::Instance()->GetMouseX();
     const int marginH = 20;
     const int marginV = 10;
 
@@ -388,7 +389,7 @@ void Widget::HandleMouseMotion(core::MouseMotionEvent &) { }
 void Widget::HandleKeyDown(core::KeyboardEvent &) { }
 void Widget::HandleKeyUp(core::KeyboardEvent &) { }
 
-void Widget::SetMouseOver(int x, int y)
+void Widget::SetMouseOver()
 {
     // mouse already over -> nothing to do
     if(mMouseOver)
