@@ -11,8 +11,6 @@
 
 #include <cmath>
 
-#include <iostream>
-
 namespace sgl
 {
 namespace sgui
@@ -301,28 +299,27 @@ void Widget::OnRender()
         elem->Render();
 }
 
-void Widget::OnUpdate(float delta)
+void Widget::OnUpdate(float delta) { }
+
+void Widget::UpdateTimeOver()
 {
-    if(IsMouseOver())
+    const auto t1 = std::chrono::high_resolution_clock::now();
+    const std::chrono::duration<float> durationOver = t1 - mTOver0;
+    const float sec2ms = 1000.f;
+    mTimeOverMs = static_cast<int>(std::roundf(sec2ms * durationOver.count()));
+
+    if(nullptr == mTooltip)
+        return ;
+
+    if(!mTooltip->IsVisible())
     {
-        const auto t1 = std::chrono::high_resolution_clock::now();
-        const std::chrono::duration<float> durationOver = t1 - mTOver0;
-        const float sec2ms = 1000.f;
-        mTimeOverMs = static_cast<int>(std::roundf(sec2ms * durationOver.count()));
-
-        if(nullptr == mTooltip)
-            return ;
-
-        if(!mTooltip->IsVisible())
-        {
-            if(!mTooltipShowed && GetTimerOver() >= mTooltipTimeDelayMs)
-                ShowTooltip();
-        }
-        else
-        {
-            if(GetTimerOver() >= mTooltipTimeDelayMs + mTooltipTimeShowingMs)
-                HideTooltip();
-        }
+        if(!mTooltipShowed && GetTimerOver() >= mTooltipTimeDelayMs)
+            ShowTooltip();
+    }
+    else
+    {
+        if(GetTimerOver() >= mTooltipTimeDelayMs + mTooltipTimeShowingMs)
+            HideTooltip();
     }
 }
 
@@ -335,24 +332,23 @@ void Widget::ShowTooltip()
     const int tooltipW = mTooltip->GetWidth();
     const int tooltipH = mTooltip->GetHeight();
     const int mouseX = Stage::Instance()->GetMouseX();
-    const int marginH = 20;
-    const int marginV = 10;
+    const int mouseY = Stage::Instance()->GetMouseY();
 
-    int x = mouseX + marginH;
+    int x = mouseX + mTooltipMarginHoriz;
 
     if(x + tooltipW > screenW)
     {
-        x = mouseX - marginH - tooltipW;
+        x = mouseX - mTooltipMarginHoriz - tooltipW;
 
         if(x < 0)
             x = 0;
     }
 
-    int y = GetScreenY() + GetHeight() + marginV;
+    int y = mouseY + mTooltipMarginVert;
 
     if(y + tooltipH > screenH)
     {
-        y = GetScreenY() - marginV - tooltipH;
+        y = mouseY - mTooltipMarginVert - tooltipH;
 
         if(y < 0)
             y = 0;

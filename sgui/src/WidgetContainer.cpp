@@ -280,6 +280,9 @@ void WidgetContainer::PropagateUpdate(float delta)
 {
     for(Widget * w : mWidgets)
     {
+        if(w->IsMouseOver())
+            w->UpdateTimeOver();
+
         w->OnUpdate(delta);
         w->PropagateUpdate(delta);
     }

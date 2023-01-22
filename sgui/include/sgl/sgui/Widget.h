@@ -45,6 +45,7 @@ public:
     void SetTooltipDelay(int ms);
     int GetTooltipShowingTime() const;
     void SetTooltipShowingTime(int ms);
+    void SetTooltipMargins(int horz, int vert);
 
     void SetEnabled(bool val);
     bool IsEnabled() const;
@@ -102,6 +103,8 @@ protected:
     virtual void OnUpdate(float delta);
 
 private:
+    void UpdateTimeOver();
+
     void ShowTooltip();
     void HideTooltip();
 
@@ -122,6 +125,8 @@ private:
     Widget * mTooltip = nullptr;
     int mTooltipTimeDelayMs = 250;
     int mTooltipTimeShowingMs = 2500;
+    int mTooltipMarginHoriz = 10;
+    int mTooltipMarginVert = 10;
     bool mTooltipShowed = false;
 
     graphic::Camera * mCamera = nullptr;
@@ -161,6 +166,11 @@ inline int Widget::GetTooltipDelay() const { return mTooltipTimeDelayMs; }
 inline void Widget::SetTooltipDelay(int ms) { mTooltipTimeDelayMs = ms; }
 inline int Widget::GetTooltipShowingTime() const { return mTooltipTimeShowingMs; }
 inline void Widget::SetTooltipShowingTime(int ms) { mTooltipTimeShowingMs = ms; }
+inline void Widget::SetTooltipMargins(int horz, int vert)
+{
+    mTooltipMarginHoriz = horz;
+    mTooltipMarginVert = vert;
+}
 
 inline bool Widget::IsEnabled() const { return mEnabled; }
 
