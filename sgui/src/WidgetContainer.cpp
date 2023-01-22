@@ -251,6 +251,9 @@ void WidgetContainer::PropagateVisibilityChanged(VisibilityChangeEvent & event)
 {
     for(Widget * w : mWidgets)
     {
+        if(!event.IsVisible() && w->IsShowingTooltip())
+            w->HideTooltip();
+
         w->HandleVisibilityChanged(event);
         w->PropagateVisibilityChanged(event);
     }

@@ -46,6 +46,7 @@ public:
     int GetTooltipShowingTime() const;
     void SetTooltipShowingTime(int ms);
     void SetTooltipMargins(int horz, int vert);
+    bool IsShowingTooltip() const;
 
     void SetEnabled(bool val);
     bool IsEnabled() const;
@@ -116,6 +117,8 @@ private:
     void HandleParentPositionChanged(int dx, int dy);
     void PropagateParentPositionChanged(int dx, int dy);
 
+    bool IsvisibleOnScreen() const;
+
 private:
     std::vector<graphic::Renderable *> mRenderables;
 
@@ -127,6 +130,7 @@ private:
     int mTooltipTimeShowingMs = 2500;
     int mTooltipMarginHoriz = 15;
     int mTooltipMarginVert = 15;
+    bool mTooltipShowing = false;
     bool mTooltipShowed = false;
 
     graphic::Camera * mCamera = nullptr;
@@ -171,6 +175,7 @@ inline void Widget::SetTooltipMargins(int horz, int vert)
     mTooltipMarginHoriz = horz;
     mTooltipMarginVert = vert;
 }
+inline bool Widget::IsShowingTooltip() const { return mTooltipShowing; }
 
 inline bool Widget::IsEnabled() const { return mEnabled; }
 

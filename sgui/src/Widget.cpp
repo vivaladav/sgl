@@ -6,6 +6,7 @@
 #include "sgl/graphic/Renderable.h"
 #include "sgl/graphic/Renderer.h"
 #include "sgl/sgui/Stage.h"
+#include "sgl/sgui/event/VisibilityChangeEvent.h"
 
 #include <algorithm>
 
@@ -313,7 +314,7 @@ void Widget::UpdateTimeOver()
 
     if(!mTooltip->IsVisible())
     {
-        if(!mTooltipShowed && GetTimerOver() >= mTooltipTimeDelayMs)
+        if(!mTooltipShowed && IsvisibleOnScreen() && GetTimerOver() >= mTooltipTimeDelayMs)
             ShowTooltip();
     }
     else
@@ -360,12 +361,15 @@ void Widget::ShowTooltip()
     mTooltip->SetVisible(true);
     Stage::Instance()->MoveChildToFront(mTooltip);
 
+    mTooltipShowing = true;
     mTooltipShowed = true;
 }
 
 void Widget::HideTooltip()
 {
     mTooltip->SetVisible(false);
+
+    mTooltipShowing = false;
 }
 
 void Widget::SetScreenPosition(int x, int y)
@@ -433,6 +437,11 @@ void Widget::PropagateParentPositionChanged(int dx, int dy)
         w->HandleParentPositionChanged(dx, dy);
         w->PropagateParentPositionChanged(dx, dy);
     }
+}
+
+bool Widget::IsvisibleOnScreen() const
+{
+    return IsVisible() && (nullptr == mParent || mParent->IsvisibleOnScreen());
 }
 
 } // namespace sgui
