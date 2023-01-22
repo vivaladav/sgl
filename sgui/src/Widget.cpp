@@ -358,6 +358,7 @@ void Widget::ShowTooltip()
 
     // make it visible
     mTooltip->SetVisible(true);
+    Stage::Instance()->MoveChildToFront(mTooltip);
 
     mTooltipShowed = true;
 }

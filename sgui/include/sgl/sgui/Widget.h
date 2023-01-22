@@ -123,10 +123,10 @@ private:
     Widget * mParent = nullptr;
 
     Widget * mTooltip = nullptr;
-    int mTooltipTimeDelayMs = 250;
+    int mTooltipTimeDelayMs = 300;
     int mTooltipTimeShowingMs = 2500;
-    int mTooltipMarginHoriz = 10;
-    int mTooltipMarginVert = 10;
+    int mTooltipMarginHoriz = 15;
+    int mTooltipMarginVert = 15;
     bool mTooltipShowed = false;
 
     graphic::Camera * mCamera = nullptr;
