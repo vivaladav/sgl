@@ -26,6 +26,15 @@ void AudioPlayer::PlayMusic(const char * filename, bool restartSame)
 
     const std::size_t musicId = mAm->GetFileId(filename);
 
+    PlayMusic(musicId, restartSame);
+}
+
+void AudioPlayer::PlayMusic(std::size_t musicId, bool restartSame)
+{
+    // do not play when music is disabled
+    if(!mMusicEnabled)
+        return ;
+
     // music already playing and caller doesn't want to restart
     if(!restartSame && musicId == mMusicPlayingId)
         return ;
@@ -69,6 +78,9 @@ void AudioPlayer::StopMusic()
     Mix_HaltMusic();
 
     mMusicPlaying = false;
+    mMusicQueuePlaying = false;
+
+    mQueueInd = 0;
 
     mMusicPlayingId = 0;
 }
@@ -84,6 +96,38 @@ void AudioPlayer::SetMusicEnabled(bool val)
     // stop music if playing
     if(!mMusicEnabled && mMusicPlayingId != 0)
         StopMusic();
+}
+
+// -- MUSIC PLAYLIST --
+void AudioPlayer::AddMusicToQueue(const char * filename)
+{
+    const std::size_t musicId = mAm->GetFileId(filename);
+
+    Music * music = mAm->GetMusic(musicId);
+
+    // can't find music
+    if(nullptr == music)
+        return ;
+
+    mQueue.push_back(musicId);
+}
+
+void AudioPlayer::ClearMusicQueue()
+{
+    mQueue.clear();
+    mQueueInd = 0;
+}
+
+void AudioPlayer::PlayMusicQueue()
+{
+    if(mQueueInd >= mQueue.size())
+        return;
+
+    const std::size_t musicId = mQueue[mQueueInd];
+
+    PlayMusic(musicId);
+
+    mMusicQueuePlaying = true;
 }
 
 // -- SOUNDS --
@@ -145,10 +189,25 @@ void AudioPlayer::Update(float delta)
 
     const float minDelta = 0.01f;
 
+    // music over
     if(mPlayingDurationLeft < minDelta)
     {
-        mMusicPlayingId = 0;
-        mMusicPlaying = false;
+        // playing queue
+        if(mMusicQueuePlaying)
+        {
+            ++mQueueInd;
+
+            if(mQueueInd < mQueue.size())
+                PlayMusicQueue();
+            else
+                StopMusic();
+        }
+        // playing single track
+        else
+        {
+            mMusicPlayingId = 0;
+            mMusicPlaying = false;
+        }
     }
 }
 

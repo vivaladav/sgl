@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include <cstddef>
 
 namespace sgl
@@ -16,12 +18,18 @@ class AudioPlayer
 public:
     // -- MUSIC --
     void PlayMusic(const char * filename, bool restartSame = false);
+    void PlayMusic(std::size_t musicId, bool restartSame = false);
     void PauseMusic();
     void ResumeMusic();
     void StopMusic();
 
     bool IsMusicEnabled() const;
     void SetMusicEnabled(bool val);
+
+    // -- MUSIC PLAYLIST --
+    void AddMusicToQueue(const char * filename);
+    void ClearMusicQueue();
+    void PlayMusicQueue();
 
     // -- SOUNDS --
     void PlaySound(const char * filename);
@@ -39,12 +47,16 @@ private:
     ~AudioPlayer() = default;
 
 private:
+    std::vector<std::size_t> mQueue;
+    unsigned int mQueueInd = 0;
+
     AudioManager * mAm = nullptr;
 
     std::size_t mMusicPlayingId = 0;
     float mPlayingDurationLeft = 0.f;
 
     bool mMusicPlaying = false;
+    bool mMusicQueuePlaying = false;
     bool mMusicEnabled = true;
     bool mSoundEnabled = true;
 
