@@ -106,7 +106,6 @@ void Application::Run()
         Update(delta);
 
         auto t1 = std::chrono::high_resolution_clock::now();
-
         std::chrono::duration<float> diff = t1 - t0;
 
         const float frameTime = diff.count();
@@ -116,7 +115,9 @@ void Application::Run()
         {
             SDL_Delay(static_cast<int>(roundf(delayTime * 1000.f)));
 
-            delta = frameTime + delayTime;
+            t1 = std::chrono::high_resolution_clock::now();
+            diff = t1 - t0;
+            delta = diff.count();
         }
         else
             delta = frameTime;

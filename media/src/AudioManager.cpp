@@ -36,6 +36,11 @@ void AudioManager::Destroy()
     mInstance = nullptr;
 }
 
+void AudioManager::Update(float delta)
+{
+    mPlayer->Update(delta);
+}
+
 // -- SFX --
 Sound * AudioManager::CreateSound(const char * filename)
 {

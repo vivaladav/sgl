@@ -29,6 +29,8 @@ public:
 
     AudioPlayer * GetPlayer() const;
 
+    void Update(float delta);
+
     // -- SFX --
     Sound * CreateSound(const char * filename);
     Sound * CreateSound(const core::DataPackage * package, const char * filename);

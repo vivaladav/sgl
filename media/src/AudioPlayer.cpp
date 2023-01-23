@@ -36,24 +36,30 @@ void AudioPlayer::PlayMusic(const char * filename, bool restartSame)
         return ;
 
     mMusicPlayingId = musicId;
+    mMusicPlaying = true;
+    mPlayingDurationLeft = music->GetDurationSec();
 
     music->Play();
 }
 
 void AudioPlayer::PauseMusic()
 {
-    // do not pause when music is disabled
-    if(!mMusicEnabled)
+    // do not pause when music is disabled or not playing
+    if(!mMusicEnabled || !mMusicPlaying || 0 == mMusicPlayingId)
         return ;
+
+    mMusicPlaying = false;
 
     Mix_PauseMusic();
 }
 
 void AudioPlayer::ResumeMusic()
 {
-    // do not play when music is disabled
-    if(!mMusicEnabled)
+    // do not play when music is disabled or already playing or no music was playing
+    if(!mMusicEnabled || mMusicPlaying || 0 == mMusicPlayingId)
         return ;
+
+    mMusicPlaying = true;
 
     Mix_ResumeMusic();
 }
@@ -61,6 +67,8 @@ void AudioPlayer::ResumeMusic()
 void AudioPlayer::StopMusic()
 {
     Mix_HaltMusic();
+
+    mMusicPlaying = false;
 
     mMusicPlayingId = 0;
 }
@@ -125,6 +133,23 @@ void AudioPlayer::SetSoundEnabled(bool val)
     // stop music if playing
     if(!mSoundEnabled)
         StopSounds();
+}
+
+void AudioPlayer::Update(float delta)
+{
+    // nothing to do if music is not playing
+    if(!mMusicPlaying)
+        return ;
+
+    mPlayingDurationLeft -= delta;
+
+    const float minDelta = 0.01f;
+
+    if(mPlayingDurationLeft < minDelta)
+    {
+        mMusicPlayingId = 0;
+        mMusicPlaying = false;
+    }
 }
 
 } // namespace media

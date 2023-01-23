@@ -32,6 +32,8 @@ public:
     bool IsSoundEnabled() const;
     void SetSoundEnabled(bool val);
 
+    void Update(float delta);
+
 private:
     AudioPlayer(AudioManager * am);
     ~AudioPlayer() = default;
@@ -40,7 +42,9 @@ private:
     AudioManager * mAm = nullptr;
 
     std::size_t mMusicPlayingId = 0;
+    float mPlayingDurationLeft = 0.f;
 
+    bool mMusicPlaying = false;
     bool mMusicEnabled = true;
     bool mSoundEnabled = true;
 
