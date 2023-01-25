@@ -34,6 +34,10 @@ void FontManager::Destroy()
 
 void FontManager::RegisterDataPackage(const char * file)
 {
+    // data package already registered
+    if(mDataPackages.find(file) != mDataPackages.end())
+        return ;
+
     auto package = new core::DataPackage(file);
 
     if(!package->IsValid())

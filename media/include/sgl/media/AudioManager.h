@@ -31,8 +31,11 @@ public:
 
     void Update(float delta);
 
+    void RegisterDataPackage(const char * file);
+
     // -- SFX --
     Sound * CreateSound(const char * filename);
+    Sound * CreateSound(const char * package, const char * filename);
     Sound * CreateSound(const core::DataPackage * package, const char * filename);
 
     Sound * GetSound(const char * filename);
@@ -42,6 +45,7 @@ public:
 
     // -- MUSIC --
     Music * CreateMusic(const char * filename);
+    Music * CreateMusic(const char * package, const char * filename);
     Music * CreateMusic(const core::DataPackage * package, const char * filename);
 
     Music * GetMusic(const char * filename);
@@ -64,6 +68,7 @@ private:
     static AudioManager * mInstance;
 
 private:
+    std::unordered_map<std::string, core::DataPackage *> mDataPackages;
     std::unordered_map<std::size_t, Music *> mMusic;
     std::unordered_map<std::size_t, Sound *> mSounds;
 

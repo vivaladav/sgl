@@ -1,5 +1,6 @@
 #include "sgl/media/AudioManager.h"
 
+#include "sgl/core/DataPackage.h"
 #include "sgl/media/AudioPlayer.h"
 #include "sgl/media/Music.h"
 #include "sgl/media/Sound.h"
@@ -41,6 +42,24 @@ void AudioManager::Update(float delta)
     mPlayer->Update(delta);
 }
 
+void AudioManager::RegisterDataPackage(const char * file)
+{
+    // data package already registered
+    if(mDataPackages.find(file) != mDataPackages.end())
+        return ;
+
+    auto package = new core::DataPackage(file);
+
+    if(!package->IsValid())
+    {
+        delete package;
+        return ;
+    }
+
+    const std::string strFile(file);
+    mDataPackages.emplace(strFile, package);
+}
+
 // -- SFX --
 Sound * AudioManager::CreateSound(const char * filename)
 {
@@ -66,6 +85,17 @@ Sound * AudioManager::CreateSound(const char * filename)
         delete sound;
         return nullptr;
     }
+}
+
+Sound * AudioManager::CreateSound(const char * package, const char * filename)
+{
+    const std::string strPackage(package);
+    auto res = mDataPackages.find(strPackage);
+
+    if(res != mDataPackages.end())
+        return CreateSound(res->second, filename);
+    else
+        return nullptr;
 }
 
 Sound * AudioManager::CreateSound(const core::DataPackage * package, const char * filename)
@@ -137,6 +167,17 @@ Music * AudioManager::CreateMusic(const char * filename)
         delete music;
         return nullptr;
     }
+}
+
+Music * AudioManager::CreateMusic(const char * package, const char * filename)
+{
+    const std::string strPackage(package);
+    auto res = mDataPackages.find(strPackage);
+
+    if(res != mDataPackages.end())
+        return CreateMusic(res->second, filename);
+    else
+        return nullptr;
 }
 
 Music * AudioManager::CreateMusic(const core::DataPackage * package, const char * filename)
@@ -286,6 +327,10 @@ AudioManager::~AudioManager()
 
     // shut down
     Mix_Quit();
+
+    // destroy data packages
+    for(auto & it : mDataPackages)
+        delete it.second;
 }
 
 } // namespace media
