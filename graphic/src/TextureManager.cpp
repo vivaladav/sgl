@@ -63,11 +63,10 @@ void TextureManager::RegisterTexture(const core::DataPackage & package, const ch
     }
 
     SDL_RWops * rwdata = SDL_RWFromConstMem(data, sizeData);
-
     auto tex = new Texture(rwdata, mTexQuality);
-    mTextures.emplace(strFile, tex);
-
     SDL_RWclose(rwdata);
+
+    mTextures.emplace(strFile, tex);
 }
 
 Texture * TextureManager::GetTexture(const char * file)
@@ -135,6 +134,7 @@ void TextureManager::RegisterSprite(const core::DataPackage & package, const cha
 
     SDL_RWops * rwdata = SDL_RWFromConstMem(data, sizeData);
     std::shared_ptr<TextureData> texData = std::make_shared<TextureData>(rwdata, mTexQuality);
+    SDL_RWclose(rwdata);
 
     // create Textures with no data and add shared one
     CreateSpritesFromData(strFile, texData, srcRects);
