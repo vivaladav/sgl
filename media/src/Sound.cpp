@@ -50,10 +50,9 @@ Sound::Sound(const core::DataPackage * package, const char * filename)
         return ;
     }
 
-    SDL_RWops * rwdata = SDL_RWFromConstMem(data, sizeData);
-
     // create sound data
-    mData = Mix_LoadWAV_RW(rwdata, 0);
+    mDataRW = SDL_RWFromConstMem(data, sizeData);
+    mData = Mix_LoadWAV_RW(mDataRW, 0);
 
     if(nullptr == mData)
     {
@@ -74,6 +73,9 @@ Sound::~Sound()
 {
     if(mData)
         Mix_FreeChunk(mData);
+
+    if(mDataRW)
+        SDL_RWclose(mDataRW);
 }
 
 bool Sound::Play()

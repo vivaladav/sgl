@@ -2,6 +2,8 @@
 
 #include <cstddef>
 
+struct SDL_RWops;
+
 namespace sgl
 {
 
@@ -26,6 +28,7 @@ public:
     bool Play();
 
 private:
+    SDL_RWops * mDataRW = nullptr;
     void * mData = nullptr;
 
     std::size_t mId = 0;

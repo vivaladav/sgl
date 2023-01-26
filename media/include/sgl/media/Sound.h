@@ -3,6 +3,7 @@
 #include <cstddef>
 
 struct Mix_Chunk;
+struct SDL_RWops;
 
 namespace sgl
 {
@@ -26,6 +27,7 @@ public:
     bool Play();
 
 private:
+    SDL_RWops * mDataRW = nullptr;
     Mix_Chunk * mData = nullptr;
 
     std::size_t mId = 0;

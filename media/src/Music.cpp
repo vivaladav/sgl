@@ -57,10 +57,9 @@ Music::Music(const core::DataPackage * package, const char * filename)
         return ;
     }
 
-    SDL_RWops * rwdata = SDL_RWFromConstMem(data, sizeData);
-
     // create music data
-    mData = Mix_LoadMUS_RW(rwdata, 0);
+    mDataRW = SDL_RWFromConstMem(data, sizeData);
+    mData = Mix_LoadMUS_RW(mDataRW, 0);
 
     if(nullptr == mData)
     {
@@ -84,6 +83,9 @@ Music::~Music()
 {
     if(mData)
       Mix_FreeMusic(SYSTEM_MUSIC(mData));
+
+    if(mDataRW)
+        SDL_RWclose(mDataRW);
 }
 
 bool Music::Play()
