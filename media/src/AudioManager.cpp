@@ -282,7 +282,7 @@ AudioManager::AudioManager()
     : mPlayer(new AudioPlayer(this))
 {
     // init audio system
-    const int frequency = 48000;
+    const int frequency = 44100;
     const unsigned short format = AUDIO_S32SYS;
     const int channels = 2;
     const int bufferSize = 2048;
