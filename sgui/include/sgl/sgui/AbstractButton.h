@@ -62,8 +62,8 @@ protected:
     void HandleKeyDown(sgl::core::KeyboardEvent & event) override;
     void HandleKeyUp(sgl::core::KeyboardEvent & event) override;
 
-    void HandleButtonDown();
-    void HandleButtonUp();
+    virtual void HandleButtonDown();
+    virtual void HandleButtonUp();
 
     virtual void HandleCheckedChanged(bool checked);
 
