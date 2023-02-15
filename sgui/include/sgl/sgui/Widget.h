@@ -74,6 +74,8 @@ public:
     void SetCamera(graphic::Camera * cam);
     graphic::Camera * GetCamera() const;
 
+    void DeleteLater();
+
 protected:
     void SetSize(int w, int h);
 

@@ -6,7 +6,6 @@
 #include "sgl/graphic/Renderable.h"
 #include "sgl/graphic/Renderer.h"
 #include "sgl/sgui/Stage.h"
-#include "sgl/sgui/event/VisibilityChangeEvent.h"
 
 #include <algorithm>
 
@@ -160,6 +159,11 @@ void Widget::SetCamera(graphic::Camera * cam)
     // update graphic elements
     for(auto elem : mRenderables)
         elem->SetCamera(mCamera);
+}
+
+void Widget::DeleteLater()
+{
+    Stage::Instance()->DeleteLater(this);
 }
 
 void Widget::SetSize(int w, int h)
