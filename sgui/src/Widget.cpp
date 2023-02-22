@@ -68,16 +68,20 @@ void Widget::SetParent(Widget * parent)
         parent->AddChild(this);
         parent->UpdateSize();
 
-        mScreenX = mRelX + parent->GetScreenX();
-        mScreenY = mRelY + parent->GetScreenY();
+        const int dx = parent->GetScreenX();
+        const int dy = parent->GetScreenY();
+        SetScreenPosition(mRelX + dx, mRelY + dy);
+        PropagateParentPositionChanged(dx, dy);
     }
     else
     {
         mStage = Stage::Instance();
         mStage->AddChild(this);
 
-        mScreenX = mRelX;
-        mScreenY = mRelY;
+        const int dx = mRelX - mScreenX;
+        const int dy = mRelY - mScreenY;
+        SetScreenPosition(mRelX, mRelY);
+        PropagateParentPositionChanged(dx, dy);
     }
 }
 
