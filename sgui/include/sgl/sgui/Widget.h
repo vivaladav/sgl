@@ -74,6 +74,11 @@ public:
     void SetCamera(graphic::Camera * cam);
     graphic::Camera * GetCamera() const;
 
+    void SetVisibleArea(int x, int y, int w, int h);
+    void ClearVisibleArea();
+    bool IsInVisibleArea() const;
+    bool IsWidgetInVisibleArea(const Widget * w) const;
+
     void DeleteLater();
 
 protected:
@@ -119,7 +124,9 @@ private:
     void HandleParentPositionChanged(int dx, int dy);
     void PropagateParentPositionChanged(int dx, int dy);
 
-    bool IsvisibleOnScreen() const;
+    bool IsVisibleOnScreen() const;
+
+    void UpdateVisibleAreaPoints();
 
 private:
     std::vector<graphic::Renderable *> mRenderables;
@@ -150,6 +157,15 @@ private:
     int mWidth = 0;
     int mHeight = 0;
 
+    int mVisX = 0;
+    int mVisY = 0;
+    int mVisW = 0;
+    int mVisH = 0;
+    int mVisX1 = 0;
+    int mVisY1 = 0;
+    int mVisX2 = 0;
+    int mVisY2 = 0;
+
     unsigned char mA = 255;
 
     std::chrono::time_point<std::chrono::high_resolution_clock> mTOver0;
@@ -157,6 +173,7 @@ private:
 
     bool mEnabled = true;
     bool mMouseOver = false;
+    bool mVisibleAreaSet = false;
 
     // access private methods for events and rendering
     friend class WidgetContainer;
@@ -196,6 +213,41 @@ inline unsigned char Widget::GetAlpha() const { return mA; }
 
 inline graphic::Camera * Widget::GetCamera() const { return mCamera; }
 
+inline void Widget::SetVisibleArea(int x, int y, int w, int h)
+{
+    mVisX = x;
+    mVisY = y;
+    mVisW = w;
+    mVisH = h;
+    mVisibleAreaSet = true;
+
+    UpdateVisibleAreaPoints();
+}
+
+inline void Widget::ClearVisibleArea()
+{
+    mVisX = mVisY = mVisW =  mVisH = 0;
+    mVisX1 = mVisY1 = mVisX2 = mVisY2 = 0;
+    mVisibleAreaSet = false;
+}
+
+inline bool Widget::IsInVisibleArea() const
+{
+    return nullptr == mParent || mParent->IsWidgetInVisibleArea(this);
+}
+
+inline bool Widget::IsWidgetInVisibleArea(const Widget *w) const
+{
+    const int wX1 = w->GetScreenX();
+    const int wY1 = w->GetScreenY();
+    const int wX2 = wX1 + w->GetWidth();
+    const int wY2 = wY2 + w->GetHeight();
+
+    return !mVisibleAreaSet ||
+           (wX1 >= mVisX1 && wY1 >= mVisY1 && wX1 <= mVisX2 && wY1 <= mVisY2) ||
+           (wX2 >= mVisX1 && wY2 >= mVisY1 && wX2 <= mVisX2 && wY2 <= mVisY2);
+}
+
 inline unsigned int Widget::MixColorAndAlpha(unsigned int color) const
 {
     const unsigned char maxA = 255;
@@ -211,6 +263,14 @@ inline unsigned char Widget::MixAlphaAndAlpha(unsigned char a) const
     const unsigned char maxA = 255;
 
     return a * mA / maxA;
+}
+
+inline void Widget::UpdateVisibleAreaPoints()
+{
+    mVisX1 = mScreenX + mVisX;
+    mVisY1 = mScreenY + mVisY;
+    mVisX2 = mVisX1 + mVisW;
+    mVisY2 = mVisY1 + mVisH;
 }
 
 } // namespace sgui

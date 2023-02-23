@@ -322,7 +322,7 @@ void Widget::UpdateTimeOver()
 
     if(!mTooltip->IsVisible())
     {
-        if(!mTooltipShowed && IsvisibleOnScreen() && GetTimerOver() >= mTooltipTimeDelayMs)
+        if(!mTooltipShowed && IsVisibleOnScreen() && GetTimerOver() >= mTooltipTimeDelayMs)
             ShowTooltip();
     }
     else
@@ -384,6 +384,9 @@ void Widget::SetScreenPosition(int x, int y)
 {
     mScreenX = x;
     mScreenY = y;
+
+    if(mVisibleAreaSet)
+        UpdateVisibleAreaPoints();
 
     HandlePositionChanged();
 }
@@ -447,9 +450,10 @@ void Widget::PropagateParentPositionChanged(int dx, int dy)
     }
 }
 
-bool Widget::IsvisibleOnScreen() const
+bool Widget::IsVisibleOnScreen() const
 {
-    return IsVisible() && (nullptr == mParent || mParent->IsvisibleOnScreen());
+    return IsVisible() && IsInVisibleArea() &&
+           (nullptr == mParent || mParent->IsVisibleOnScreen());
 }
 
 } // namespace sgui

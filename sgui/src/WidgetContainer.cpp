@@ -263,7 +263,7 @@ void WidgetContainer::PropagateRender()
 {
     for(Widget * w : mWidgets)
     {
-        if(w->IsVisible())  // TODO remove this when implemented rendering lists
+        if(w->IsVisible() && w->IsInVisibleArea())  // TODO remove this when implemented rendering lists
         {
             w->OnRender();
             w->PropagateRender();
