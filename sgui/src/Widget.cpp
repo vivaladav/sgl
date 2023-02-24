@@ -201,7 +201,7 @@ void Widget::UnregisterRenderable(graphic::Renderable * elem)
 // current behavior for Widgets is to grow according to children position and size
 void Widget::UpdateSize()
 {
-    // resize not allowed wiht FIXED policy
+    // resize not allowed with FIXED policy
     if(FIXED == mResizePol)
         return ;
 

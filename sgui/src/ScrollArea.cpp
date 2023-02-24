@@ -9,6 +9,7 @@ ScrollArea::ScrollArea(int w, int h, Widget * parent)
     : Widget(parent)
 {
     SetSize(w, h);
+    SetResizePolicy(FIXED);
 }
 
 void ScrollArea::SetContent(Widget * content)

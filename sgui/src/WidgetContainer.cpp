@@ -3,6 +3,7 @@
 #include "sgl/core/event/KeyboardEvent.h"
 #include "sgl/core/event/MouseButtonEvent.h"
 #include "sgl/core/event/MouseMotionEvent.h"
+#include "sgl/graphic/Renderer.h"
 #include "sgl/sgui/Stage.h"
 #include "sgl/sgui/Widget.h"
 #include "sgl/sgui/event/VisibilityChangeEvent.h"
@@ -265,8 +266,20 @@ void WidgetContainer::PropagateRender()
     {
         if(w->IsVisible() && w->IsInVisibleArea())  // TODO remove this when implemented rendering lists
         {
-            w->OnRender();
-            w->PropagateRender();
+            if(w->mVisibleAreaSet)
+            {
+                auto renderer = sgl::graphic::Renderer::Instance();
+
+                renderer->SetClipping(w->mVisX1, w->mVisY1, w->mVisW, w->mVisH);
+                w->OnRender();
+                w->PropagateRender();
+                renderer->ClearClipping();
+            }
+            else
+            {
+                w->OnRender();
+                w->PropagateRender();
+            }
         }
     }
 }

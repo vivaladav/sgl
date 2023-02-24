@@ -236,16 +236,17 @@ inline bool Widget::IsInVisibleArea() const
     return nullptr == mParent || mParent->IsWidgetInVisibleArea(this);
 }
 
-inline bool Widget::IsWidgetInVisibleArea(const Widget *w) const
+inline bool Widget::IsWidgetInVisibleArea(const Widget * w) const
 {
+    if(!mVisibleAreaSet)
+        return true;
+
     const int wX1 = w->GetScreenX();
     const int wY1 = w->GetScreenY();
     const int wX2 = wX1 + w->GetWidth();
-    const int wY2 = wY2 + w->GetHeight();
+    const int wY2 = wY1 + w->GetHeight();
 
-    return !mVisibleAreaSet ||
-           (wX1 >= mVisX1 && wY1 >= mVisY1 && wX1 <= mVisX2 && wY1 <= mVisY2) ||
-           (wX2 >= mVisX1 && wY2 >= mVisY1 && wX2 <= mVisX2 && wY2 <= mVisY2);
+    return !mVisibleAreaSet || (wX1 < mVisX2 && wX2 > mVisX1 && wY1 < mVisY2 && wY2 > mVisY1);
 }
 
 inline unsigned int Widget::MixColorAndAlpha(unsigned int color) const
