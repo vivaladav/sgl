@@ -107,7 +107,6 @@ void Slider::HandleMousePositionX(int x)
 {
     const int barX0 = mBar->GetX();
     const int barX1 = barX0 + mBarWidth;
-
     HandleMousePosition(x, barX0, barX1);
 }
 
@@ -115,7 +114,6 @@ void Slider::HandleMousePositionY(int y)
 {
     const int barY0 = mBar->GetY();
     const int barY1 = barY0 + mBarHeight;
-
     HandleMousePosition(y, barY0, barY1);
 }
 
@@ -131,13 +129,15 @@ void Slider::HandleMousePosition(int pos, int pos0, int pos1)
     else if(pos >= pos1)
         perc = 100.f;
     else
-        perc = 100.f * (pos - pos0) / static_cast<float>(mBarWidth);
+    {
+        const float side = (HORIZONTAL == mOrientation) ? mBarWidth : mBarHeight;
+        perc = 100.f * (pos - pos0) / side;
+    }
 
     const int segmentInd = static_cast<int>(std::roundf(perc / segmentSizePerc));
-
-    mValuePerc = segmentInd * segmentSizePerc;
-
     const int val = mMin + segmentInd * mStep;
+
+     mValuePerc = static_cast<int>(std::roundf(segmentInd * segmentSizePerc));
 
     if(mValue != val)
     {
