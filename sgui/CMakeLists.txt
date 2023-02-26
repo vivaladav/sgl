@@ -8,6 +8,7 @@ add_library(
     sgui
     include/sgl/sgui/AbstractButton.h
     include/sgl/sgui/AbstractButtonsGroup.h
+    include/sgl/sgui/AbstractSlider.h
     include/sgl/sgui/ButtonsGroup.h
     include/sgl/sgui/ComboBox.h
     include/sgl/sgui/ComboBoxItem.h
@@ -17,6 +18,7 @@ add_library(
     include/sgl/sgui/ProgressBar.h
     include/sgl/sgui/PushButton.h
     include/sgl/sgui/ScrollArea.h
+    include/sgl/sgui/Scrollbar.h
     include/sgl/sgui/Slider.h
     include/sgl/sgui/Stage.h
     include/sgl/sgui/TextArea.h
@@ -25,6 +27,7 @@ add_library(
     include/sgl/sgui/event/VisibilityChangeEvent.h
     src/AbstractButton.cpp
     src/AbstractButtonsGroup.cpp
+    src/AbstractSlider.cpp
     src/ButtonsGroup.cpp
     src/ComboBox.cpp
     src/ComboBoxItem.cpp
@@ -34,6 +37,7 @@ add_library(
     src/ProgressBar.cpp
     src/PushButton.cpp
     src/ScrollArea.cpp
+    src/Scrollbar.cpp
     src/Slider.cpp
     src/Stage.cpp
     src/TextArea.cpp
