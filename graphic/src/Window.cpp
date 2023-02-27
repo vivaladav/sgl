@@ -47,9 +47,26 @@ void Window::SetFullscreen(bool f)
     if(mFullscreen == f)
         return ;
 
-    mFullscreen = f;
+    const VideoMode vm = f ? VM_FULLSCREEN : VM_WINDOW;
+    SetVideoMode(vm);
+}
 
-    const unsigned int flag = mFullscreen ? SDL_WINDOW_FULLSCREEN : 0;
+void Window::SetVideoMode(VideoMode vm)
+{
+    if(vm == mVideoMode)
+        return ;
+
+    mVideoMode = vm;
+
+    const unsigned int flags[] =
+    {
+        SDL_WINDOW_FULLSCREEN_DESKTOP,
+        SDL_WINDOW_FULLSCREEN,
+        0
+    };
+    const unsigned int flag = flags[vm];
+
+    mFullscreen =  flag == SDL_WINDOW_FULLSCREEN;
 
     SDL_SetWindowFullscreen(mSysWin, flag);
 }
@@ -280,6 +297,7 @@ void Window::HandleEvent(const union SDL_Event & event)
 Window::Window(const char * title, int w, int h, core::Application * app)
     : mW(w)
     , mH(h)
+    , mVideoMode(VM_WINDOW)
 {
     UpdateDisplayModes();
 

@@ -31,6 +31,14 @@ struct DisplayMode
 class Window : public core::WindowEventHandler
 {
 public:
+    enum VideoMode : int
+    {
+        VM_BORDERLESS = 0,
+        VM_FULLSCREEN,
+        VM_WINDOW
+    };
+
+public:
     static Window * Create(const char * title, int w, int h, core::Application * app);
     static Window * Instance();
     static void Destroy();
@@ -42,6 +50,9 @@ public:
     bool IsFullscreen() const;
     void SetFullscreen(bool f);
     void SwitchFullscreen();
+
+    VideoMode GetVideoMode() const;
+    void SetVideoMode(VideoMode vm);
 
     int GetNumDisplays() const;
     int GetNumDisplayModes(unsigned int display) const;
@@ -70,8 +81,11 @@ private:
     int mW = 0;
     int mH = 0;
 
+    VideoMode mVideoMode;
+
     SDL_Window * mSysWin = nullptr;
     unsigned int mSysWinId = 0;
+
 
     bool mFullscreen = false;
 
@@ -89,6 +103,8 @@ inline void Window::SwitchFullscreen()
 
 inline int Window::GetWidth() const { return mW; }
 inline int Window::GetHeight() const { return mH; }
+
+inline Window::VideoMode Window::GetVideoMode() const { return mVideoMode; }
 
 inline int Window::GetNumDisplays() const { return mDisplayModes.size(); }
 inline int Window::GetNumDisplayModes(unsigned int display) const
