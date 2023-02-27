@@ -97,14 +97,14 @@ void AbstractSlider::HandleMouseOut()
 
 void AbstractSlider::HandleMousePositionX(int x)
 {
-    const int barX0 = mBarX;
+    const int barX0 = mSlidingAreaX;
     const int barX1 = barX0 + GetBarFullWidth();
     HandleMousePosition(x, barX0, barX1);
 }
 
 void AbstractSlider::HandleMousePositionY(int y)
 {
-    const int barY0 = mBarY;
+    const int barY0 = mSlidingAreaY;
     const int barY1 = barY0 + GetBarFullHeight();
     HandleMousePosition(y, barY0, barY1);
 }
@@ -122,7 +122,7 @@ void AbstractSlider::HandleMousePosition(int pos, int pos0, int pos1)
         perc = 100.f;
     else
     {
-        const float side = (HORIZONTAL == mOrientation) ? mBarFullW : mBarFullH;
+        const float side = (HORIZONTAL == mOrientation) ? mSlidingAreaW : mSlidingAreaH;
         perc = 100.f * (pos - pos0) / side;
     }
 

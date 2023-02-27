@@ -63,8 +63,8 @@ protected:
 
     int GetBarFullWidth() const;
     int GetBarFullHeight() const;
-    void SetBarFullSize(int w, int h);
-    void SetBarPosition(int x, int y);
+    void SetSlidingAreaSize(int w, int h);
+    void SetSlidingAreaPosition(int x, int y);
 
 private:
     std::function<void(int)> mOnValChanged;
@@ -73,10 +73,10 @@ private:
 
     VisualState mState = NORMAL;
 
-    int mBarX = 0;
-    int mBarY = 0;
-    int mBarFullW = 0;
-    int mBarFullH = 0;
+    int mSlidingAreaX = 0;
+    int mSlidingAreaY = 0;
+    int mSlidingAreaW = 0;
+    int mSlidingAreaH = 0;
 
     int mMin = 0;
     int mMax = 100;
@@ -97,17 +97,17 @@ inline void AbstractSlider::SetStep(int val) { mStep = val; }
 
 inline void AbstractSlider::SetOnValueChanged(const std::function<void(int)> & f) { mOnValChanged = f; }
 
-inline int AbstractSlider::GetBarFullWidth() const { return mBarFullW; }
-inline int AbstractSlider::GetBarFullHeight() const { return mBarFullH; }
-inline void AbstractSlider::SetBarFullSize(int w, int h)
+inline int AbstractSlider::GetBarFullWidth() const { return mSlidingAreaW; }
+inline int AbstractSlider::GetBarFullHeight() const { return mSlidingAreaH; }
+inline void AbstractSlider::SetSlidingAreaSize(int w, int h)
 {
-    mBarFullW = w;
-    mBarFullH = h;
+    mSlidingAreaW = w;
+    mSlidingAreaH = h;
 }
-inline void AbstractSlider::SetBarPosition(int x, int y)
+inline void AbstractSlider::SetSlidingAreaPosition(int x, int y)
 {
-    mBarX = x;
-    mBarY = y;
+    mSlidingAreaX = x;
+    mSlidingAreaY = y;
 }
 
 } // namespace sgui
