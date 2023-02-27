@@ -61,8 +61,8 @@ protected:
 
     virtual void HandleValueChanged(int val);
 
-    int GetBarFullWidth() const;
-    int GetBarFullHeight() const;
+    int GetSlidingAreaWidth() const;
+    int GetSlidingAreaHeight() const;
     void SetSlidingAreaSize(int w, int h);
     void SetSlidingAreaPosition(int x, int y);
 
@@ -97,8 +97,8 @@ inline void AbstractSlider::SetStep(int val) { mStep = val; }
 
 inline void AbstractSlider::SetOnValueChanged(const std::function<void(int)> & f) { mOnValChanged = f; }
 
-inline int AbstractSlider::GetBarFullWidth() const { return mSlidingAreaW; }
-inline int AbstractSlider::GetBarFullHeight() const { return mSlidingAreaH; }
+inline int AbstractSlider::GetSlidingAreaWidth() const { return mSlidingAreaW; }
+inline int AbstractSlider::GetSlidingAreaHeight() const { return mSlidingAreaH; }
 inline void AbstractSlider::SetSlidingAreaSize(int w, int h)
 {
     mSlidingAreaW = w;
