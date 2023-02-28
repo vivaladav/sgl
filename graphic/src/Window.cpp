@@ -317,11 +317,14 @@ Window::Window(const char * title, int w, int h, core::Application * app)
 
     mSysWinId = SDL_GetWindowID(mSysWin);
 
+    mContextGL = SDL_GL_CreateContext(mSysWin);
+
     app->SetWindowEventHandler(this);
 }
 
 Window::~Window()
 {
+    SDL_GL_DeleteContext(mContextGL);
     SDL_DestroyWindow(mSysWin);
 }
 

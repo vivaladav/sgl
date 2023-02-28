@@ -72,6 +72,7 @@ private:
 
 private:
     static Window * mInstance;
+    void * mContextGL = nullptr;
 
     std::vector<WindowEventListener *> mWindowListeners;
 
