@@ -176,7 +176,6 @@ const int KeyboardEvent::KEY_UNDERSCORE     = SDLK_UNDERSCORE;
 // -- FORMATTING --
 const int KeyboardEvent::KEY_BACKSPACE      = SDLK_BACKSPACE;
 const int KeyboardEvent::KEY_DELETE         = SDLK_DELETE;
-const int KeyboardEvent::KEY_ESCAPE         = SDLK_ESCAPE;
 const int KeyboardEvent::KEY_RETURN         = SDLK_RETURN;
 const int KeyboardEvent::KEY_SPACE          = SDLK_SPACE;
 const int KeyboardEvent::KEY_TAB            = SDLK_TAB;
@@ -242,7 +241,7 @@ const int KeyboardEvent::KEY_DECIMALSEPARATOR   = SDLK_DECIMALSEPARATOR;
 const int KeyboardEvent::KEY_DISPLAYSWITCH      = SDLK_DISPLAYSWITCH;
 const int KeyboardEvent::KEY_EJECT              = SDLK_EJECT;
 const int KeyboardEvent::KEY_END                = SDLK_END;
-const int KeyboardEvent::KEY_ESC                = SDLK_ESCAPE;
+const int KeyboardEvent::KEY_ESCAPE             = SDLK_ESCAPE;
 const int KeyboardEvent::KEY_EXECUTE            = SDLK_EXECUTE;
 const int KeyboardEvent::KEY_EXSEL              = SDLK_EXSEL;
 const int KeyboardEvent::KEY_FIND               = SDLK_FIND;

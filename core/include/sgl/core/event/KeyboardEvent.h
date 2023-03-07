@@ -188,7 +188,6 @@ public:
     // -- FORMATTING --
     static const int KEY_BACKSPACE;
     static const int KEY_DELETE;
-    static const int KEY_ESCAPE;
     static const int KEY_RETURN;
     static const int KEY_SPACE;
     static const int KEY_TAB;
@@ -254,7 +253,7 @@ public:
     static const int KEY_DISPLAYSWITCH;
     static const int KEY_EJECT;
     static const int KEY_END;
-    static const int KEY_ESC;
+    static const int KEY_ESCAPE;
     static const int KEY_EXECUTE;
     static const int KEY_EXSEL;
     static const int KEY_FIND;
