@@ -57,6 +57,11 @@ void Stage::OnMouseMotion(core::MouseMotionEvent & event)
     PropagateMouseMotion(event);
 }
 
+void Stage::OnMouseWheel(core::MouseWheelEvent & event)
+{
+    PropagateMouseWheel(event);
+}
+
 void Stage::OnKeyDown(core::KeyboardEvent & event)
 {
     PropagateKeyDown(event);

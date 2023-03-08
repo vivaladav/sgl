@@ -40,6 +40,7 @@ private:
     void OnMouseButtonDown(core::MouseButtonEvent & event) override;
     void OnMouseButtonUp(core::MouseButtonEvent & event) override;
     void OnMouseMotion(core::MouseMotionEvent & event) override;
+    void OnMouseWheel(core::MouseWheelEvent & event) override;
 
     void OnKeyDown(core::KeyboardEvent & event) override;
     void OnKeyUp(core::KeyboardEvent & event) override;

@@ -8,6 +8,7 @@ namespace core
 class EventDispatcher;
 class MouseButtonEvent;
 class MouseMotionEvent;
+class MouseWheelEvent;
 
 class MouseEventListener
 {
@@ -18,6 +19,7 @@ private:
     virtual void OnMouseButtonDown(MouseButtonEvent & event);
     virtual void OnMouseButtonUp(MouseButtonEvent & event);
     virtual void OnMouseMotion(MouseMotionEvent & event);
+    virtual void OnMouseWheel(MouseWheelEvent & event);
 
 private:
     EventDispatcher * mDispatcher = nullptr;

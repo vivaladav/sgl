@@ -21,6 +21,7 @@ add_library(
     include/sgl/core/event/MouseEvent.h
     include/sgl/core/event/MouseEventListener.h
     include/sgl/core/event/MouseMotionEvent.h
+    include/sgl/core/event/MouseWheelEvent.h
     include/sgl/core/event/WindowEventHandler.h
     src/Application.cpp
     src/DataPackage.cpp

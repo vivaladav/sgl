@@ -10,6 +10,7 @@ namespace core
     class KeyboardEvent;
     class MouseButtonEvent;
     class MouseMotionEvent;
+    class MouseWheelEvent;
 }
 
 namespace sgui
@@ -47,6 +48,7 @@ protected:
     void PropagateMouseButtonDown(core::MouseButtonEvent & event);
     void PropagateMouseButtonUp(core::MouseButtonEvent & event);
     void PropagateMouseMotion(core::MouseMotionEvent & event);
+    void PropagateMouseWheel(core::MouseWheelEvent & event);
 
     void PropagateKeyDown(core::KeyboardEvent & event);
     void PropagateKeyUp(core::KeyboardEvent & event);

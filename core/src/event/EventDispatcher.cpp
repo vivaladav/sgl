@@ -7,6 +7,7 @@
 #include "sgl/core/event/MouseButtonEvent.h"
 #include "sgl/core/event/MouseEventListener.h"
 #include "sgl/core/event/MouseMotionEvent.h"
+#include "sgl/core/event/MouseWheelEvent.h"
 #include "sgl/core/event/WindowEventHandler.h"
 
 #ifdef LINUX
@@ -149,6 +150,24 @@ void EventDispatcher::Update()
                 for(MouseEventListener * el : mMouseListeners)
                 {
                     el->OnMouseButtonUp(e);
+
+                    // stop propagation if event is consumed
+                    if(e.IsConsumed())
+                        break;
+                }
+            }
+            break;
+
+            case SDL_MOUSEWHEEL:
+            {
+                const bool flipped = event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED;
+                const int dir = (-1 * flipped) + (1 * !flipped);
+
+                MouseWheelEvent e(event.wheel.x * dir, event.wheel.y * dir);
+
+                for(MouseEventListener * el : mMouseListeners)
+                {
+                    el->OnMouseWheel(e);
 
                     // stop propagation if event is consumed
                     if(e.IsConsumed())

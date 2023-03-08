@@ -16,6 +16,7 @@ MouseEventListener::~MouseEventListener()
 void MouseEventListener::OnMouseButtonDown(MouseButtonEvent &) { }
 void MouseEventListener::OnMouseButtonUp(MouseButtonEvent &) { }
 void MouseEventListener::OnMouseMotion(MouseMotionEvent &) { }
+void MouseEventListener::OnMouseWheel(MouseWheelEvent &) { }
 
 } // namespace core
 } // namespace sgl

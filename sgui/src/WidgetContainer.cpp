@@ -3,6 +3,7 @@
 #include "sgl/core/event/KeyboardEvent.h"
 #include "sgl/core/event/MouseButtonEvent.h"
 #include "sgl/core/event/MouseMotionEvent.h"
+#include "sgl/core/event/MouseWheelEvent.h"
 #include "sgl/graphic/Renderer.h"
 #include "sgl/sgui/Stage.h"
 #include "sgl/sgui/Widget.h"
@@ -200,6 +201,26 @@ void WidgetContainer::PropagateMouseMotion(core::MouseMotionEvent & event)
             }
             else
                 w->SetMouseOut();
+        }
+    }
+}
+
+void WidgetContainer::PropagateMouseWheel(core::MouseWheelEvent & event)
+{
+    for(auto it = mWidgets.rbegin(); it != mWidgets.rend(); ++it)
+    {
+        Widget * w = *it;
+
+        if(w->IsEnabled() && w->IsVisible()) // TODO remove this when implemented rendering and active lists
+        {
+            w->PropagateMouseWheel(event);
+
+            // stop propagation if event is consumed
+            if(event.IsConsumed())
+                break;
+
+            if(w->HasFocus())
+                w->HandleMouseWheel(event);
         }
     }
 }

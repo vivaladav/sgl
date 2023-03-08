@@ -2,6 +2,7 @@
 
 #include "sgl/core/event/MouseButtonEvent.h"
 #include "sgl/core/event/MouseMotionEvent.h"
+#include "sgl/core/event/MouseWheelEvent.h"
 #include "sgl/graphic/Camera.h"
 #include "sgl/graphic/Renderable.h"
 #include "sgl/graphic/Renderer.h"
@@ -397,6 +398,7 @@ void Widget::HandleStateDisabled() { }
 void Widget::HandleMouseButtonDown(core::MouseButtonEvent &) { }
 void Widget::HandleMouseButtonUp(core::MouseButtonEvent &) { }
 void Widget::HandleMouseMotion(core::MouseMotionEvent &) { }
+void Widget::HandleMouseWheel(core::MouseWheelEvent &) { }
 
 void Widget::HandleKeyDown(core::KeyboardEvent &) { }
 void Widget::HandleKeyUp(core::KeyboardEvent &) { }
