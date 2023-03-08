@@ -35,6 +35,11 @@ void AbstractSlider::SetMinMax(int min, int max)
 
 void AbstractSlider::SetValue(int val)
 {
+    if(val < mMin)
+        val = mMin;
+    else if(val > mMax)
+        val = mMax;
+
     if(mValue == val)
         return ;
 
