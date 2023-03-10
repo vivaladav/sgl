@@ -19,19 +19,21 @@ namespace sgl
 namespace sgui
 {
 
-TextArea::TextArea(int w, int h, graphic::Font * font, Widget * parent)
+TextArea::TextArea(int w, int h, graphic::Font * font, bool autoAdapt, Widget * parent)
     : Widget(parent)
     , mFont(font)
+    , mAutoAdaptH(autoAdapt)
 {
     assert(font);
 
     SetSize(w, h);
 }
 
-TextArea::TextArea(int w, int h, const char * txt, graphic::Font * font, Widget * parent)
+TextArea::TextArea(int w, int h, const char * txt, graphic::Font * font, bool autoAdapt, Widget * parent)
     : Widget(parent)
     , mStr(txt)
     , mFont(font)
+    , mAutoAdaptH(autoAdapt)
 {
     assert(txt);
     assert(font);
@@ -76,6 +78,9 @@ void TextArea::ClearText()
     }
 
     mTxtLines.clear();
+
+    mTextW = 0;
+    mTextH = 0;
 }
 
 void TextArea::SetText(const char * txt)
@@ -132,8 +137,8 @@ void TextArea::CreateText()
         int lineH = 0;
         TTF_SizeUTF8(mFont->GetSysFont(), sub.c_str(), &lineW, &lineH);
 
-        // exit if passed allowed H
-        if(h + lineH > GetHeight())
+        // exit if passed allowed H and not auto-adapting
+        if(!mAutoAdaptH && (h + lineH) > GetHeight())
             return ;
 
         // line shorter than widget
@@ -179,6 +184,9 @@ void TextArea::CreateText()
             h += lineH;
         }
     }
+
+    if(mAutoAdaptH)
+        AdaptHeightToContent();
 }
 
 void TextArea::AddTextLine(const char * txt)
@@ -186,6 +194,9 @@ void TextArea::AddTextLine(const char * txt)
     auto line = new sgl::graphic::Text(txt, mFont, false);
     RegisterRenderable(line);
     mTxtLines.push_back(line);
+
+    mTextW = line->GetWidth() > mTextW ? line->GetWidth() : mTextW;
+    mTextH += line->GetHeight();
 }
 
 void TextArea::AddEmptyLine(int h)
@@ -194,6 +205,8 @@ void TextArea::AddEmptyLine(int h)
     line->SetHeight(h);
     RegisterRenderable(line);
     mTxtLines.push_back(line);
+
+    mTextH += h;
 }
 
 void TextArea::HandlePositionChanged()

@@ -33,8 +33,8 @@ public:
     };
 
 public:
-    TextArea(int w, int h, graphic::Font * font, Widget * parent = nullptr);
-    TextArea(int w, int h, const char * txt, graphic::Font * font, Widget * parent = nullptr);
+    TextArea(int w, int h, graphic::Font * font, bool autoAdapt, Widget * parent);
+    TextArea(int w, int h, const char * txt, graphic::Font * font, bool autoAdapt, Widget * parent);
 
     void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
     void SetColor(unsigned int color);
@@ -46,6 +46,10 @@ public:
     void ClearText();
     const std::string & GetText() const;
     void SetText(const char * txt);
+
+    int GetTextWidth() const;
+    int GetTextHeight() const;
+    void AdaptHeightToContent();
 
 private:
     void CreateText();
@@ -65,10 +69,15 @@ private:
     Alignment mAlignH = ALIGN_H_LEFT;
     Alignment mAlignV = ALIGN_V_TOP;
 
+    int mTextW = 0;
+    int mTextH = 0;
+
     unsigned char mTxtR = 255;
     unsigned char mTxtG = 255;
     unsigned char mTxtB = 255;
     unsigned char mTxtA = 255;
+
+    bool mAutoAdaptH = false;
 };
 
 inline void TextArea::setTextAlignment(Alignment horiz, Alignment vert)
@@ -103,6 +112,15 @@ inline void TextArea::setTextAlignmentVertical(Alignment vert)
 }
 
 inline const std::string & TextArea::GetText() const { return mStr; }
+
+inline int TextArea::GetTextWidth() const { return mTextW; }
+inline int TextArea::GetTextHeight() const { return mTextH; }
+
+inline void TextArea::AdaptHeightToContent()
+{
+    if(mTextH > 0)
+        SetSize(GetWidth(), mTextH);
+}
 
 } // namespace sgui
 } // namespace sgl
