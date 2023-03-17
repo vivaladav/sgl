@@ -79,6 +79,8 @@ void TextArea::ClearText()
 
     mTxtLines.clear();
 
+    mStr.clear();
+
     mTextW = 0;
     mTextH = 0;
 }
