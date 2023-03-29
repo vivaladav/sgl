@@ -15,13 +15,23 @@ std::string Filesystem::GetUserHomeDirectory()
     const char * ret = getenv("HOME");
 
     if(ret != nullptr)
-        return std::string(ret);
+    {
+        const std::string sret(ret);
+
+        if(DoesDirectoryExist(sret))
+            return sret;
+    }
 
     // get home directory from password file entry
     struct passwd * pwd = getpwuid(getuid());
 
     if(pwd != nullptr)
-        return std::string(pwd->pw_dir);
+    {
+        const std::string sret(pwd->pw_dir);
+
+        if(DoesDirectoryExist(sret))
+            return sret;
+    }
 
     // everything failed
     return std::string();
