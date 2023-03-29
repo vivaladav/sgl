@@ -1,4 +1,4 @@
-#include "sgl/utilities/linux/Filesystem.h"
+#include "sgl/utilities/windows/Filesystem.h"
 
 #include <cstdlib>
 
@@ -18,7 +18,12 @@ std::string Filesystem::GetUserHomeDirectory()
     const errno_t err = _dupenv_s(&envUsrProf, &len, "USERPROFILE");
 
     if(err == NO_ERR && len > 0)
-        return std::string(envUsrProf);
+    {
+        const std::string sret(envUsrProf);
+
+        if(DoesDirectoryExist(sret))
+            return sret;
+    }
 
     // check environment variables HOME
     char * envDrive;
@@ -30,7 +35,12 @@ std::string Filesystem::GetUserHomeDirectory()
     const errno_t err2 = _dupenv_s(&envPath, &len2, "HOMEPATH");
 
     if(err1 == NO_ERR && len1 > 0 && err2 == NO_ERR && len2 > 0)
-        return std::string(envDrive) + std::string(envPath);
+    {
+        const std::string sret = std::string(envDrive) + std::string(envPath);
+
+        if(DoesDirectoryExist(sret))
+            return sret;
+    }
 
     // everything failed
     return std::string();
