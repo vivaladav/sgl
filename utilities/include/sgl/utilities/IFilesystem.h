@@ -12,7 +12,7 @@ class IFilesystem
 public:
     virtual ~IFilesystem();
 
-    virtual std::string GetUserHomeDirectory() = 0;
+    virtual std::string GetUserHomeDirectory() const = 0;
 
     virtual bool DoesDirectoryExist(const std::string & path) const = 0;
 };

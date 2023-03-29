@@ -7,7 +7,7 @@ namespace sgl
 namespace utilities
 {
 
-std::string Filesystem::GetUserHomeDirectory()
+std::string Filesystem::GetUserHomeDirectory() const
 {
     const errno_t NO_ERR = 0;
 

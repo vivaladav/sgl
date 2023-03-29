@@ -10,7 +10,7 @@ namespace utilities
 class Filesystem : public FilesystemBase
 {
 public:
-    std::string GetUserHomeDirectory() override;
+    std::string GetUserHomeDirectory() const override;
 };
 
 } // namespace utilities

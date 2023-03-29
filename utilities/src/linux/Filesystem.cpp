@@ -9,7 +9,7 @@ namespace sgl
 namespace utilities
 {
 
-std::string Filesystem::GetUserHomeDirectory()
+std::string Filesystem::GetUserHomeDirectory() const
 {
     // check HOME environment variable
     const char * ret = getenv("HOME");
