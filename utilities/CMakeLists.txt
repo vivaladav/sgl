@@ -9,6 +9,7 @@ add_library(
     include/sgl/utilities/ISystem.h
     include/sgl/utilities/Filesystem.h
     include/sgl/utilities/FilesystemBase.h
+    include/sgl/utilities/HashCRC32.h
     include/sgl/utilities/LoadedDie.h
     include/sgl/utilities/State.h
     include/sgl/utilities/StateManager.h
@@ -19,6 +20,7 @@ add_library(
     $<$<PLATFORM_ID:Windows>:include/sgl/utilities/windows/System.h>
     include/sgl/utilities/UniformDistribution.h
     src/FilesystemBase.cpp
+    src/HashCRC32.cpp
     src/LoadedDie.cpp
     src/State.cpp
     src/StateManager.cpp
