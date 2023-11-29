@@ -43,6 +43,15 @@ void ButtonsGroup::OnButtonRemoved(AbstractButton * button)
     RepositionButtons();
 }
 
+void ButtonsGroup::BeforeButtonsCleared()
+{
+    for(unsigned int i = 0; i < GetNumButtons(); ++i)
+    {
+        auto button = GetButton(i);
+        button->SetParent(nullptr);
+    }
+}
+
 void ButtonsGroup::OnButtonsCleared()
 {
     SetSize(0, 0);

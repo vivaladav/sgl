@@ -59,13 +59,14 @@ void AbstractButtonsGroup::SetButtonEnabled(unsigned int index, bool val)
 
 void AbstractButtonsGroup::ClearButtons()
 {
+    BeforeButtonsCleared();
+
     for(AbstractButton * b : mButtons)
     {
         const unsigned int fId = mToggleFunctions[b];
         mToggleFunctions.erase(b);
 
         b->RemoveToggleFunction(fId);
-        b->SetParent(nullptr);
     }
 
     mIndChecked = -1;
@@ -131,6 +132,7 @@ void AbstractButtonsGroup::RemoveButton(AbstractButton * button)
 
 void AbstractButtonsGroup::OnButtonAdded(AbstractButton *) { }
 void AbstractButtonsGroup::OnButtonRemoved(AbstractButton *) { }
+void AbstractButtonsGroup::BeforeButtonsCleared() { }
 void AbstractButtonsGroup::OnButtonsCleared() { }
 
 } // namespace sgui

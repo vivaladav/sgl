@@ -26,6 +26,7 @@ public:
 
     void OnButtonAdded(AbstractButton * button) override;
     void OnButtonRemoved(AbstractButton * button) override;
+    void BeforeButtonsCleared() override;
     void OnButtonsCleared() override;
 
 private:

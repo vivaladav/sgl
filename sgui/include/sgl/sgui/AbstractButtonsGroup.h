@@ -39,6 +39,7 @@ public:
 private:
     virtual void OnButtonAdded(AbstractButton * button);
     virtual void OnButtonRemoved(AbstractButton * button);
+    virtual void BeforeButtonsCleared();
     virtual void OnButtonsCleared();
 
 private:
