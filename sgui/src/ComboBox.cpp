@@ -14,7 +14,7 @@ namespace sgui
 ComboBox::ComboBox(Widget * parent)
     : AbstractButton(parent)
     , mOnActiveChanged([](int){})
-{        
+{
     mBody = new graphic::Image;
     RegisterRenderable(mBody);
 
@@ -59,6 +59,13 @@ void ComboBox::AddItem(ComboBoxItem * item)
 
     if(-1 == mActiveItem)
         SetActiveItem(0);
+}
+
+void ComboBox::InitActiveItem(unsigned int index)
+{
+    mActiveItem = index;
+
+    UpdateText();
 }
 
 void ComboBox::SetActiveItem(unsigned int index)

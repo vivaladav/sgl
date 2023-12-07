@@ -29,6 +29,7 @@ public:
 
     const ComboBoxItem * GetActiveItem() const;
     int GetActiveItemIndex() const;
+    void InitActiveItem(unsigned int index);
     void SetActiveItem(unsigned int index);
 
     void SetOnActiveChanged(const std::function<void(int)> & f);
