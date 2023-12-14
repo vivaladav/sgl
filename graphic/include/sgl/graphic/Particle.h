@@ -1,17 +1,15 @@
 #pragma once
 
-#include "TexturedRenderable.h"
-
 namespace sgl
 {
 namespace graphic
 {
 
-class Particle : public TexturedRenderable
+class Particle
 {
 public:
     Particle() = default;
-    Particle(Texture * tex);
+    virtual ~Particle() = default;
 
     bool IsActive() const;
     void SetActive(bool val);
@@ -22,6 +20,8 @@ public:
     void ClearDone();
     void SetDone();
 
+    virtual void Render() = 0;
+
 private:
     virtual void OnDone() = 0;
 
@@ -31,11 +31,6 @@ private:
 };
 
 // ==================== INLINE FUNCTIONS ====================
-
-inline Particle::Particle(Texture * tex)
-    : TexturedRenderable(tex)
-{
-}
 
 inline bool Particle::IsActive() const { return mActive; }
 inline void Particle::SetActive(bool val) { mActive = val; }

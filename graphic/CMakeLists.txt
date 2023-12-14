@@ -20,6 +20,7 @@ add_library(
     include/sgl/graphic/Renderable.h
     include/sgl/graphic/Renderer.h
     include/sgl/graphic/Text.h
+    include/sgl/graphic/TexturedParticle.h
     include/sgl/graphic/TexturedRenderable.h
     include/sgl/graphic/Texture.h
     include/sgl/graphic/TextureData.h
