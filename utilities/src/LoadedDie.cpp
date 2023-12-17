@@ -14,7 +14,6 @@ LoadedDie::LoadedDie(const std::vector<float> & probabilities, int seed)
 
     // create event IDs and init thresholds
     const unsigned int numProbs = probabilities.size();
-
     mEventIds.reserve(numProbs);
 
     for(unsigned int i = 0; i < numProbs; ++i)
@@ -73,8 +72,13 @@ void LoadedDie::InitTresholds(const std::vector<float> & probabilities)
         totProbs += prob;
 
     // convert probabilities to the range [PROB_MIN, PROB_MAX]
+    float acc = 0.f;
+
     for(float prob : probabilities)
-        mTresholds.push_back(prob * PROB_MAX / totProbs);
+    {
+        acc += prob * PROB_MAX / totProbs;
+        mTresholds.push_back(acc);
+    }
 }
 
 } // namespace utilities
