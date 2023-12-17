@@ -23,7 +23,7 @@ public:
     virtual void Render() = 0;
 
 private:
-    virtual void OnDone() = 0;
+    virtual void OnDone();
 
 private:
     bool mActive = true;
@@ -42,6 +42,8 @@ inline void Particle::SetDone()
     mDone = true;
     OnDone();
 }
+
+inline void Particle::OnDone() { }
 
 } // namespace graphic
 } // namespace sgl
