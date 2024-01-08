@@ -27,6 +27,14 @@ void Stage::Destroy()
     mInstance = nullptr;
 }
 
+void Stage::CancelDeleteLater(Widget * w)
+{
+    auto it = std::find(mWidgetsToDelete.begin(), mWidgetsToDelete.end(), w);
+
+    if(it != mWidgetsToDelete.end())
+        mWidgetsToDelete.erase(it);
+}
+
 void Stage::Update(float delta)
 {
     // delete widget scheduled for destruction

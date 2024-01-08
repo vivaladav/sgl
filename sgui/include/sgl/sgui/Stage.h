@@ -28,6 +28,7 @@ public:
     graphic::Font * GetDefaultFont();
     void SetDefaultFont(graphic::Font * font);
 
+    void CancelDeleteLater(Widget * w);
     void DeleteLater(Widget * w);
 
     void Render();

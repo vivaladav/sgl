@@ -28,11 +28,13 @@ Widget::Widget(Widget * parent)
 
 Widget::~Widget()
 {
+    auto stage = Stage::Instance();
+
     // remove itself from parent
     if(mParent)
         mParent->RemoveChild(this);
     else
-        mStage->RemoveChild(this);
+        stage->RemoveChild(this);
 
     // delete renderables
     for(auto elem : mRenderables)
@@ -42,9 +44,10 @@ Widget::~Widget()
     if(HasFocus())
     {
         ClearFocus();
-
-        Stage::Instance()->SetFocus();
+        stage->SetFocus();
     }
+
+    stage->CancelDeleteLater(this);
 }
 
 void Widget::SetParent(Widget * parent)
