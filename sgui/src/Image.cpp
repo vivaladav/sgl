@@ -28,6 +28,7 @@ Image::Image(const char * file, Widget * parent)
 Image::Image(graphic::Texture * tex, Widget * parent)
     : Widget(parent)
     , mImg(new graphic::Image(tex))
+    , mDummy(false)
 {
     assert(tex);
 
@@ -69,6 +70,36 @@ void Image::LoadImage(const char * file)
 
         delete oldImg;
     }
+
+    SetSize(mImg->GetWidth(), mImg->GetHeight());
+
+    mDummy = false;
+}
+
+void Image::SetTexture(graphic::Texture * tex)
+{
+    if(mDummy)
+    {
+        graphic::Renderable * oldImg = mImg;
+
+        mImg = new graphic::Image(tex);
+
+        RegisterRenderable(mImg);
+
+        if(oldImg)
+        {
+            mImg->SetPosition(oldImg->GetX(), oldImg->GetY());
+            mImg->SetColor(oldImg->GetColor());
+
+            UnregisterRenderable(oldImg);
+
+            delete oldImg;
+        }
+
+        mDummy = false;
+    }
+    else
+        static_cast<graphic::Image *>(mImg)->SetTexture(tex);
 
     SetSize(mImg->GetWidth(), mImg->GetHeight());
 }

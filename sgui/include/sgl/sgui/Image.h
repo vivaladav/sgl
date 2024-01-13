@@ -28,11 +28,15 @@ public:
 
     void LoadImage(const char * file);
 
+    void SetTexture(graphic::Texture * tex);
+
 private:
     void HandlePositionChanged() override;
 
 private:
     graphic::Renderable * mImg = nullptr;
+
+    bool mDummy = true;
 };
 
 } // namespace sgui
