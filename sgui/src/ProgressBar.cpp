@@ -9,7 +9,6 @@ const float delta = 0.001f;
 
 ProgressBar::ProgressBar(float min, float max, Widget * parent)
     : Widget(parent)
-    , mFunOnCompleted([]{})
     , mValue(min)
     , mMin(min)
     , mMax(max)
@@ -86,6 +85,24 @@ void ProgressBar::Reset()
     HandleProgressUpdate();
 }
 
+unsigned int ProgressBar::AddFunctionOnCompleted(const std::function<void()> & f)
+{
+    static unsigned int num = 0;
+
+    int fId = ++num;
+    mOnCompleted.emplace(fId, f);
+
+    return fId;
+}
+
+void ProgressBar::RemoveFunctionOnCompleted(unsigned int fId)
+{
+    auto it = mOnCompleted.find(fId);
+
+    if(it != mOnCompleted.end())
+        mOnCompleted.erase(it);
+}
+
 void ProgressBar::Complete()
 {
     mCompleted = true;
@@ -93,7 +110,8 @@ void ProgressBar::Complete()
 
     HandleProgressUpdate();
 
-    mFunOnCompleted();
+    for(auto & it: mOnCompleted)
+        it.second();
 }
 
 } // namespace sgui

@@ -3,6 +3,7 @@
 #include "sgl/sgui/Widget.h"
 
 #include <functional>
+#include <map>
 
 namespace sgl
 {
@@ -26,7 +27,9 @@ public:
 
     void Reset();
 
-    void SetFunctionOnCompleted(const std::function<void()> & f);
+    unsigned int AddFunctionOnCompleted(const std::function<void()> & f);
+    void RemoveFunctionOnCompleted(unsigned int key);
+    void ClearFunctionsOnCompleted();
 
 protected:
     virtual void HandleProgressUpdate() = 0;
@@ -35,7 +38,7 @@ private:
     void Complete();
 
 private:
-    std::function<void()> mFunOnCompleted;
+    std::map<unsigned int, std::function<void()>> mOnCompleted;
 
     float mValue = 0;
     float mMin = 0;
@@ -51,12 +54,9 @@ inline float ProgressBar::GetValuePerc() const
     return mValue * 100.f / (mMax - mMin);
 }
 
-inline void ProgressBar::SetFunctionOnCompleted(const std::function<void()> & f)
-{
-    mFunOnCompleted = f;
-}
-
 inline bool ProgressBar::IsCompleted() const { return mCompleted; }
+
+inline void ProgressBar::ClearFunctionsOnCompleted() { mOnCompleted.clear(); }
 
 } // namespace sgui
 } // namespace sgl
