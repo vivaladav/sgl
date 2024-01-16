@@ -43,11 +43,11 @@ int LoadedDie::GetNextValue()
     for(unsigned int i = 0; i < numProbs; ++i)
     {
         if(res < mTresholds[i])
-            return i;
+            return mEventIds[i];
     }
 
     // fallback solution in case last treshold is < PROB_MAX
-    return numProbs - 1;
+    return mEventIds[numProbs - 1];
 }
 
 void LoadedDie::InitDistribution(int seed)
