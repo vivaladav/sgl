@@ -68,8 +68,6 @@ inline int Stage::GetMouseY() const { return mMouseY; }
 inline graphic::Font * Stage::GetDefaultFont() { return mDefaultFont; }
 inline void Stage::SetDefaultFont(graphic::Font * font) { mDefaultFont = font; }
 
-inline void Stage::DeleteLater(Widget * w) { mWidgetsToDelete.push_back(w); }
-
 inline void Stage::Render()
 {
     if(IsVisible())

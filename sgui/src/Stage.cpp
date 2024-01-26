@@ -35,6 +35,15 @@ void Stage::CancelDeleteLater(Widget * w)
         mWidgetsToDelete.erase(it);
 }
 
+void Stage::DeleteLater(Widget * w)
+{
+    auto it = std::find(mWidgetsToDelete.begin(), mWidgetsToDelete.end(), w);
+
+    // add only if not already added
+    if(it == mWidgetsToDelete.end())
+        mWidgetsToDelete.push_back(w);
+}
+
 void Stage::Update(float delta)
 {
     // delete widget scheduled for destruction
