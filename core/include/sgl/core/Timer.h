@@ -21,8 +21,12 @@ public:
     unsigned int AddTimeoutFunction(const std::function<void()> & f);
     void RemoveTimeoutFunction(unsigned int fId);
 
+    // start or restart the timer
     void Start();
+    // stop the timer
     void Stop();
+    // continue after stop
+    void Resume();
 
     void Update();
 

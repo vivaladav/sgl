@@ -7,6 +7,8 @@ namespace sgl
 namespace core
 {
 
+const float minTimeDelta = 0.001f;
+
 Timer::~Timer()
 {
     Stop();
@@ -32,7 +34,8 @@ void Timer::RemoveTimeoutFunction(unsigned int fId)
 
 void Timer::Start()
 {
-    TimerManager::Instance()->AddTimer(this);
+    if(!mRunning)
+        TimerManager::Instance()->AddTimer(this);
 
     mRunning = true;
 
@@ -49,15 +52,33 @@ void Timer::Stop()
     mRunning = false;
 }
 
-void Timer::Update()
+void Timer::Resume()
 {
-    const float minDelta = 0.01f;
+    // already running -> exit
+    if(mRunning)
+        return ;
 
+    // check there's time left
     const auto t1 = std::chrono::high_resolution_clock::now();
     const std::chrono::duration<float> elapsed = t1 - mT0;
     const float d = mTimeoutTime - elapsed.count();
 
-    if(d > minDelta)
+    if(d < minTimeDelta)
+        return ;
+
+    // all good -> resume
+    TimerManager::Instance()->AddTimer(this);
+
+    mRunning = true;
+}
+
+void Timer::Update()
+{
+    const auto t1 = std::chrono::high_resolution_clock::now();
+    const std::chrono::duration<float> elapsed = t1 - mT0;
+    const float d = mTimeoutTime - elapsed.count();
+
+    if(d > minTimeDelta)
         return ;
 
     // execute callbacks
