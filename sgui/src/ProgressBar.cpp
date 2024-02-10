@@ -53,8 +53,13 @@ void ProgressBar::IncValue(float val)
 {
     mValue += val;
 
-    if((mMax - mValue) < delta)
+    if(mValue > mMax || (mMax - mValue) < delta)
         Complete();
+    else if(mValue < mMin)
+    {
+        mValue = mMin;
+        HandleProgressUpdate();
+    }
     else
         HandleProgressUpdate();
 }
