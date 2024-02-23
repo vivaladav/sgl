@@ -16,6 +16,8 @@ public:
     ProgressBar(float min, float max, Widget * parent = nullptr);
 
     void SetMinMax(float min, float max);
+    float GetMin() const;
+    float GetMax() const;
 
     float GetValue() const;
     void SetValue(float progress);
@@ -46,6 +48,9 @@ private:
 
     bool mCompleted = false;
 };
+
+inline float ProgressBar::GetMin() const { return mMin; }
+inline float ProgressBar::GetMax() const { return mMax; }
 
 inline float ProgressBar::GetValue() const { return mValue; }
 
