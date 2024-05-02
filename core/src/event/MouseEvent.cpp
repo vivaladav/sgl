@@ -17,5 +17,7 @@ const int MouseEvent::BUTTON_RIGHT  = SDL_BUTTON_RIGHT;
 const int MouseEvent::BUTTON_X1     = SDL_BUTTON_X1;
 const int MouseEvent::BUTTON_X2     = SDL_BUTTON_X2;
 
+const int MouseEvent::BUTTON_NULL   = -1;
+
 } // namespace core
 } // namespace sgl

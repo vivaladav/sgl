@@ -16,6 +16,8 @@ public:
     static const int BUTTON_X1;
     static const int BUTTON_X2;
 
+    static const int BUTTON_NULL;
+
 protected:
     MouseEvent();
 };
