@@ -338,6 +338,8 @@ void Widget::UpdateTimeOver()
 
 void Widget::ShowTooltip()
 {
+    mOnShowingTooltip();
+
     // position tooltip
     const auto renderer = graphic::Renderer::Instance();
     const int screenW = renderer->GetWidth();

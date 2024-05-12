@@ -3,6 +3,7 @@
 #include "sgl/sgui/WidgetContainer.h"
 
 #include <chrono>
+#include <functional>
 #include <vector>
 
 namespace sgl
@@ -47,6 +48,7 @@ public:
     void SetTooltipShowingTime(int ms);
     void SetTooltipMargins(int horz, int vert);
     bool IsShowingTooltip() const;
+    void SetFunctionOnShowingTooltip(const std::function<void()> & f);
 
     void SetEnabled(bool val);
     bool IsEnabled() const;
@@ -135,6 +137,7 @@ private:
     Stage * mStage = nullptr;
     Widget * mParent = nullptr;
 
+    std::function<void()> mOnShowingTooltip = []{};
     Widget * mTooltip = nullptr;
     int mTooltipTimeDelayMs = 300;
     int mTooltipTimeShowingMs = 2500;
@@ -196,6 +199,7 @@ inline void Widget::SetTooltipMargins(int horz, int vert)
     mTooltipMarginVert = vert;
 }
 inline bool Widget::IsShowingTooltip() const { return mTooltipShowing; }
+inline void Widget::SetFunctionOnShowingTooltip(const std::function<void()> & f) { mOnShowingTooltip = f; }
 
 inline bool Widget::IsEnabled() const { return mEnabled; }
 
