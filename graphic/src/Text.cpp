@@ -30,7 +30,7 @@ Text::Text(const char * text, Font * font, bool trim)
     // text is always created white as color is set later
     const SDL_Color white = { 255, 255, 255, 255};
 
-    TTF_Font * f = font->GetSysFont();
+    auto f = static_cast<TTF_Font *>(font->GetSysFont());
     SDL_Surface * surf = TTF_RenderUTF8_Blended(f, text, white);
 
     if(!surf)

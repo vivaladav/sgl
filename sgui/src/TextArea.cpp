@@ -137,7 +137,8 @@ void TextArea::CreateText()
 
         int lineW = 0;
         int lineH = 0;
-        TTF_SizeUTF8(mFont->GetSysFont(), sub.c_str(), &lineW, &lineH);
+        auto f = static_cast<TTF_Font *>(mFont->GetSysFont());
+        TTF_SizeUTF8(f, sub.c_str(), &lineW, &lineH);
 
         // exit if passed allowed H and not auto-adapting
         if(!mAutoAdaptH && (h + lineH) > GetHeight())
@@ -176,7 +177,7 @@ void TextArea::CreateText()
             if(sub.empty())
                 return ;
 
-            TTF_SizeUTF8(mFont->GetSysFont(), sub.c_str(), &lineW, &lineH);
+            TTF_SizeUTF8(f, sub.c_str(), &lineW, &lineH);
 
             AddTextLine(sub.c_str());
 

@@ -3,7 +3,6 @@
 #include "sgl/core/Size.h"
 
 struct SDL_RWops;
-typedef struct _TTF_Font TTF_Font;
 
 namespace sgl
 {
@@ -27,7 +26,7 @@ public:
 
     core::Sized GetTextSize(const char * text);
 
-    TTF_Font * GetSysFont() const;
+    void * GetSysFont() const;
 
 private:
     Font(SDL_RWops * data, int size, int style);
@@ -35,7 +34,7 @@ private:
     ~Font();
 
 private:
-    TTF_Font * mSysFont = nullptr;
+    void * mSysFont = nullptr;
 
     int mSize = 0;
 
@@ -47,7 +46,7 @@ inline bool Font::IsValid() const { return mSysFont != nullptr; }
 
 inline int Font::GetSize() const { return mSize; }
 
-inline TTF_Font * Font::GetSysFont() const { return mSysFont; }
+inline void * Font::GetSysFont() const { return mSysFont; }
 
 } // namespace graphic
 } // namespace sgl

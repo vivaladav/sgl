@@ -8,8 +8,9 @@
     #include <SDL_ttf.h>
 #endif
 
-
 #include <iostream>
+
+#define CAST_TTF_FONT(x) static_cast<TTF_Font *>(x)
 
 namespace sgl
 {
@@ -24,7 +25,7 @@ const int Font::UNDERLINE       = TTF_STYLE_UNDERLINE;
 
 int Font::GetStyle() const
 {
-    return TTF_GetFontStyle(mSysFont);
+    return TTF_GetFontStyle(CAST_TTF_FONT(mSysFont));
 }
 
 core::Sized Font::GetTextSize(const char * text)
@@ -32,7 +33,7 @@ core::Sized Font::GetTextSize(const char * text)
     core::Sized size;
 
     // reset size in case of error
-    if(TTF_SizeUTF8(mSysFont, text, &(size.w), &(size.h)) != 0)
+    if(TTF_SizeUTF8(CAST_TTF_FONT(mSysFont), text, &(size.w), &(size.h)) != 0)
     {
         size.w = 0;
         size.h = 0;
@@ -53,7 +54,7 @@ Font::Font(SDL_RWops * data, int size, int style)
     }
 
     if(style != NORMAL)
-        TTF_SetFontStyle(mSysFont, style);
+        TTF_SetFontStyle(CAST_TTF_FONT(mSysFont), style);
 }
 
 Font::Font(const char * file, int size, int style)
@@ -68,12 +69,12 @@ Font::Font(const char * file, int size, int style)
     }
 
     if(style != NORMAL)
-        TTF_SetFontStyle(mSysFont, style);
+        TTF_SetFontStyle(CAST_TTF_FONT(mSysFont), style);
 }
 
 Font::~Font()
 {
-    TTF_CloseFont(mSysFont);
+    TTF_CloseFont(CAST_TTF_FONT(mSysFont));
 }
 
 } // namespace graphic
