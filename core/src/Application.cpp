@@ -5,8 +5,14 @@
 
 #ifdef LINUX
     #include <SDL2/SDL.h>
+    #include <SDL2/SDL_image.h>
+    #include <SDL2/SDL_mixer.h>
+    #include <SDL2/SDL_ttf.h>
 #else
     #include <SDL.h>
+    #include <SDL_image.h>
+    #include <SDL_mixer.h>
+    #include <SDL_ttf.h>
 #endif
 
 #include <cmath>
@@ -43,6 +49,68 @@ Application::~Application()
     delete mEventDispatcher;
 
     TimerManager::Destroy();
+}
+
+// ===== libraries =====
+void Application::PrintBuildLibs() const
+{
+    SDL_version sdlVer;
+    SDL_version sdlImgVer;
+    SDL_version sdlMixVer;
+    SDL_version sdlTtfVer;
+
+    SDL_VERSION(&sdlVer);
+    SDL_IMAGE_VERSION(&sdlImgVer);
+    SDL_MIXER_VERSION(&sdlMixVer);
+    SDL_TTF_VERSION(&sdlTtfVer);
+
+    std::cout << "====== BUILD LIBRARIES ======" << std::endl;
+    std::cout << "SDL version: "
+              << static_cast<int>(sdlVer.major) << "."
+              << static_cast<int>(sdlVer.minor) << "."
+              << static_cast<int>(sdlVer.patch) << std::endl;
+    std::cout << "SDL_image version: "
+              << static_cast<int>(sdlImgVer.major) << "."
+              << static_cast<int>(sdlImgVer.minor) << "."
+              << static_cast<int>(sdlImgVer.patch) << std::endl;
+    std::cout << "SDL_mixer version: "
+              << static_cast<int>(sdlMixVer.major) << "."
+              << static_cast<int>(sdlMixVer.minor) << "."
+              << static_cast<int>(sdlMixVer.patch) << std::endl;
+    std::cout << "SDL_ttf version: "
+              << static_cast<int>(sdlTtfVer.major) << "."
+              << static_cast<int>(sdlTtfVer.minor) << "."
+              << static_cast<int>(sdlTtfVer.patch) << std::endl;
+    std::cout << "====== BUILD LIBRARIES ======\n" << std::endl;
+}
+
+void Application::PrintRuntimeLibs() const
+{
+    SDL_version sdlVer;
+    SDL_GetVersion(&sdlVer);
+
+    const SDL_version * sdlImgVer = IMG_Linked_Version();
+    const SDL_version * sdlMixVer = Mix_Linked_Version();
+    const SDL_version * sdlTtfVer = TTF_Linked_Version();
+
+    std::cout << "====== RUNTIME LIBRARIES ======" << std::endl;
+    std::cout << "SDL version: "
+              << static_cast<int>(sdlVer.major) << "."
+              << static_cast<int>(sdlVer.minor) << "."
+              << static_cast<int>(sdlVer.patch) << std::endl;
+    std::cout << "SDL_image version: "
+              << static_cast<int>(sdlImgVer->major) << "."
+              << static_cast<int>(sdlImgVer->minor) << "."
+              << static_cast<int>(sdlImgVer->patch) << std::endl;
+    std::cout << "SDL_mixer version: "
+              << static_cast<int>(sdlMixVer->major) << "."
+              << static_cast<int>(sdlMixVer->minor) << "."
+              << static_cast<int>(sdlMixVer->patch) << std::endl;
+    std::cout << "SDL_ttf version: "
+              << static_cast<int>(sdlTtfVer->major) << "."
+              << static_cast<int>(sdlTtfVer->minor) << "."
+              << static_cast<int>(sdlTtfVer->patch) << std::endl;
+    std::cout << "====== RUNTIME LIBRARIES ======\n" << std::endl;
 }
 
 // ===== command line arguments =====
