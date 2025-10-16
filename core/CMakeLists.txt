@@ -8,6 +8,7 @@ add_library(
     include/sgl/core/Application.h
     include/sgl/core/DataPackage.h
     include/sgl/core/Math.h
+    include/sgl/core/ModuleCore.h
     include/sgl/core/Point.h
     include/sgl/core/Rect.h
     include/sgl/core/Size.h
@@ -26,6 +27,7 @@ add_library(
     src/Application.cpp
     src/DataPackage.cpp
     src/Math.cpp
+    src/ModuleCore.cpp
     src/Timer.cpp
     src/TimerManager.h
     src/TimerManager.cpp

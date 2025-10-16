@@ -13,6 +13,7 @@ add_library(
     include/sgl/graphic/FontManager.h
     include/sgl/graphic/GraphicConstants.h
     include/sgl/graphic/Image.h
+    include/sgl/graphic/ModuleGraphic.h
     include/sgl/graphic/Particle.h
     include/sgl/graphic/ParticleData.h
     include/sgl/graphic/ParticlesManager.h
@@ -33,6 +34,7 @@ add_library(
     src/Font.cpp
     src/FontManager.cpp
     src/Image.cpp
+    src/ModuleGraphic.cpp
     src/ParticlesManager.cpp
     src/ParticlesUpdater.cpp
     src/Renderable.cpp

@@ -21,10 +21,6 @@ public:
     Application(int argc, char * argv[]);
     virtual ~Application();
 
-    // -- libraries --
-    void PrintBuildLibs() const;
-    void PrintRuntimeLibs() const;
-
     // -- command line arguments --
     int GetNumArguments() const;
     const std::vector<std::string> & GetArguments() const;
