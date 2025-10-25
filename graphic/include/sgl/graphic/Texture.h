@@ -45,7 +45,7 @@ public:
     // NOTE this will affect all the textures generated from the same file
     // which means that setting a scale mode for 1 sprite will affect all the ones
     // sharing the same texture
-    void SetScaleMode(int sm);
+    void SetScaleMode(TextureScaleMode sm);
 
 private:
     std::shared_ptr<TextureData> mTexData;

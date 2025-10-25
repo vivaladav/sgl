@@ -96,7 +96,7 @@ void Texture::SetColor(unsigned char r, unsigned char g, unsigned char b, unsign
     mTexData->SetColor(r, g, b, a);
 }
 
-void Texture::SetScaleMode(int sm) { mTexData->SetScaleMode(sm); }
+void Texture::SetScaleMode(TextureScaleMode sm) { mTexData->SetScaleMode(sm); }
 
 } // namespace graphic
 } // namespace sgl
