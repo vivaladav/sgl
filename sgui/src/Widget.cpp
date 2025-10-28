@@ -202,6 +202,56 @@ void Widget::UnregisterRenderable(graphic::Renderable * elem)
         mRenderables.erase(it);
 }
 
+void Widget::ShowTooltip()
+{
+    mOnShowingTooltip();
+
+    // position tooltip
+    const auto renderer = graphic::Renderer::Instance();
+    const int screenW = renderer->GetWidth();
+    const int screenH = renderer->GetHeight();
+    const int tooltipW = mTooltip->GetWidth();
+    const int tooltipH = mTooltip->GetHeight();
+    const int mouseX = Stage::Instance()->GetMouseX();
+    const int mouseY = Stage::Instance()->GetMouseY();
+
+    int x = mouseX + mTooltipMarginHoriz;
+
+    if(x + tooltipW > screenW)
+    {
+        x = mouseX - mTooltipMarginHoriz - tooltipW;
+
+        if(x < 0)
+            x = 0;
+    }
+
+    int y = mouseY + mTooltipMarginVert;
+
+    if(y + tooltipH > screenH)
+    {
+        y = mouseY - mTooltipMarginVert - tooltipH;
+
+        if(y < 0)
+            y = 0;
+    }
+
+    mTooltip->SetPosition(x, y);
+
+    // make it visible
+    mTooltip->SetVisible(true);
+    Stage::Instance()->MoveChildToFront(mTooltip);
+
+    mTooltipShowing = true;
+    mTooltipShowed = true;
+}
+
+void Widget::HideTooltip()
+{
+    mTooltip->SetVisible(false);
+
+    mTooltipShowing = false;
+}
+
 // current behavior for Widgets is to grow according to children position and size
 void Widget::UpdateSize()
 {
@@ -334,56 +384,6 @@ void Widget::UpdateTimeOver()
         if(GetTimerOver() >= mTooltipTimeDelayMs + mTooltipTimeShowingMs)
             HideTooltip();
     }
-}
-
-void Widget::ShowTooltip()
-{
-    mOnShowingTooltip();
-
-    // position tooltip
-    const auto renderer = graphic::Renderer::Instance();
-    const int screenW = renderer->GetWidth();
-    const int screenH = renderer->GetHeight();
-    const int tooltipW = mTooltip->GetWidth();
-    const int tooltipH = mTooltip->GetHeight();
-    const int mouseX = Stage::Instance()->GetMouseX();
-    const int mouseY = Stage::Instance()->GetMouseY();
-
-    int x = mouseX + mTooltipMarginHoriz;
-
-    if(x + tooltipW > screenW)
-    {
-        x = mouseX - mTooltipMarginHoriz - tooltipW;
-
-        if(x < 0)
-            x = 0;
-    }
-
-    int y = mouseY + mTooltipMarginVert;
-
-    if(y + tooltipH > screenH)
-    {
-        y = mouseY - mTooltipMarginVert - tooltipH;
-
-        if(y < 0)
-            y = 0;
-    }
-
-    mTooltip->SetPosition(x, y);
-
-    // make it visible
-    mTooltip->SetVisible(true);
-    Stage::Instance()->MoveChildToFront(mTooltip);
-
-    mTooltipShowing = true;
-    mTooltipShowed = true;
-}
-
-void Widget::HideTooltip()
-{
-    mTooltip->SetVisible(false);
-
-    mTooltipShowing = false;
 }
 
 void Widget::SetScreenPosition(int x, int y)

@@ -27,6 +27,9 @@ void AbstractButton::SetChecked(bool val)
 
 void AbstractButton::Click()
 {
+    if(HasTooltip() && IsShowingTooltip())
+        HideTooltip();
+
     // checkable button
     if(mCheckable)
     {

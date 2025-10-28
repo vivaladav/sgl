@@ -41,6 +41,7 @@ public:
     Widget * GetParent() const;
     void SetParent(Widget * parent);
 
+    bool HasTooltip() const;
     void SetTooltip(Widget * t);
     int GetTooltipDelay() const;
     void SetTooltipDelay(int ms);
@@ -108,6 +109,9 @@ protected:
     unsigned int MixColorAndAlpha(unsigned int color) const;
     unsigned char MixAlphaAndAlpha(unsigned char a) const;
 
+    void ShowTooltip();
+    void HideTooltip();
+
     virtual void HandlePositionChanged();
 
     virtual void OnRender();
@@ -115,9 +119,6 @@ protected:
 
 private:
     void UpdateTimeOver();
-
-    void ShowTooltip();
-    void HideTooltip();
 
     void SetScreenPosition(int x, int y);
 
@@ -189,6 +190,7 @@ inline unsigned int Widget::GetWidgetId() const { return mId; }
 
 inline Widget * Widget::GetParent() const { return mParent; }
 
+inline bool Widget::HasTooltip() const { return mTooltip != nullptr; }
 inline int Widget::GetTooltipDelay() const { return mTooltipTimeDelayMs; }
 inline void Widget::SetTooltipDelay(int ms) { mTooltipTimeDelayMs = ms; }
 inline int Widget::GetTooltipShowingTime() const { return mTooltipTimeShowingMs; }
