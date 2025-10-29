@@ -302,10 +302,12 @@ AudioManager::AudioManager()
 
     mSoundtracks = Mix_AllocateChannels(mSoundtracks);
 
+#ifdef DEBUG
     std::cout << "AudioManager OK - freq: " << currFrequency << "/" << frequency
               << " - form: " << currFormat << "/" << format
               << " - chan: " << currChannels << "/" << channels
               << " - sound tracks: " << mSoundtracks << std::endl;
+#endif
 
     mValid = true;
 }
