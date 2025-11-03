@@ -49,7 +49,7 @@ void Label::SetText(const char * txt)
 {
     assert(txt);
 
-    std::string t(txt);
+    const std::string t(txt);
 
     if(t == mStr)
         return ;
