@@ -1,9 +1,11 @@
 #include "sgl/graphic/ModuleGraphic.h"
 
 #ifdef LINUX
+#include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #else
+#include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #endif
@@ -51,6 +53,17 @@ void ModuleGraphic::PrintRuntimeLibs()
               << static_cast<int>(ttfVer->minor) << "."
               << static_cast<int>(ttfVer->patch) << std::endl;
     std::cout << "-----------------------------------------" << std::endl;
+}
+
+// -- cursor --
+void ModuleGraphic::HideSystemCursor()
+{
+    SDL_ShowCursor(SDL_DISABLE);
+}
+
+void ModuleGraphic::ShowSystemCursor()
+{
+    SDL_ShowCursor(SDL_ENABLE);
 }
 
 } // namespace graphic
