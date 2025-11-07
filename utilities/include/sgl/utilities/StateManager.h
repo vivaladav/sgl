@@ -19,9 +19,13 @@ public:
     State * RemoveState(int stateId);
     void RemoveAndDestroyState(int stateId);
     bool RequestNextActiveState(int stateId);
-    void UpdateActive();
 
     State * GetActiveState() const;
+
+    void Update(float delta);
+
+private:
+    void UpdateActive();
 
 private:
     std::unordered_map<int, State *> mStates;

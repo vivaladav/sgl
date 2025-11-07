@@ -20,6 +20,8 @@ public:
 
     StateManager * GetStateManager() const;
 
+    virtual void Update(float delta);
+
 private:
     StateManager * mManager = nullptr;
 

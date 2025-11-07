@@ -83,6 +83,13 @@ bool StateManager::RequestNextActiveState(int stateId)
     return true;
 }
 
+void StateManager::Update(float delta)
+{
+    UpdateActive();
+
+    mActive->Update(delta);
+}
+
 void StateManager::UpdateActive()
 {
     // no next scheduled -> nothing to do
