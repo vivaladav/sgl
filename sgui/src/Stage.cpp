@@ -2,6 +2,8 @@
 
 #include "sgl/core/event/MouseButtonEvent.h"
 #include "sgl/core/event/MouseMotionEvent.h"
+#include "sgl/graphic/Cursor.h"
+#include "sgl/graphic/ModuleGraphic.h"
 #include "sgl/sgui/Widget.h"
 
 #include <algorithm>
@@ -27,6 +29,21 @@ void Stage::Destroy()
     mInstance = nullptr;
 }
 
+// -- cursor --
+void Stage::SetCursor(graphic::Cursor * cursor)
+{
+    sgl::graphic::ModuleGraphic::HideSystemCursor();
+
+    mCursor = cursor;
+}
+
+void Stage::ClearCursor()
+{
+    sgl::graphic::ModuleGraphic::ShowSystemCursor();
+
+    mCursor = nullptr;
+}
+
 void Stage::CancelDeleteLater(Widget * w)
 {
     auto it = std::find(mWidgetsToDelete.begin(), mWidgetsToDelete.end(), w);
@@ -42,6 +59,15 @@ void Stage::DeleteLater(Widget * w)
     // add only if not already added
     if(it == mWidgetsToDelete.end())
         mWidgetsToDelete.push_back(w);
+}
+
+void Stage::Render()
+{
+    if(IsVisible())
+        PropagateRender();
+
+    if(mCursor)
+        mCursor->Render();
 }
 
 void Stage::Update(float delta)

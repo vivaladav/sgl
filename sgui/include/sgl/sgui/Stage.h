@@ -7,7 +7,11 @@
 namespace sgl
 {
 
-namespace graphic { class Font; }
+namespace graphic
+{
+    class Cursor;
+    class Font;
+}
 
 namespace sgui
 {
@@ -23,6 +27,13 @@ public:
 
     int GetMouseX() const;
     int GetMouseY() const;
+
+    // -- cursor --
+    // cursor is only used, it is not owned (deleted) by Stage
+    void SetCursor(graphic::Cursor * cursor);
+    void ClearCursor();
+    void HideCursor();
+    void ShowCursor();
 
     // temporary code
     graphic::Font * GetDefaultFont();
@@ -53,6 +64,9 @@ private:
 
     graphic::Font * mDefaultFont = nullptr;
 
+    graphic::Cursor * mCursor = nullptr;
+    graphic::Cursor * mHiddenCursor = nullptr;
+
     int mMouseX = -1;
     int mMouseY = -1;
 
@@ -65,14 +79,20 @@ inline Stage * Stage::Instance() { return mInstance; }
 inline int Stage::GetMouseX() const { return mMouseX; }
 inline int Stage::GetMouseY() const { return mMouseY; }
 
+// -- cursor --
+inline void Stage::HideCursor()
+{
+    mHiddenCursor = mCursor;
+    mCursor = nullptr;
+}
+inline void Stage::ShowCursor()
+{
+    mCursor = mHiddenCursor;
+    mHiddenCursor = nullptr;
+}
+
 inline graphic::Font * Stage::GetDefaultFont() { return mDefaultFont; }
 inline void Stage::SetDefaultFont(graphic::Font * font) { mDefaultFont = font; }
-
-inline void Stage::Render()
-{
-    if(IsVisible())
-        PropagateRender();
-}
 
 } // namespace sgui
 } // namespace sgl
