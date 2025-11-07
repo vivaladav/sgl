@@ -8,6 +8,7 @@ find_package(SDL2_ttf REQUIRED)
 add_library(
     graphic
     include/sgl/graphic/Camera.h
+    include/sgl/graphic/Cursor.h
     include/sgl/graphic/DummyRenderable.h
     include/sgl/graphic/Font.h
     include/sgl/graphic/FontManager.h
@@ -30,6 +31,7 @@ add_library(
     include/sgl/graphic/event/WindowEvent.h
     include/sgl/graphic/event/WindowEventListener.h
     src/Camera.cpp
+    src/Cursor.cpp
     src/DummyRenderable.cpp
     src/Font.cpp
     src/FontManager.cpp

@@ -11,7 +11,6 @@
     #include <SDL_image.h>
 #endif
 
-
 #include <cassert>
 #include <iostream>
 
