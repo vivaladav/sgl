@@ -1,5 +1,7 @@
 #include "sgl/graphic/Cursor.h"
 
+#include "sgl/graphic/Camera.h"
+
 #ifdef LINUX
 #include <SDL2/SDL.h>
 #else
@@ -16,6 +18,7 @@ Cursor::Cursor(Texture * tex, int hotX, int hotY)
     , mHotX(hotX)
     , mHotY(hotY)
 {
+    SetCamera(Camera::GetDummyCamera());
 }
 
 void Cursor::Render()
