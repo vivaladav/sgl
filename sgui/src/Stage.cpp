@@ -98,6 +98,9 @@ void Stage::OnMouseMotion(core::MouseMotionEvent & event)
     mMouseY = event.GetY();
 
     PropagateMouseMotion(event);
+
+    if(mCursor != nullptr)
+        mCursor->OnMouseMotion(event);
 }
 
 void Stage::OnMouseWheel(core::MouseWheelEvent & event)
