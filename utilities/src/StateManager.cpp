@@ -67,6 +67,10 @@ void StateManager::RemoveAndDestroyState(int stateId)
 
 bool StateManager::RequestNextActiveState(int stateId)
 {
+    // need to use SetInitialActiveState first
+    if(mInit)
+        return false;
+
     auto res = mStates.find(stateId);
 
     // state not found
@@ -80,6 +84,25 @@ bool StateManager::RequestNextActiveState(int stateId)
     // schedule state to be next active
     mNext = res->second;
 
+    mUpdated = false;
+
+    return true;
+}
+
+bool StateManager::SetInitialActiveState(int stateId)
+{
+    // initial state already set once
+    if(mActive != nullptr || mNext != nullptr)
+        return false;
+
+    auto res = mStates.find(stateId);
+
+    // state not found
+    if(res == mStates.end())
+        return false;
+
+    mNext = res->second;
+
     return true;
 }
 
@@ -88,19 +111,34 @@ void StateManager::Update(float delta)
     UpdateActive();
 
     mActive->Update(delta);
+
+    mUpdated = true;
 }
 
 void StateManager::UpdateActive()
 {
-    // no next scheduled -> nothing to do
-    if(!mNext)
-        return;
+    if(mNext != nullptr)
+    {
+        // change happening after SetInitialActiveState
+        if(mInit)
+            mInit = false;
+        // change happening after RequestNextActiveState
+        else
+        {
+            // skip change if the current active state has not been updated yet
+            // this is required because some UI events can trigger changes before the update
+            if(!mUpdated)
+                return ;
 
-    if(mActive)
-        mActive->OnInactive();
+            if(mActive)
+                mActive->OnInactive();
+        }
 
-    mActive = mNext;
-    mNext = nullptr;
+        mActive = mNext;
+        mNext = nullptr;
+    }
+    else
+        return ;
 
     mActive->OnActive();
 }

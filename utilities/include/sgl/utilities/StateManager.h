@@ -19,6 +19,7 @@ public:
     State * RemoveState(int stateId);
     void RemoveAndDestroyState(int stateId);
     bool RequestNextActiveState(int stateId);
+    bool SetInitialActiveState(int stateId);
 
     State * GetActiveState() const;
 
@@ -32,6 +33,9 @@ private:
 
     State * mActive = nullptr;
     State * mNext = nullptr;
+
+    bool mInit = true;
+    bool mUpdated = false;
 };
 
 inline State * StateManager::GetActiveState() const { return mActive; }
