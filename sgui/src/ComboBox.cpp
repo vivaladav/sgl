@@ -70,6 +70,10 @@ void ComboBox::InitActiveItem(unsigned int index)
 
 void ComboBox::SetActiveItem(unsigned int index)
 {
+    // no items
+    if(mItems.empty())
+        return ;
+
     // iteam already active -> exit
     if(static_cast<int>(index) == mActiveItem)
         return ;
@@ -88,7 +92,8 @@ void ComboBox::SetLabelFont(graphic::Font * font)
 
 void ComboBox::SetLabelColor(unsigned int color)
 {
-    mLabel->SetColor(color);
+    if(mLabel)
+        mLabel->SetColor(color);
 }
 
 void ComboBox::SetBodyTexture(graphic::Texture * tex)
