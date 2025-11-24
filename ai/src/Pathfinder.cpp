@@ -21,11 +21,11 @@ Pathfinder::~Pathfinder()
     mNodes = nullptr;
 }
 
-void Pathfinder::SetMap(const IPathMap * map, unsigned int mapRows, unsigned int mapCols)
+void Pathfinder::SetMap(const IPathMap * map)
 {
     mMap = map;
-    mMapRows = mapRows;
-    mMapCols = mapCols;
+    mMapRows = map->GetNumRows();
+    mMapCols = map->GetNumCols();
     mMapSize = mMapRows * mMapCols;
 
     InitNodes();

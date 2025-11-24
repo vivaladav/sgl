@@ -28,7 +28,7 @@ public:
 public:
     ~Pathfinder();
 
-    void SetMap(const IPathMap * map, unsigned int mapRows, unsigned int mapCols);
+    void SetMap(const IPathMap * map);
 
     std::vector<unsigned int> MakePath(unsigned int r0, unsigned int c0,
                                        unsigned int r1, unsigned int c1,
