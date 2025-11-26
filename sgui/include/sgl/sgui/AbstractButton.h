@@ -31,7 +31,9 @@ public:
     AbstractButton(Widget * parent = nullptr);
 
     int GetShortcutKey() const;
+    unsigned int GetShortcutModifiers() const;
     void SetShortcutKey(int key);
+    void SetShortcutKey(int key, unsigned int modifiers);
 
     VisualState GetState() const;
 
@@ -77,7 +79,8 @@ private:
 
     VisualState mState = NULL_STATE;
 
-    int mShortcutKey = -1;
+    int mShortcutKey;
+    unsigned int mShortcutModifiers;
 
     bool mCheckable = false;
     bool mChecked = false;
@@ -85,7 +88,13 @@ private:
 };
 
 inline int AbstractButton::GetShortcutKey() const { return mShortcutKey; }
-inline void AbstractButton::SetShortcutKey(int key) { mShortcutKey = key; }
+inline unsigned int AbstractButton::GetShortcutModifiers() const { return mShortcutModifiers; }
+
+inline void AbstractButton::SetShortcutKey(int key, unsigned int modifiers)
+{
+    mShortcutKey = key;
+    mShortcutModifiers = modifiers;
+}
 
 inline AbstractButton::VisualState AbstractButton::GetState() const { return mState; }
 

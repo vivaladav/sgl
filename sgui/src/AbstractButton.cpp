@@ -10,7 +10,14 @@ namespace sgui
 
 AbstractButton::AbstractButton(Widget * parent)
     : Widget(parent)
+    , mShortcutKey(core::KeyboardEvent::KEY_UNKNOWN)
+    , mShortcutModifiers(core::KeyboardEvent::MOD_NONE)
 {
+}
+
+void AbstractButton::SetShortcutKey(int key)
+{
+    SetShortcutKey(key, core::KeyboardEvent::MOD_NONE);
 }
 
 void AbstractButton::SetChecked(bool val)
@@ -132,7 +139,8 @@ void AbstractButton::HandleMouseOut()
 
 void AbstractButton::HandleKeyDown(sgl::core::KeyboardEvent & event)
 {
-    if(event.GetKey() == mShortcutKey)
+    if(event.GetKey() == mShortcutKey &&
+       (mShortcutModifiers == core::KeyboardEvent::MOD_NONE || event.GetModifiers() & mShortcutModifiers))
     {
         HandleButtonDown();
 
@@ -142,7 +150,8 @@ void AbstractButton::HandleKeyDown(sgl::core::KeyboardEvent & event)
 
 void AbstractButton::HandleKeyUp(sgl::core::KeyboardEvent & event)
 {
-    if(event.GetKey() == mShortcutKey)
+    if(event.GetKey() == mShortcutKey &&
+       (mShortcutModifiers == core::KeyboardEvent::MOD_NONE || event.GetModifiers() & mShortcutModifiers))
     {
         HandleButtonUp();
 

@@ -13,6 +13,7 @@ class KeyboardEvent : public Event
 {
 public:
     int GetKey() const;
+    unsigned int GetModifiers() const;
 
     bool IsModAltDown() const;
     bool IsModCtrlDown() const;
@@ -303,22 +304,19 @@ public:
 
 private:
     int mKey;
-
-    bool mModAltDown = false;
-    bool mModCtrlDown = false;
-    bool mModGuiDown = false;
-    bool mModShiftDown = false;
+    unsigned int mModifiers;
 
     // only EventDispatcher can create an event
     friend class EventDispatcher;
 };
 
 inline int KeyboardEvent::GetKey() const { return mKey; }
+inline unsigned int KeyboardEvent::GetModifiers() const { return mModifiers; }
 
-inline bool KeyboardEvent::IsModAltDown() const { return mModAltDown; }
-inline bool KeyboardEvent::IsModCtrlDown() const { return mModCtrlDown; }
-inline bool KeyboardEvent::IsModGuiDown() const { return mModGuiDown; }
-inline bool KeyboardEvent::IsModShiftDown() const { return mModShiftDown; }
+inline bool KeyboardEvent::IsModAltDown() const { return mModifiers & MOD_ALT; }
+inline bool KeyboardEvent::IsModCtrlDown() const { return mModifiers & MOD_CTRL; }
+inline bool KeyboardEvent::IsModGuiDown() const { return mModifiers & MOD_GUI; }
+inline bool KeyboardEvent::IsModShiftDown() const { return mModifiers & MOD_SHIFT; }
 
 } // namespace core
 } // namespace sgl
