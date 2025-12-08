@@ -13,7 +13,7 @@ ParticlesManager::~ParticlesManager()
         delete it.second;
 }
 
-ParticlesUpdater * ParticlesManager::GetUpdater(unsigned int key)
+ParticlesUpdater * ParticlesManager::GetUpdater(unsigned int key) const
 {
     auto res = mUpdaters.find(key);
 
