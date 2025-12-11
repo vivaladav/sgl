@@ -14,9 +14,6 @@ class AbstractButton;
 class AbstractButtonsGroup
 {
 public:
-    typedef std::function<void(unsigned int, bool)> ToggleFun;
-
-public:
     AbstractButtonsGroup();
 
     bool IsExclusive() const;
@@ -34,7 +31,7 @@ public:
 
     unsigned int GetNumButtons() const;
 
-    void SetFunctionOnToggle(const ToggleFun & f);
+    void SetFunctionOnToggle(const std::function<void(unsigned int, bool)> & f);
 
 private:
     virtual void OnButtonAdded(AbstractButton * button);
@@ -67,7 +64,10 @@ inline AbstractButton * AbstractButtonsGroup::GetButton(unsigned int ind) const
 
 inline unsigned int AbstractButtonsGroup::GetNumButtons() const { return mButtons.size(); }
 
-inline void AbstractButtonsGroup::SetFunctionOnToggle(const ToggleFun & f) { mOnToggle = f; }
+inline void AbstractButtonsGroup::SetFunctionOnToggle(const std::function<void(unsigned int, bool)> & f)
+{
+    mOnToggle = f;
+}
 
 } // namespace sgui
 } // namespace sgl
