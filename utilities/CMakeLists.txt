@@ -19,6 +19,7 @@ add_library(
     $<$<PLATFORM_ID:Windows>:include/sgl/utilities/windows/Filesystem.h>
     $<$<PLATFORM_ID:Windows>:include/sgl/utilities/windows/System.h>
     include/sgl/utilities/UniformDistribution.h
+    include/sgl/utilities/UniformRealDistribution.h
     src/FilesystemBase.cpp
     src/HashCRC32.cpp
     src/LoadedDie.cpp
@@ -29,6 +30,7 @@ add_library(
     $<$<PLATFORM_ID:Windows>:src/windows/Filesystem.cpp>
     $<$<PLATFORM_ID:Windows>:src/windows/System.cpp>
     src/UniformDistribution.cpp
+    src/UniformRealDistribution.cpp
 )
 
 target_include_directories(
