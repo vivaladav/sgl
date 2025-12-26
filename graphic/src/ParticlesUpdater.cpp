@@ -11,6 +11,9 @@ ParticlesUpdater::~ParticlesUpdater()
 {
     for(auto p : mParticles)
         delete p;
+
+    for(auto p : mActiveParticles)
+        delete p;
 }
 
 void ParticlesUpdater::AddParticle(const ParticleData & initData)
