@@ -4,6 +4,8 @@
 #include "sgl/core/event/MouseEventListener.h"
 #include "sgl/sgui/WidgetContainer.h"
 
+#include <vector>
+
 namespace sgl
 {
 
@@ -57,10 +59,12 @@ private:
     void OnKeyDown(core::KeyboardEvent & event) override;
     void OnKeyUp(core::KeyboardEvent & event) override;
 
+    void UpdateDelete();
+
 private:
     static Stage * mInstance;
 
-    std::vector<Widget *> mWidgetsToDelete;
+    std::list<Widget *> mWidgetsToDelete;
 
     graphic::Font * mDefaultFont = nullptr;
 

@@ -58,7 +58,7 @@ void Stage::DeleteLater(Widget * w)
 
     // add only if not already added
     if(it == mWidgetsToDelete.end())
-        mWidgetsToDelete.push_back(w);
+        mWidgetsToDelete.emplace_back(w);
 }
 
 void Stage::Render()
@@ -72,11 +72,8 @@ void Stage::Render()
 
 void Stage::Update(float delta)
 {
-    // delete widget scheduled for destruction
-    for(Widget * w : mWidgetsToDelete)
-        delete w;
-
-    mWidgetsToDelete.clear();
+    // delete widgets scheduled for destruction
+    UpdateDelete();
 
     // propagate update
     PropagateUpdate(delta);
@@ -116,6 +113,21 @@ void Stage::OnKeyDown(core::KeyboardEvent & event)
 void Stage::OnKeyUp(core::KeyboardEvent & event)
 {
     PropagateKeyUp(event);
+}
+
+void Stage::UpdateDelete()
+{
+    auto it = mWidgetsToDelete.begin();
+
+    while(!mWidgetsToDelete.empty())
+    {
+        Widget * w = *it;
+
+        it = mWidgetsToDelete.erase(it);
+
+        // delete Widget after erase because destructor will call CancelDeleteLater
+        delete w;
+    }
 }
 
 } // namespace sgui

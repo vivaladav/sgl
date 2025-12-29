@@ -23,22 +23,17 @@ WidgetContainer::~WidgetContainer()
 
 void WidgetContainer::ClearWidgets()
 {
-    // nothing to do if empty
-    if(mWidgets.empty())
-        return ;
+    auto it = mWidgets.begin();
 
-    // make a copy of the list of Widgets because deleted ones will remove themselves
-    // from the original list
-    std::vector<Widget *> widgets = mWidgets;
-    auto it = widgets.rbegin();
-
-    while(it != widgets.rend())
+    while(!mWidgets.empty())
     {
-        delete *it;
-        ++it;
-    }
+        Widget * w = *it;
 
-    mWidgets.clear();
+        it = mWidgets.erase(it);
+
+        // delete Widget after erase because destructor will call RemoveChild
+        delete w;
+    }
 }
 
 void WidgetContainer::MoveChildToBack(Widget * w)
@@ -51,8 +46,8 @@ void WidgetContainer::MoveChildToBack(Widget * w)
 
     mWidgets.erase(res);
 
-    // add widget to back
-    mWidgets.insert(mWidgets.begin(), w);
+    // add widget to front of list which is back of screen
+    mWidgets.emplace_front(w);
 }
 
 void WidgetContainer::MoveChildToFront(Widget * w)
@@ -65,8 +60,8 @@ void WidgetContainer::MoveChildToFront(Widget * w)
 
     mWidgets.erase(res);
 
-    // add widget to front
-    mWidgets.push_back(w);
+    // add widget to back of list which is front of screen
+    mWidgets.emplace_back(w);
 }
 
 void WidgetContainer::ClearFocus()
@@ -106,14 +101,18 @@ void WidgetContainer::SetVisible(bool val)
 
 void WidgetContainer::AddChild(Widget * w)
 {
-    mWidgets.emplace_back(w);
+    auto it = std::find(mWidgets.begin(), mWidgets.end(), w);
+
+    if(it == mWidgets.end())
+        mWidgets.emplace_back(w);
 }
 
 void WidgetContainer::RemoveChild(Widget * w)
 {
-    auto res = std::find(mWidgets.begin(), mWidgets.end(), w);
+    auto it = std::find(mWidgets.begin(), mWidgets.end(), w);
 
-    mWidgets.erase(res);
+    if(it != mWidgets.end())
+        mWidgets.erase(it);
 }
 
 void WidgetContainer::HandleChildEnableChanged(Widget * /*child*/)

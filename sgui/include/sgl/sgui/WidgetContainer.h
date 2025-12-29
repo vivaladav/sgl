@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <list>
 
 namespace sgl
 {
@@ -63,7 +63,7 @@ protected:
     void PropagateUpdate(float delta);
 
 protected:
-    std::vector<Widget *> mWidgets;
+    std::list<Widget *> mWidgets;
 
 private:
     bool mFocus = false;
