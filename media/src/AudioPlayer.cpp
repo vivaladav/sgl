@@ -131,7 +131,7 @@ void AudioPlayer::PlayMusicQueue()
 }
 
 // -- SOUNDS --
-void AudioPlayer::PlaySound(const char * filename)
+void AudioPlayer::PlaySound(const char * filename, unsigned int loops)
 {
     // do not play when sounds are disabled
     if(!mSoundEnabled)
@@ -140,7 +140,43 @@ void AudioPlayer::PlaySound(const char * filename)
     Sound * sound = mAm->GetSound(filename);
 
     if(sound)
-        sound->Play();
+        sound->Play(loops);
+}
+
+void AudioPlayer::PlaySoundLoop(const char * filename)
+{
+    // do not play when sounds are disabled
+    if(!mSoundEnabled)
+        return ;
+
+    Sound * sound = mAm->GetSound(filename);
+
+    if(sound)
+        sound->PlayLoop();
+}
+
+void AudioPlayer::FadeOutSound(const char * filename, int ms)
+{
+    // not playing sounds
+    if(!mSoundEnabled)
+        return ;
+
+    Sound * sound = mAm->GetSound(filename);
+
+    if(sound)
+        sound->FadeOut(ms);
+}
+
+void AudioPlayer::StopSound(const char * filename)
+{
+    // not playing sounds
+    if(!mSoundEnabled)
+        return ;
+
+    Sound * sound = mAm->GetSound(filename);
+
+    if(sound)
+        sound->Stop();
 }
 
 void AudioPlayer::PauseSounds()

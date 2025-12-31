@@ -69,11 +69,47 @@ Sound::~Sound()
         SDL_RWclose(mDataRW);
 }
 
-bool Sound::Play()
+bool Sound::Play(unsigned int loops)
 {
-    if(Mix_PlayChannel(-1, mData, 0) == -1)
+    return ExecutePlay(loops);
+}
+
+bool Sound::PlayLoop()
+{
+    return ExecutePlay(-1);
+}
+
+void Sound::FadeOut(int ms)
+{
+    if(mChannel < 0)
+        return ;
+
+    Mix_FadeOutChannel(mChannel, ms);
+
+    mChannel = -1;
+}
+
+void Sound::Stop()
+{
+    if(mChannel < 0)
+        return ;
+
+    Mix_HaltChannel(mChannel);
+
+    mChannel = -1;
+}
+
+bool Sound::ExecutePlay(int loops)
+{
+    mChannel = Mix_PlayChannel(-1, mData, loops);
+
+    // TODO
+    // handle play termination with Mix_ChannelFinished in Player
+    // to clear the channel data
+
+    if(mChannel == -1)
     {
-        std::cout << "Sound::Play ERROR: " << SDL_GetError() << std::endl;
+        std::cout << "Sound::ExecutePlay ERROR: " << SDL_GetError() << std::endl;
         return false;
     }
     else

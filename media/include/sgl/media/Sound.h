@@ -24,13 +24,22 @@ public:
 
     bool IsValid() const;
 
-    bool Play();
+    bool Play(unsigned int loops);
+    bool PlayLoop();
+
+    void FadeOut(int ms);
+    void Stop();
+
+private:
+    bool ExecutePlay(int loops);
 
 private:
     SDL_RWops * mDataRW = nullptr;
     Mix_Chunk * mData = nullptr;
 
     std::size_t mId = 0;
+
+    int mChannel = -1;
 
     bool mValid = false;
 };

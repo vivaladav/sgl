@@ -32,7 +32,10 @@ public:
     void PlayMusicQueue();
 
     // -- SOUNDS --
-    void PlaySound(const char * filename);
+    void PlaySound(const char * filename, unsigned int loops = 0);
+    void PlaySoundLoop(const char * filename);
+    void FadeOutSound(const char * filename, int ms);
+    void StopSound(const char * filename);
     void PauseSounds();
     void ResumeSounds();
     void StopSounds();
