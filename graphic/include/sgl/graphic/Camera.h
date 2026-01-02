@@ -38,6 +38,8 @@ public:
     // conversion
     int GetScreenToWorldX(int x) const;
     int GetScreenToWorldY(int y) const;
+    int GetWorldToScreenX(int x) const;
+    int GetWorldToScreenY(int y) const;
 
     // default camera
     static void CreateDefaultCamera();
@@ -84,6 +86,8 @@ inline void Camera::SetFunctionOnMove(const std::function<void()> & f)
 
 inline int Camera::GetScreenToWorldX(int x) const { return x + mXd; }
 inline int Camera::GetScreenToWorldY(int y) const { return y + mYd; }
+inline int Camera::GetWorldToScreenX(int x) const { return x - mXd; }
+inline int Camera::GetWorldToScreenY(int y) const { return y - mYd; }
 
 inline Camera * Camera::GetDefaultCamera() { return mDefault; }
 
