@@ -16,7 +16,7 @@ public:
 
 public:
     // values will be generated in the range [min, max]
-    UniformRealDistribution(float min, float max, int seed = SEED_RANDOM);
+    UniformRealDistribution(float min, float max, unsigned int seed = SEED_RANDOM);
 
     void SetParameters(float min, float max);
 

@@ -7,14 +7,14 @@ namespace sgl
 namespace utilities
 {
 
-UniformDistribution::UniformDistribution(int min, int max, int seed)
+UniformDistribution::UniformDistribution(int min, int max, unsigned int seed)
 {
     if(SEED_RANDOM == seed)
         mGenerator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-	else
+    else
         mGenerator.seed(seed);
 
-	mDistribution.param(std::uniform_int_distribution<int>::param_type(min, max));
+    mDistribution.param(std::uniform_int_distribution<int>::param_type(min, max));
 }
 
 } // namespace utilities

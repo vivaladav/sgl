@@ -7,7 +7,7 @@ namespace sgl
 namespace utilities
 {
 
-UniformRealDistribution::UniformRealDistribution(float min, float max, int seed)
+UniformRealDistribution::UniformRealDistribution(float min, float max, unsigned int seed)
 {
     if(SEED_RANDOM == seed)
         mGenerator.seed(std::chrono::system_clock::now().time_since_epoch().count());
