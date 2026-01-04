@@ -106,6 +106,14 @@ bool StateManager::SetInitialActiveState(int stateId)
     return true;
 }
 
+int StateManager::GetActiveStateId() const
+{
+    if(mActive != nullptr)
+        return mActive->GetStateId();
+    else
+        return -1;
+}
+
 void StateManager::Update(float delta)
 {
     UpdateActive();

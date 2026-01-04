@@ -13,7 +13,7 @@ public:
     State(int stateId);
     virtual ~State();
 
-    unsigned int GetStateId() const;
+    int GetStateId() const;
 
     virtual void OnActive();
     virtual void OnInactive();
@@ -25,7 +25,7 @@ public:
 private:
     StateManager * mManager = nullptr;
 
-    unsigned int mId = 0;
+    int mId = 0;
 
     // manager can set the pointer to itself
     friend class StateManager;
@@ -34,7 +34,7 @@ private:
 inline State::State(int stateId) : mId(stateId) { }
 inline State::~State() { }
 
-inline unsigned int State::GetStateId() const { return mId; }
+inline int State::GetStateId() const { return mId; }
 
 inline StateManager * State::GetStateManager() const { return mManager; }
 
