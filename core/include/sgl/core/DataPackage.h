@@ -15,7 +15,7 @@ public:
     ~DataPackage();
 
     const char * GetData(const char * fileId) const;
-    int GetDataSize(const char * fileId) const;
+    unsigned int GetDataSize(const char * fileId) const;
 
     bool IsValid() const;
 
@@ -25,10 +25,10 @@ private:
 private:
     struct Data
     {
-        Data(char * d, int s) : data(d), size(s) {}
+        Data(char * d, unsigned int s) : data(d), size(s) {}
 
         const char * data = nullptr;
-        int size = 0;
+        unsigned int size = 0;
     };
 
     std::unordered_map<std::string, Data> mData;

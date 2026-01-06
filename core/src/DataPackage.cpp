@@ -39,7 +39,7 @@ namespace core
             return ;
 
         // SIZE of data
-        int sizeData = 0;
+        unsigned int sizeData = 0;
         sizeRead = sizeof(sizeData);
 
         if(ifs.read(reinterpret_cast<char*>(&sizeData), sizeRead))
@@ -59,7 +59,7 @@ namespace core
             return ;
         }
 
-        Data block {data, sizeData};
+        const Data block {data, sizeData};
         mData.emplace(fileId, block);
     }
 
@@ -79,10 +79,10 @@ const char * DataPackage::GetData(const char * fileId) const
     if(it != mData.end())
         return it->second.data;
     else
-        return 0;
+        return nullptr;
 }
 
-int DataPackage::GetDataSize(const char * fileId) const
+unsigned int DataPackage::GetDataSize(const char * fileId) const
 {
     auto it = mData.find(fileId);
 
