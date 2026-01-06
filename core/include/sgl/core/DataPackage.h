@@ -14,7 +14,7 @@ public:
     DataPackage(const char * filename);
     ~DataPackage();
 
-    char * GetData(const char * fileId) const;
+    const char * GetData(const char * fileId) const;
     int GetDataSize(const char * fileId) const;
 
     bool IsValid() const;
@@ -27,7 +27,7 @@ private:
     {
         Data(char * d, int s) : data(d), size(s) {}
 
-        char * data = nullptr;
+        const char * data = nullptr;
         int size = 0;
     };
 

@@ -72,7 +72,7 @@ DataPackage::~DataPackage()
         delete[] it.second.data;
 }
 
-char * DataPackage::GetData(const char * fileId) const
+const char * DataPackage::GetData(const char * fileId) const
 {
     auto it = mData.find(fileId);
 
