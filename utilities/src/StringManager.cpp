@@ -2,6 +2,7 @@
 
 #include "sgl/core/DataPackage.h"
 
+#include <fstream>
 #include <sstream>
 
 namespace sgl
@@ -39,7 +40,23 @@ bool StringManager::RegisterPackage(const char * file)
 
 bool StringManager::LoadStringsFromFile(const char * file)
 {
+    // open  file
+    std::ifstream fs(file, std::ios::binary | std::ios::ate);
 
+    if(!fs.is_open())
+        return false;
+
+    const std::size_t size = fs.tellg();
+    fs.seekg(0);
+
+    char data[size];
+
+    if(fs.read(data, size))
+        LoadStringsData(data, size);
+
+    fs.close();
+
+    return true;
 }
 
 bool StringManager::LoadStringsFromPackage(const char * file)
