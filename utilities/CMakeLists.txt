@@ -13,6 +13,7 @@ add_library(
     include/sgl/utilities/LoadedDie.h
     include/sgl/utilities/State.h
     include/sgl/utilities/StateManager.h
+    include/sgl/utilities/StringManager.h
     include/sgl/utilities/System.h
     $<$<PLATFORM_ID:Linux>:include/sgl/utilities/linux/Filesystem.h>
     $<$<PLATFORM_ID:Linux>:include/sgl/utilities/linux/System.h>
@@ -25,12 +26,18 @@ add_library(
     src/LoadedDie.cpp
     src/State.cpp
     src/StateManager.cpp
+    src/StringManager.cpp
     $<$<PLATFORM_ID:Linux>:src/linux/Filesystem.cpp>
     $<$<PLATFORM_ID:Linux>:src/linux/System.cpp>
     $<$<PLATFORM_ID:Windows>:src/windows/Filesystem.cpp>
     $<$<PLATFORM_ID:Windows>:src/windows/System.cpp>
     src/UniformDistribution.cpp
     src/UniformRealDistribution.cpp
+)
+
+target_link_libraries(
+    utilities
+    PUBLIC core
 )
 
 target_include_directories(
