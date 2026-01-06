@@ -101,13 +101,28 @@ void StringManager::LoadStringsData(const char * data, unsigned int size)
 
     while(std::getline(dataStream, line))
     {
-        std::istringstream lineStream(line);
-
+        // read key
+        const unsigned int sizeKey = line.find(' ');
         std::string key;
-        lineStream >> key;
+        key.reserve(sizeKey);
+        key = line.substr(0, sizeKey);
 
+        // define text
+        const unsigned int posText = sizeKey + 1;
+        const unsigned int sizeText = line.size() - posText;
         std::string text;
-        lineStream >> text;
+        text.reserve(sizeText);
+        text = line.substr(posText, sizeText);
+
+        // replace "\n" occurencies with new line character
+        const std::string tagNL("\\n");
+        const unsigned int lenTag = tagNL.length();
+        const std::string NL("\n");
+
+        std::size_t pos = 0;
+
+        while((pos = text.find(tagNL, pos)) != std::string::npos)
+            text.replace(pos++, lenTag, NL);
 
         // check if string is already stored
         auto it = mStrings.find(key);

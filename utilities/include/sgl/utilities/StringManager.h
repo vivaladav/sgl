@@ -25,6 +25,7 @@ public:
     bool LoadStringsFromPackage(const char * file);
 
     const std::string & GetString(const std::string & sid) const;
+    const char * GetCString(const std::string & sid) const;
 
 private:
     StringManager() = default;
@@ -42,6 +43,11 @@ private:
 };
 
 inline StringManager * StringManager::Instance() { return mInstance; }
+
+inline const char * StringManager::GetCString(const std::string & sid) const
+{
+    return GetString(sid).c_str();
+}
 
 } // namespace utilities
 } // namespace sgl
