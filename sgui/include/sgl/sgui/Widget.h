@@ -84,6 +84,9 @@ public:
 
     void DeleteLater();
 
+    // call to refresh content, if implemented
+    virtual void Refresh();
+
 protected:
     void SetSize(int w, int h);
 

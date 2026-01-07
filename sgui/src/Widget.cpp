@@ -174,6 +174,8 @@ void Widget::DeleteLater()
     Stage::Instance()->DeleteLater(this);
 }
 
+void Widget::Refresh() {}
+
 void Widget::SetSize(int w, int h)
 {
     mWidth = w;

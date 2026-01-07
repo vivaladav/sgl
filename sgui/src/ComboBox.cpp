@@ -85,6 +85,11 @@ void ComboBox::SetActiveItem(unsigned int index)
     UpdateText();
 }
 
+void ComboBox::Refresh()
+{
+    UpdateText();
+}
+
 void ComboBox::SetLabelFont(graphic::Font * font)
 {
     mLabelFont = font;
