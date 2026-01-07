@@ -3,7 +3,6 @@
 #include "sgl/core/DataPackage.h"
 
 #include <fstream>
-#include <sstream>
 
 namespace sgl
 {
@@ -95,29 +94,34 @@ StringManager::~StringManager()
 
 void StringManager::LoadStringsData(const char * data, unsigned int size)
 {
-    std::istringstream dataStream(data);
+    const std::string strData(data, size);
+    const std::string NL("\n");
 
-    std::string line;
+    std::size_t linePos = 0;
+    std::size_t linePrevPos = 0;
 
-    while(std::getline(dataStream, line))
+    while((linePos = strData.find(NL, linePos)) != std::string::npos)
     {
+        std::size_t sizeLine = linePos - linePrevPos;
+        const std::string line = strData.substr(linePrevPos, sizeLine);
+        linePrevPos = ++linePos;
+
         // read key
-        const unsigned int sizeKey = line.find(' ');
+        const std::size_t sizeKey = line.find(' ');
         std::string key;
         key.reserve(sizeKey);
         key = line.substr(0, sizeKey);
 
         // define text
-        const unsigned int posText = sizeKey + 1;
-        const unsigned int sizeText = line.size() - posText;
+        const std::size_t posText = sizeKey + 1;
+        const std::size_t sizeText = sizeLine - posText;
         std::string text;
         text.reserve(sizeText);
         text = line.substr(posText, sizeText);
 
         // replace "\n" occurencies with new line character
         const std::string tagNL("\\n");
-        const unsigned int lenTag = tagNL.length();
-        const std::string NL("\n");
+        const std::size_t lenTag = tagNL.length();
 
         std::size_t pos = 0;
 
