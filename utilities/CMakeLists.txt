@@ -13,6 +13,7 @@ add_library(
     include/sgl/utilities/LoadedDie.h
     include/sgl/utilities/State.h
     include/sgl/utilities/StateManager.h
+    include/sgl/utilities/StringsChangeListener.h
     include/sgl/utilities/StringManager.h
     include/sgl/utilities/System.h
     $<$<PLATFORM_ID:Linux>:include/sgl/utilities/linux/Filesystem.h>
@@ -26,6 +27,7 @@ add_library(
     src/LoadedDie.cpp
     src/State.cpp
     src/StateManager.cpp
+    src/StringsChangeListener.cpp
     src/StringManager.cpp
     $<$<PLATFORM_ID:Linux>:src/linux/Filesystem.cpp>
     $<$<PLATFORM_ID:Linux>:src/linux/System.cpp>

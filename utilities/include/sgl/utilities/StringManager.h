@@ -1,5 +1,6 @@
 #pragma once
 
+#include <list>
 #include <string>
 #include <unordered_map>
 
@@ -10,6 +11,8 @@ namespace core { class DataPackage; }
 
 namespace utilities
 {
+
+class StringsChangeListener;
 
 class StringManager
 {
@@ -27,17 +30,25 @@ public:
     const std::string & GetString(const std::string & sid) const;
     const char * GetCString(const std::string & sid) const;
 
+    // LISTENERS
+    void AddListener(StringsChangeListener * l);
+    void RemoveListener(StringsChangeListener * l);
+
 private:
     StringManager() = default;
     ~StringManager();
 
     void LoadStringsData(const char * data, unsigned int size);
 
+    void NotifyListeners();
+
 private:
     static StringManager *  mInstance;
 
 private:
     std::unordered_map<std::string, std::string> mStrings;
+
+    std::list<StringsChangeListener *> mListeners;
 
     core::DataPackage * mPackage = nullptr;
 };

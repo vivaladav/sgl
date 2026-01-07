@@ -1,7 +1,9 @@
 #include "sgl/utilities/StringManager.h"
 
 #include "sgl/core/DataPackage.h"
+#include "sgl/utilities/StringsChangeListener.h"
 
+#include <algorithm>
 #include <fstream>
 
 namespace sgl
@@ -55,6 +57,8 @@ bool StringManager::LoadStringsFromFile(const char * file)
 
     fs.close();
 
+    NotifyListeners();
+
     return true;
 }
 
@@ -71,6 +75,8 @@ bool StringManager::LoadStringsFromPackage(const char * file)
 
     LoadStringsData(data, sizeData);
 
+    NotifyListeners();
+
     return true;
 }
 
@@ -84,6 +90,23 @@ const std::string & StringManager::GetString(const std::string & sid) const
         return res->second;
     else
         return unknown;
+}
+
+void StringManager::AddListener(StringsChangeListener * l)
+{
+    // listener already registered
+    if(std::find(mListeners.begin(), mListeners.end(), l) != mListeners.end())
+        return ;
+
+    mListeners.emplace_back(l);
+}
+
+void StringManager::RemoveListener(StringsChangeListener * l)
+{
+    auto it = std::find(mListeners.begin(), mListeners.end(), l);
+
+    if(it != mListeners.end())
+        mListeners.erase(it);
 }
 
 // ===== PRIVATE  MEMBERS ======
@@ -138,6 +161,12 @@ void StringManager::LoadStringsData(const char * data, unsigned int size)
 
         lineStart = ++lineEnd;
     }
+}
+
+void StringManager::NotifyListeners()
+{
+    for(auto it : mListeners)
+        it->OnStringsChanged();
 }
 
 } // namespace utilities
