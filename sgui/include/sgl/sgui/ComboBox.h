@@ -26,13 +26,16 @@ public:
     ComboBox(Widget * parent);
 
     void AddItem(ComboBoxItem * item);
+    ComboBoxItem * GetItem(unsigned int index);
 
-    const ComboBoxItem * GetActiveItem() const;
+    ComboBoxItem * GetActiveItem() const;
     int GetActiveItemIndex() const;
     void InitActiveItem(unsigned int index);
     void SetActiveItem(unsigned int index);
 
     void SetOnActiveChanged(const std::function<void(int)> & f);
+
+    void Refresh() override;
 
 protected:
     void SetLabelFont(graphic::Font * font);
@@ -59,7 +62,15 @@ private:
     int mActiveItem = -1;
 };
 
-inline const ComboBoxItem * ComboBox::GetActiveItem() const
+inline ComboBoxItem * ComboBox::GetItem(unsigned int index)
+{
+    if(index < mItems.size())
+        return mItems[index];
+    else
+        return nullptr;
+}
+
+inline ComboBoxItem * ComboBox::GetActiveItem() const
 {
     if(-1 != mActiveItem)
         return mItems[mActiveItem];
