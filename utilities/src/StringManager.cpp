@@ -97,27 +97,25 @@ void StringManager::LoadStringsData(const char * data, unsigned int size)
     const std::string strData(data, size);
     const std::string NL("\n");
 
-    std::size_t linePos = 0;
-    std::size_t linePrevPos = 0;
+    std::size_t lineEnd = 0;
+    std::size_t lineStart = 0;
 
-    while((linePos = strData.find(NL, linePos)) != std::string::npos)
+    while((lineEnd = strData.find(NL, lineStart)) != std::string::npos)
     {
-        std::size_t sizeLine = linePos - linePrevPos;
-        const std::string line = strData.substr(linePrevPos, sizeLine);
-        linePrevPos = ++linePos;
+        std::size_t sizeLine = lineEnd - lineStart;
 
         // read key
-        const std::size_t sizeKey = line.find(' ');
+        const std::size_t sizeKey = strData.find(' ', lineStart) - lineStart;
         std::string key;
         key.reserve(sizeKey);
-        key = line.substr(0, sizeKey);
+        key = strData.substr(lineStart, sizeKey);
 
         // define text
-        const std::size_t posText = sizeKey + 1;
-        const std::size_t sizeText = sizeLine - posText;
+        const std::size_t posText = lineStart + sizeKey + 1;
+        const std::size_t sizeText = lineEnd - posText;
         std::string text;
         text.reserve(sizeText);
-        text = line.substr(posText, sizeText);
+        text = strData.substr(posText, sizeText);
 
         // replace "\n" occurencies with new line character
         const std::string tagNL("\\n");
@@ -137,6 +135,8 @@ void StringManager::LoadStringsData(const char * data, unsigned int size)
         // insert text
         else
             mStrings.emplace(key, text);
+
+        lineStart = ++lineEnd;
     }
 }
 
