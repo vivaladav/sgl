@@ -27,7 +27,7 @@ public:
     void ClearButtons();
     void AddButton(AbstractButton * button);
     void RemoveButton(AbstractButton * button);
-    AbstractButton *GetButton(unsigned int ind) const;
+    AbstractButton * GetButton(unsigned int ind) const;
 
     unsigned int GetNumButtons() const;
 
