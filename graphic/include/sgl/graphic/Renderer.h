@@ -34,6 +34,8 @@ public:
     void SetClipping(int x0, int y0, int w, int h);
     void ClearClipping();
 
+    void PrintInfo();
+
 private:
     Renderer(Window * win, bool vsync);
     ~Renderer();

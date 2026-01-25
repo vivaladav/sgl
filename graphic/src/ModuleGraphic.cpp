@@ -1,5 +1,7 @@
 #include "sgl/graphic/ModuleGraphic.h"
 
+#include "sgl/graphic/Renderer.h"
+
 #ifdef LINUX
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -53,6 +55,18 @@ void ModuleGraphic::PrintRuntimeLibs()
               << static_cast<int>(ttfVer->minor) << "."
               << static_cast<int>(ttfVer->patch) << std::endl;
     std::cout << "-----------------------------------------" << std::endl;
+}
+
+void ModuleGraphic::PrintVideoInfo()
+{
+    auto r = Renderer::Instance();
+
+    if(r == nullptr)
+        return ;
+
+    std::cout << "=========== GRAPHIC - VIDEO INFO ===========" << std::endl;
+    r->PrintInfo();
+    std::cout << "--------------------------------------------" << std::endl;
 }
 
 // -- cursor --

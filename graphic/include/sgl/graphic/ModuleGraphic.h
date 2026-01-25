@@ -11,6 +11,7 @@ public:
     // -- module info --
     static void PrintBuildLibs();
     static void PrintRuntimeLibs();
+    static void PrintVideoInfo();
 
     // -- cursor --
     static void HideSystemCursor();

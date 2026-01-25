@@ -141,5 +141,17 @@ void Renderer::ClearClipping()
     SDL_RenderSetClipRect(mSysRenderer, nullptr);
 }
 
+void Renderer::PrintInfo()
+{
+    if(mSysRenderer == nullptr)
+        return ;
+
+    SDL_RendererInfo info;
+    SDL_GetRendererInfo(mSysRenderer, &info);
+
+    std::cout << "Max texture size: " << info.max_texture_width << "x"
+              << info.max_texture_height << std::endl;
+}
+
 } // namespace graphic
 } // namespace sgl
