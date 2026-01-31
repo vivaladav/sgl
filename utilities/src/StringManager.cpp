@@ -50,10 +50,12 @@ bool StringManager::LoadStringsFromFile(const char * file)
     const std::size_t size = fs.tellg();
     fs.seekg(0);
 
-    char data[size];
+    char * data = new char[size];
 
     if(fs.read(data, size))
         LoadStringsData(data, size);
+
+    delete[] data;
 
     fs.close();
 
