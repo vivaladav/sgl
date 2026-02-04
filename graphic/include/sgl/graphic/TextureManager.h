@@ -38,6 +38,7 @@ public:
                         const std::vector<core::Rectd> & srcRects);
     void RegisterSprite(const char * file, const std::vector<core::Rectd> & srcRects);
     Texture * GetSprite(const char * file, unsigned int spriteId);
+    void DestroySprite(const char * file);
     void DestroySprites();
 
     TextureQuality GetNewTextureQuality() const;

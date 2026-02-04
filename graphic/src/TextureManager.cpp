@@ -180,6 +180,23 @@ Texture * TextureManager::GetSprite(const char * file, unsigned int spriteId)
     return textures[spriteId];
 }
 
+void TextureManager::DestroySprite(const char * file)
+{
+    const std::string strFile(file);
+    auto it = mSprites.find(strFile);
+
+    // no sprite found
+    if(mSprites.end() == it)
+        return ;
+
+    // delete all textures
+    for(auto tex : it->second)
+        delete tex;
+
+    // remove sprite from map
+    mSprites.erase(it);
+}
+
 void TextureManager::DestroySprites()
 {
     for(auto & sprite : mSprites)
