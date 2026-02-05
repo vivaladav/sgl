@@ -92,8 +92,10 @@ void TextureManager::DestroyTexture(const char * file)
 {
     auto res = mTextures.find(std::string(file));
 
-    if(res != mTextures.end())
-        delete res->second;
+    if(res == mTextures.end())
+        return ;
+
+    delete res->second;
 
     mTextures.erase(res);
 }
