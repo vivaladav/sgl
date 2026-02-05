@@ -7,6 +7,12 @@ namespace utilities
 
 class StateManager;
 
+class StateData
+{
+public:
+    virtual ~StateData() = default;
+};
+
 class State
 {
 public:
@@ -14,6 +20,8 @@ public:
     virtual ~State();
 
     int GetStateId() const;
+
+    virtual void SetNextStateData(StateData * data);
 
     virtual void OnActive();
     virtual void OnInactive();

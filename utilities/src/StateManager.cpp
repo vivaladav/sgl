@@ -65,7 +65,7 @@ void StateManager::RemoveAndDestroyState(int stateId)
     delete res;
 }
 
-bool StateManager::RequestNextActiveState(int stateId)
+bool StateManager::RequestNextActiveState(int stateId, StateData * data)
 {
     // need to use SetInitialActiveState first
     if(mInit)
@@ -83,13 +83,14 @@ bool StateManager::RequestNextActiveState(int stateId)
 
     // schedule state to be next active
     mNext = res->second;
+    mNext->SetNextStateData(data);
 
     mUpdated = false;
 
     return true;
 }
 
-bool StateManager::SetInitialActiveState(int stateId)
+bool StateManager::SetInitialActiveState(int stateId, StateData * data)
 {
     // initial state already set once
     if(mActive != nullptr || mNext != nullptr)
@@ -102,6 +103,7 @@ bool StateManager::SetInitialActiveState(int stateId)
         return false;
 
     mNext = res->second;
+    mNext->SetNextStateData(data);
 
     return true;
 }

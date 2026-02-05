@@ -8,6 +8,7 @@ namespace utilities
 {
 
 class State;
+class StateData;
 
 class StateManager
 {
@@ -18,8 +19,8 @@ public:
     bool AddState(State * state);
     State * RemoveState(int stateId);
     void RemoveAndDestroyState(int stateId);
-    bool RequestNextActiveState(int stateId);
-    bool SetInitialActiveState(int stateId);
+    bool RequestNextActiveState(int stateId, StateData * data = nullptr);
+    bool SetInitialActiveState(int stateId, StateData * data = nullptr);
 
     int GetActiveStateId() const;
     State * GetActiveState() const;

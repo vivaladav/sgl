@@ -5,6 +5,8 @@ namespace sgl
 namespace utilities
 {
 
+void State::SetNextStateData(StateData *) { }
+
 void State::OnActive() { }
 
 void State::OnInactive() { }
