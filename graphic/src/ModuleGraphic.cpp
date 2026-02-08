@@ -66,6 +66,18 @@ void ModuleGraphic::PrintVideoInfo()
 
     std::cout << "=========== GRAPHIC - VIDEO INFO ===========" << std::endl;
     r->PrintInfo();
+
+    std::cout << "ACTIVE VIDEO DRIVER: " << SDL_GetCurrentVideoDriver() << std::endl;
+
+    const int numDrivers = SDL_GetNumVideoDrivers();
+    const int lastDriver = numDrivers - 1;
+    std::cout << "AVAILABLE VIDEO DRIVERS: ";
+    for(int i = 0; i < lastDriver; ++i)
+        std::cout << SDL_GetVideoDriver(i) << ", ";
+
+    if(lastDriver > 0)
+        std::cout << SDL_GetVideoDriver(lastDriver) << "\n";
+
     std::cout << "--------------------------------------------" << std::endl;
 }
 
