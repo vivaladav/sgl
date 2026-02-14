@@ -38,7 +38,11 @@ private:
     int mSpacing = 0;
 };
 
-inline void ButtonsGroup::SetSpacing(int spacing) { mSpacing = spacing; }
+inline void ButtonsGroup::SetSpacing(int spacing)
+{
+    mSpacing = spacing;
+    RepositionButtons();
+}
 
 } // namespace sgui
 } // namespace sgl
