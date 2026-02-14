@@ -17,24 +17,26 @@ ButtonsGroup::ButtonsGroup(Orientation orient, Widget * parent)
 
 void ButtonsGroup::OnButtonAdded(AbstractButton * button)
 {
-    const int w = GetWidth();
-    const int h = GetHeight();
-
-    // no spacing when adding the first button (w=0)
-    const int spacing = w > 0 ? mSpacing : 0;
-
-    // this will update the size of the group
+    // make sure button is child of this group
     button->SetParent(this);
+
+    // position the new button according to orientation
+    unsigned int numOldButtons = GetNumButtons() - 1;
 
     int x = 0;
     int y = 0;
 
     if(mOrient == HORIZONTAL)
-        x += w + spacing;
+    {
+        for(unsigned int i = 0; i < numOldButtons; ++i)
+            x += GetButton(i)->GetWidth() + mSpacing;
+    }
     else
-        y += h + spacing;
+    {
+        for(unsigned int i = 0; i < numOldButtons; ++i)
+            y += GetButton(i)->GetHeight() + mSpacing;
+    }
 
-    // button's position depends on orientation
     button->SetPosition(x, y);
 }
 
