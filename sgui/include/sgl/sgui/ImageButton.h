@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sgl/sgui/PushButton.h"
+#include "sgl/sgui/AbstractButton.h"
 
 #include <array>
 
@@ -16,19 +16,24 @@ namespace graphic
 namespace sgui
 {
 
-class ImageButton : public PushButton
+class ImageButton : public AbstractButton
 {
 public:
     ImageButton(const std::array<unsigned int, NUM_VISUAL_STATES> & texIds,
                 const char * spriteFile, Widget * parent);
 
 protected:
-    void OnStateChanged(sgl::sgui::AbstractButton::VisualState state) override;
+    void OnStateChanged(sgui::AbstractButton::VisualState state) override;
+
+    void HandlePositionChanged() override;
 
 private:
-    std::array<sgl::graphic::Texture *, NUM_VISUAL_STATES> mTexs;
+    void UpdateContent(sgui::AbstractButton::VisualState state);
 
-    sgl::graphic::Image * mBody = nullptr;
+private:
+    std::array<graphic::Texture *, NUM_VISUAL_STATES> mTexs;
+
+    graphic::Image * mBody = nullptr;
 };
 
 } // namespace sgui

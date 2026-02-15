@@ -1,7 +1,6 @@
 #include "sgl/sgui/ImageButton.h"
 
 #include "sgl/graphic/Image.h"
-#include "sgl/graphic/Texture.h"
 #include "sgl/graphic/TextureManager.h"
 
 namespace sgl
@@ -11,7 +10,7 @@ namespace sgui
 
 ImageButton::ImageButton(const std::array<unsigned int, NUM_VISUAL_STATES> & texIds,
             const char * spriteFile, Widget * parent)
-    : PushButton(parent)
+    : AbstractButton(parent)
     , mBody(new sgl::graphic::Image)
 {
     RegisterRenderable(mBody);
@@ -23,14 +22,29 @@ ImageButton::ImageButton(const std::array<unsigned int, NUM_VISUAL_STATES> & tex
     }
 
     // set initial visual state
-    SetState(NORMAL);
+    InitState(NORMAL);
+    UpdateContent(NORMAL);
 }
 
 void ImageButton::OnStateChanged(sgl::sgui::AbstractButton::VisualState state)
 {
+    AbstractButton::OnStateChanged(state);
+
+    UpdateContent(state);
+}
+
+void ImageButton::HandlePositionChanged()
+{
+    mBody->SetPosition(GetScreenX(), GetScreenY());
+}
+
+void ImageButton::UpdateContent(sgui::AbstractButton::VisualState state)
+{
     mBody->SetTexture(mTexs[state]);
-    // reset BG to make changes visible
-    SetCurrBg(mBody);
+
+    mBody->SetPosition(GetScreenX(), GetScreenY());
+
+    SetSize(mBody->GetWidth(), mBody->GetHeight());
 }
 
 } // namespace sgui
