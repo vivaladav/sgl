@@ -191,6 +191,13 @@ void Widget::HandleMouseOut() { }
 
 void Widget::RegisterRenderable(graphic::Renderable * elem)
 {
+    // check element not added already
+    auto it = std::find(mRenderables.begin(), mRenderables.end(), elem);
+
+    if(it != mRenderables.end())
+        return ;
+
+    // add element
     mRenderables.push_back(elem);
 
     elem->SetCamera(mCamera);
