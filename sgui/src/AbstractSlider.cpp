@@ -132,9 +132,13 @@ void AbstractSlider::HandleMousePosition(int pos, int pos0, int pos1)
     }
 
     const int segmentInd = static_cast<int>(std::roundf(perc / segmentSizePerc));
-    const int val = mMin + segmentInd * mStep;
 
-     mValuePerc = static_cast<int>(std::roundf(segmentInd * segmentSizePerc));
+    int val = mMin + segmentInd * mStep;
+
+    if(val > mMax)
+        val = mMax;
+
+    mValuePerc = static_cast<int>(std::roundf((val - mMin) * 100.f / (mMax - mMin)));
 
     if(mValue != val)
     {
