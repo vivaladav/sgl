@@ -56,6 +56,11 @@ int Renderable::GetWidth() const { return mRect->w; }
 void Renderable::SetWidth(int w) { mRect->w = w; }
 int Renderable::GetHeight() const { return mRect->h; }
 void Renderable::SetHeight(int h) { mRect->h = h; }
+void Renderable::SetSize(int w, int h)
+{
+    mRect->w = w;
+    mRect->h = h;
+}
 
 void Renderable::SetColor(unsigned int color)
 {

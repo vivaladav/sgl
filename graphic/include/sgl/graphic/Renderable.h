@@ -31,6 +31,7 @@ public:
     void SetWidth(int w);
     int GetHeight() const;
     void SetHeight(int h);
+    void SetSize(int w, int h);
 
     void SetAlpha(unsigned char a);
     // get color as #RRGGBBAA
