@@ -53,6 +53,27 @@ void Image::SetColor(unsigned int color)
     mImg->SetColor(color);
 }
 
+void Image::SetImageWidth(int w)
+{
+    mImg->SetWidth(w);
+
+    SetSize(w, mImg->GetHeight());
+}
+
+void Image::SetImageHeight(int h)
+{
+    mImg->SetHeight(h);
+
+    SetSize(mImg->GetWidth(), h);
+}
+
+void Image::SetImageSize(int w, int h)
+{
+    mImg->SetSize(w, h);
+
+    SetSize(w, h);
+}
+
 void Image::LoadImage(const char * file)
 {
     graphic::Renderable * oldImg = mImg;

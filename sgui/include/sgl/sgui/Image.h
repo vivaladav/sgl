@@ -2,8 +2,6 @@
 
 #include "sgl/sgui/Widget.h"
 
-#include <string>
-
 namespace sgl
 {
 
@@ -25,6 +23,10 @@ public:
 
     void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
     void SetColor(unsigned int color);
+
+    void SetImageWidth(int w);
+    void SetImageHeight(int h);
+    void SetImageSize(int w, int h);
 
     void LoadImage(const char * file);
 
