@@ -20,9 +20,9 @@ namespace sgui
 Widget::Widget(Widget * parent)
     : mCamera(graphic::Camera::GetDummyCamera())
 {
-    SetParent(parent);
+    SetParent(parent, true);
 
-    static unsigned int ids = 0;
+    static unsigned int ids = 10;
     mId = ++ids;
 }
 
@@ -48,45 +48,6 @@ Widget::~Widget()
     }
 
     stage->CancelDeleteLater(this);
-}
-
-void Widget::SetParent(Widget * parent)
-{
-    // remove from current parent
-    if(mParent)
-    {
-        mParent->RemoveChild(this);
-        mParent->UpdateSize();
-        mParent = nullptr;
-    }
-    else if(mStage)
-    {
-        mStage->RemoveChild(this);
-        mStage = nullptr;
-    }
-
-    // set new parent
-    if(parent)
-    {
-        mParent = parent;
-        parent->AddChild(this);
-        parent->UpdateSize();
-
-        const int dx = parent->GetScreenX();
-        const int dy = parent->GetScreenY();
-        SetScreenPosition(mRelX + dx, mRelY + dy);
-        PropagateParentPositionChanged(dx, dy);
-    }
-    else
-    {
-        mStage = Stage::Instance();
-        mStage->AddChild(this);
-
-        const int dx = mRelX - mScreenX;
-        const int dy = mRelY - mScreenY;
-        SetScreenPosition(mRelX, mRelY);
-        PropagateParentPositionChanged(dx, dy);
-    }
 }
 
 void Widget::SetTooltip(Widget * t)
@@ -373,6 +334,55 @@ void Widget::OnRender()
 
 void Widget::OnUpdate(float delta) { }
 
+void Widget::SetParent(Widget * parent, bool init)
+{
+    // remove from current parent
+    if(mParent)
+    {
+        mParent->RemoveChild(this);
+        mParent->UpdateSize();
+        mParent = nullptr;
+    }
+    else if(mStage)
+    {
+        mStage->RemoveChild(this);
+        mStage = nullptr;
+    }
+
+    // set new parent
+    if(parent)
+    {
+        mParent = parent;
+        parent->AddChild(this);
+        parent->UpdateSize();
+
+        const int dx = parent->GetScreenX();
+        const int dy = parent->GetScreenY();
+
+        if(init)
+            InitScreenPosition(mRelX + dx, mRelY + dy);
+        else
+            SetScreenPosition(mRelX + dx, mRelY + dy);
+
+        PropagateParentPositionChanged(dx, dy);
+    }
+    else
+    {
+        mStage = Stage::Instance();
+        mStage->AddChild(this);
+
+        const int dx = mRelX - mScreenX;
+        const int dy = mRelY - mScreenY;
+
+        if(init)
+            InitScreenPosition(mRelX, mRelY);
+        else
+            SetScreenPosition(mRelX, mRelY);
+
+        PropagateParentPositionChanged(dx, dy);
+    }
+}
+
 void Widget::UpdateTimeOver()
 {
     const auto t1 = std::chrono::high_resolution_clock::now();
@@ -393,6 +403,15 @@ void Widget::UpdateTimeOver()
         if(GetTimerOver() >= mTooltipTimeDelayMs + mTooltipTimeShowingMs)
             HideTooltip();
     }
+}
+
+void Widget::InitScreenPosition(int x, int y)
+{
+    mScreenX = x;
+    mScreenY = y;
+
+    // NOTE not calling UpdateVisibleAreaPoints here as no visible area is set on init
+    // change this if adding a costructor that specifies a visible area
 }
 
 void Widget::SetScreenPosition(int x, int y)

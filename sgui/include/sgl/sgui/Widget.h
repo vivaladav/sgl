@@ -121,8 +121,11 @@ protected:
     virtual void OnUpdate(float delta);
 
 private:
+    void SetParent(Widget * parent, bool init);
+
     void UpdateTimeOver();
 
+    void InitScreenPosition(int x, int y);
     void SetScreenPosition(int x, int y);
 
     void SetMouseOver();
@@ -192,6 +195,8 @@ inline void Widget::SetResizePolicy(ResizePolicy policy) { mResizePol = policy; 
 inline unsigned int Widget::GetWidgetId() const { return mId; }
 
 inline Widget * Widget::GetParent() const { return mParent; }
+
+inline void Widget::SetParent(Widget * parent) { SetParent(parent, false); }
 
 inline bool Widget::HasTooltip() const { return mTooltip != nullptr; }
 inline int Widget::GetTooltipDelay() const { return mTooltipTimeDelayMs; }
