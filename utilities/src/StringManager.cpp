@@ -127,8 +127,6 @@ void StringManager::LoadStringsData(const char * data, unsigned int size)
 
     while((lineEnd = strData.find(NL, lineStart)) != std::string::npos)
     {
-        std::size_t sizeLine = lineEnd - lineStart;
-
         // read key
         const std::size_t sizeKey = strData.find(' ', lineStart) - lineStart;
         std::string key;
