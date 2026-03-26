@@ -90,7 +90,7 @@ public:
 protected:
     void SetSize(int w, int h);
 
-    virtual void UpdateSize();
+    void UpdateSize();
 
     virtual void HandleStateEnabled();
     virtual void HandleStateDisabled();
