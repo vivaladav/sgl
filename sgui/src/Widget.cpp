@@ -128,6 +128,10 @@ void Widget::SetCamera(graphic::Camera * cam)
     // update graphic elements
     for(auto elem : mRenderables)
         elem->SetCamera(mCamera);
+
+    // update children
+    for(auto w : mWidgets)
+        w->SetCamera(mCamera);
 }
 
 void Widget::DeleteLater()
@@ -355,6 +359,8 @@ void Widget::SetParent(Widget * parent, bool init)
         mParent = parent;
         parent->AddChild(this);
         parent->UpdateSize();
+
+        SetCamera(parent->GetCamera());
 
         const int dx = parent->GetScreenX();
         const int dy = parent->GetScreenY();
