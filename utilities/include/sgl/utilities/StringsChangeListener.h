@@ -10,6 +10,7 @@ class StringManager;
 class StringsChangeListener
 {
 public:
+    StringsChangeListener();
     virtual ~StringsChangeListener();
 
 private:

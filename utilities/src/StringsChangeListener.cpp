@@ -7,6 +7,14 @@ namespace sgl
 namespace utilities
 {
 
+StringsChangeListener::StringsChangeListener()
+{
+    auto sm = StringManager::Instance();
+
+    if(sm != nullptr)
+        sm->AddListener(this);
+}
+
 StringsChangeListener::~StringsChangeListener()
 {
     auto sm = StringManager::Instance();
