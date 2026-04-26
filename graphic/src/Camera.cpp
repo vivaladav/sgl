@@ -103,6 +103,16 @@ void Camera::SetY(int y)
     mFuncOnMove();
 }
 
+bool Camera::IsPointInside(int x, int y) const
+{
+    return x > mXd && x < (mXd + mWidth) && y > mYd && y < (mYd + mHeight);
+}
+
+bool Camera::IsRectangleInside(int tlX, int tlY, int brX, int brY) const
+{
+    return IsPointInside(tlX, tlY) && IsPointInside(brX, brY);
+}
+
 void Camera::CreateDefaultCamera()
 {
     if(nullptr == mDefault)

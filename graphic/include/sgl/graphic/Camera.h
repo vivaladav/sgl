@@ -35,6 +35,10 @@ public:
     void SetX(int x);
     void SetY(int y);
 
+    // testers
+    bool IsPointInside(int x, int y) const;
+    bool IsRectangleInside(int tlX, int tlY, int brX, int brY) const;
+
     // conversion
     int GetScreenToWorldX(int x) const;
     int GetScreenToWorldY(int y) const;
