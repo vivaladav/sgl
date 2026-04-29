@@ -32,7 +32,7 @@ public:
 
     // -- cursor --
     // cursor is only used, it is not owned (deleted) by Stage
-    void SetCursor(graphic::Cursor * cursor);
+    void SetCursor(graphic::Cursor * cursor, bool show = true);
     void ClearCursor();
     void HideCursor();
     void ShowCursor();
@@ -69,7 +69,7 @@ private:
     graphic::Font * mDefaultFont = nullptr;
 
     graphic::Cursor * mCursor = nullptr;
-    graphic::Cursor * mHiddenCursor = nullptr;
+    bool mShowingCursor = false;
 
     int mMouseX = -1;
     int mMouseY = -1;
@@ -84,16 +84,8 @@ inline int Stage::GetMouseX() const { return mMouseX; }
 inline int Stage::GetMouseY() const { return mMouseY; }
 
 // -- cursor --
-inline void Stage::HideCursor()
-{
-    mHiddenCursor = mCursor;
-    mCursor = nullptr;
-}
-inline void Stage::ShowCursor()
-{
-    mCursor = mHiddenCursor;
-    mHiddenCursor = nullptr;
-}
+inline void Stage::HideCursor() { mShowingCursor = false; }
+inline void Stage::ShowCursor() { mShowingCursor = true; }
 
 inline graphic::Font * Stage::GetDefaultFont() { return mDefaultFont; }
 inline void Stage::SetDefaultFont(graphic::Font * font) { mDefaultFont = font; }

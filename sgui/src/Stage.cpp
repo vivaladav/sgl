@@ -30,11 +30,12 @@ void Stage::Destroy()
 }
 
 // -- cursor --
-void Stage::SetCursor(graphic::Cursor * cursor)
+void Stage::SetCursor(graphic::Cursor * cursor, bool show)
 {
     sgl::graphic::ModuleGraphic::HideSystemCursor();
 
     mCursor = cursor;
+    mShowingCursor = show;
 }
 
 void Stage::ClearCursor()
@@ -42,6 +43,7 @@ void Stage::ClearCursor()
     sgl::graphic::ModuleGraphic::ShowSystemCursor();
 
     mCursor = nullptr;
+    mShowingCursor = false;
 }
 
 void Stage::CancelDeleteLater(Widget * w)
@@ -66,7 +68,7 @@ void Stage::Render()
     if(IsVisible())
         PropagateRender();
 
-    if(mCursor)
+    if(mShowingCursor)
         mCursor->Render();
 }
 
