@@ -36,6 +36,7 @@ public:
     void ClearCursor();
     void HideCursor();
     void ShowCursor();
+    void ToggleCursorVisibility();
 
     // temporary code
     graphic::Font * GetDefaultFont();
@@ -85,7 +86,16 @@ inline int Stage::GetMouseY() const { return mMouseY; }
 
 // -- cursor --
 inline void Stage::HideCursor() { mShowingCursor = false; }
-inline void Stage::ShowCursor() { mShowingCursor = true; }
+inline void Stage::ShowCursor()
+{
+    if(mCursor != nullptr)
+        mShowingCursor = true;
+}
+inline void Stage::ToggleCursorVisibility()
+{
+    if(mCursor != nullptr)
+        mShowingCursor = !mShowingCursor;
+}
 
 inline graphic::Font * Stage::GetDefaultFont() { return mDefaultFont; }
 inline void Stage::SetDefaultFont(graphic::Font * font) { mDefaultFont = font; }
