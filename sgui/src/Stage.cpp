@@ -35,7 +35,7 @@ void Stage::SetCursor(graphic::Cursor * cursor, bool show)
     sgl::graphic::ModuleGraphic::HideSystemCursor();
 
     mCursor = cursor;
-    mShowingCursor = show;
+    mShowCursor = show;
 }
 
 void Stage::ClearCursor()
@@ -43,7 +43,7 @@ void Stage::ClearCursor()
     sgl::graphic::ModuleGraphic::ShowSystemCursor();
 
     mCursor = nullptr;
-    mShowingCursor = false;
+    mShowCursor = false;
 }
 
 void Stage::CancelDeleteLater(Widget * w)
@@ -68,7 +68,7 @@ void Stage::Render()
     if(IsVisible())
         PropagateRender();
 
-    if(mShowingCursor)
+    if(mRenderCursor)
         mCursor->Render();
 }
 
@@ -79,6 +79,15 @@ void Stage::Update(float delta)
 
     // propagate update
     PropagateUpdate(delta);
+
+    // auto- hide cursor when timer expired
+    if(mAutohideCursor && mRenderCursor)
+    {
+        mTimerAutohideCursor -= delta;
+
+        if(mTimerAutohideCursor < 0.f)
+            mRenderCursor = false;
+    }
 }
 
 void Stage::OnMouseButtonDown(core::MouseButtonEvent & event)
@@ -98,8 +107,15 @@ void Stage::OnMouseMotion(core::MouseMotionEvent & event)
 
     PropagateMouseMotion(event);
 
+    // update cursor if set
     if(mCursor != nullptr)
+    {
         mCursor->OnMouseMotion(event);
+
+        // render it if showing it and reset auto-hide timer
+        mRenderCursor = mShowCursor;
+        mTimerAutohideCursor = mTimeAutohideCursor;
+    }
 }
 
 void Stage::OnMouseWheel(core::MouseWheelEvent & event)

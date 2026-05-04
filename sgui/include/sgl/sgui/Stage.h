@@ -37,6 +37,9 @@ public:
     void HideCursor();
     void ShowCursor();
     void ToggleCursorVisibility();
+    void AutoHideInactiveCursor(bool enabled, float timeSec = 2.f);
+    bool IsShowingCursor() const;
+    bool IsAutoHidingCursor() const;
 
     // temporary code
     graphic::Font * GetDefaultFont();
@@ -70,7 +73,12 @@ private:
     graphic::Font * mDefaultFont = nullptr;
 
     graphic::Cursor * mCursor = nullptr;
-    bool mShowingCursor = false;
+    float mTimerAutohideCursor = 0.f;
+    float mTimeAutohideCursor = 2.f;
+    bool mAutohideCursor = false;
+    bool mShowCursor = false;
+    bool mRenderCursor = false;
+
 
     int mMouseX = -1;
     int mMouseY = -1;
@@ -85,17 +93,40 @@ inline int Stage::GetMouseX() const { return mMouseX; }
 inline int Stage::GetMouseY() const { return mMouseY; }
 
 // -- cursor --
-inline void Stage::HideCursor() { mShowingCursor = false; }
+inline void Stage::HideCursor()
+{
+    mShowCursor = false;
+    mRenderCursor = false;
+}
 inline void Stage::ShowCursor()
 {
+    mShowCursor = true;
+
     if(mCursor != nullptr)
-        mShowingCursor = true;
+    {
+        mRenderCursor = true;
+
+        mTimerAutohideCursor = mTimeAutohideCursor;
+    }
 }
 inline void Stage::ToggleCursorVisibility()
 {
-    if(mCursor != nullptr)
-        mShowingCursor = !mShowingCursor;
+    if(mShowCursor)
+        HideCursor();
+    else
+        ShowCursor();
 }
+
+inline void Stage::AutoHideInactiveCursor(bool enabled, float timeSec)
+{
+    mAutohideCursor = enabled;
+
+    mTimeAutohideCursor = timeSec;
+    mTimerAutohideCursor = mTimeAutohideCursor;
+}
+
+inline bool Stage::IsShowingCursor() const { return mShowCursor; }
+inline bool Stage::IsAutoHidingCursor() const { return mAutohideCursor; }
 
 inline graphic::Font * Stage::GetDefaultFont() { return mDefaultFont; }
 inline void Stage::SetDefaultFont(graphic::Font * font) { mDefaultFont = font; }
