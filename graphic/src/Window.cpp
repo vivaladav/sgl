@@ -39,20 +39,18 @@ void Window::SetSize(int w, int h)
     mW = w;
     mH = h;
 
-    SDL_SetWindowSize(mSysWin, w, h);
-}
-
-void Window::SetFullscreen(bool f)
-{
-    if(mFullscreen == f)
-        return ;
-
-    const VideoMode vm = f ? VM_FULLSCREEN : VM_WINDOW;
-    SetVideoMode(vm);
+    // upate the window size if not in FULLSCREEN mode
+    if(mVideoMode == VM_WINDOW)
+        SDL_SetWindowSize(mSysWin, w, h);
 }
 
 void Window::SetVideoMode(VideoMode vm)
 {
+#ifdef DEBUG
+    std::cout << "Window::SetVideoMode - CURRENT video mode: " << mVideoMode
+              << " NEW video mode: " << vm << std::endl;
+#endif
+
     if(vm == mVideoMode)
         return ;
 
@@ -66,9 +64,14 @@ void Window::SetVideoMode(VideoMode vm)
     };
     const unsigned int flag = flags[vm];
 
-    mFullscreen =  flag == SDL_WINDOW_FULLSCREEN;
-
     SDL_SetWindowFullscreen(mSysWin, flag);
+
+#ifdef DEBUG
+    PrintDisplayMode();
+    PrintVideoSize();
+    PrintWindowFlags();
+    std::cout << "----------------------------------------\n" << std::endl;
+#endif
 }
 
 DisplayMode Window::GetCurrentDisplayMode()
@@ -99,7 +102,7 @@ DisplayMode Window::GetDisplayMode(unsigned int display, unsigned int index) con
         return {};
 }
 
-bool Window::SetDisplayMode(unsigned int display, unsigned int index, bool updateWindowSize)
+bool Window::SetDisplayMode(unsigned int display, unsigned int index)
 {
     SDL_DisplayMode mode;
 
@@ -119,11 +122,13 @@ bool Window::SetDisplayMode(unsigned int display, unsigned int index, bool updat
         return false;
     }
 
-    std::cout << "Window::SetDisplayMode - set display " << mode.w << "x" << mode.h
-              << " @ " << mode.refresh_rate << std::endl;
+#ifdef DEBUG
+    std::cout << "Window::SetDisplayMode - SET DISPLAY " << mode.w << "x" << mode.h
+              << " @ " << mode.refresh_rate << "Hz." << std::endl;
+    std::cout <<  std::endl;
+#endif
 
-    if(updateWindowSize)
-        SetSize(mode.w, mode.h);
+    SetSize(mode.w, mode.h);
 
     return true;
 }
@@ -294,32 +299,101 @@ void Window::HandleEvent(const union SDL_Event & event)
     }
 }
 
+#ifdef DEBUG
+void Window::PrintWindowFlags() const
+{
+    if(mSysWin == nullptr)
+        return ;
+
+    const unsigned int wf = SDL_GetWindowFlags(mSysWin);
+
+    std::cout << "Window::PrintWindowFlags - WINDOW FLAGS:"
+              << ((SDL_WINDOW_FULLSCREEN & wf) ? " FULLSCREEN |" : "")
+              << ((SDL_WINDOW_OPENGL & wf) ? " OPENGL |" : "")
+              << ((SDL_WINDOW_SHOWN & wf) ? " SHOWN |" : "")
+              << ((SDL_WINDOW_HIDDEN & wf) ? " HIDDEN |" : "")
+              << ((SDL_WINDOW_BORDERLESS & wf) ? " BORDERLESS |" : "")
+              << ((SDL_WINDOW_RESIZABLE & wf) ? " RESIZABLE |" : "")
+              << ((SDL_WINDOW_MINIMIZED & wf) ? " MINIMIZED |" : "")
+              << ((SDL_WINDOW_MAXIMIZED & wf) ? " MAXIMIZED |" : "")
+              << ((SDL_WINDOW_MOUSE_GRABBED  & wf) ? " MOUSE GRABBED |" : "")
+              << ((SDL_WINDOW_INPUT_FOCUS  & wf) ? " INPUT FOREIGN |" : "")
+              << ((SDL_WINDOW_ALLOW_HIGHDPI & wf) ? " ALLOW HIGHDPI |" : "")
+              << ((SDL_WINDOW_MOUSE_CAPTURE & wf) ? " MOUSE CAPTURE |" : "")
+              << ((SDL_WINDOW_ALWAYS_ON_TOP & wf) ? " ALWAYS ON TOP |" : "")
+              << ((SDL_WINDOW_SKIP_TASKBAR & wf) ? " SKIP TASKBAR |" : "")
+              << ((SDL_WINDOW_UTILITY & wf) ? " UTILITY |" : "")
+              << ((SDL_WINDOW_TOOLTIP & wf) ? " TOOLTIP |" : "")
+              << ((SDL_WINDOW_POPUP_MENU & wf) ? " POPUP MENU |" : "")
+              << ((SDL_WINDOW_KEYBOARD_GRABBED & wf) ? " KEYBOARD GRABBED |" : "")
+              << ((SDL_WINDOW_VULKAN & wf) ? " VULKAN |" : "")
+              << ((SDL_WINDOW_METAL & wf) ? " METAL |" : "")
+              << std::endl;
+}
+
+void Window::PrintDisplayMode() const
+{
+    if(mSysWin == nullptr)
+        return ;
+
+    SDL_DisplayMode m;
+    SDL_GetWindowDisplayMode(mSysWin, &m);
+
+    std::cout << "Window::PrintDisplayMode - display mode: " << m.w << "x" << m.h
+              << " @ " << m.refresh_rate << " Hz." <<  std::endl;
+}
+
+void Window::PrintVideoSize() const
+{
+    if(mSysWin == nullptr)
+        return ;
+
+    int winW = 0;
+    int winH = 0;
+    SDL_GetWindowSize(mSysWin, &winW, &winH);
+    std::cout << "Window::PrintVideoSize - Window size: " << winW << "x" << winH << std::endl;
+
+    SDL_GL_GetDrawableSize(mSysWin, &winW, &winH);
+    std::cout << "Window::PrintVideoSize - Drawable size: " << winW << "x" << winH << std::endl;
+}
+
+#endif
+
 Window::Window(const char * title, int w, int h, core::Application * app)
     : mW(w)
     , mH(h)
-    , mVideoMode(VM_WINDOW)
+    , mVideoMode(VM_BORDERLESS)
 {
     UpdateDisplayModes();
 
-    // requested default size
+    // requested desktop size
     if(0 == w || 0 == h)
     {
-        const DisplayMode dm = GetDisplayMode(0, 0);
-        mW = dm.width;
-        mH = dm.height;
+        SDL_DisplayMode dm;
+        SDL_GetDesktopDisplayMode(0, &dm);
+
+        mW = dm.w;
+        mH = dm.h;
     }
 
     const int posX = SDL_WINDOWPOS_CENTERED;
     const int posY = SDL_WINDOWPOS_CENTERED;
-    const int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_FOCUS;
+    const int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_FULLSCREEN_DESKTOP;
 
     mSysWin = SDL_CreateWindow(title, posX, posY, mW, mH, flags);
 
     mSysWinId = SDL_GetWindowID(mSysWin);
-
     mContextGL = SDL_GL_CreateContext(mSysWin);
 
     app->SetWindowEventHandler(this);
+
+#ifdef DEBUG
+    std::cout << "---------------- Window ----------------" << std::endl;
+    PrintDisplayMode();
+    PrintVideoSize();
+    PrintWindowFlags();
+    std::cout << "----------------------------------------\n" << std::endl;
+#endif
 }
 
 Window::~Window()
@@ -332,20 +406,41 @@ void Window::UpdateDisplayModes()
 {
     mNumDisplays = SDL_GetNumVideoDisplays();
 
+    mDisplayModes.clear();
     mDisplayModes.resize(mNumDisplays);
 
     for(int d = 0; d < mNumDisplays; ++d)
     {
         const int numModes = SDL_GetNumDisplayModes(d);
+        mDisplayModes[d].reserve(numModes + 1);
 
         for(int m = 0; m < numModes; ++m)
         {
             SDL_DisplayMode dm;
-
             SDL_GetDisplayMode(d, m, &dm);
 
             mDisplayModes[d].emplace_back(d, dm.w, dm.h, dm.refresh_rate);
         }
+
+        // check if desktop display is present
+        // NOTE this is done to prevent missing modes in Windows when scaling is enabled
+        SDL_DisplayMode ddm;
+        SDL_GetDesktopDisplayMode(d, &ddm);
+
+        bool found = false;
+
+        for(const DisplayMode & mode : mDisplayModes[d])
+        {
+            if(mode.width == ddm.w && mode.height == ddm.h && mode.refresh == ddm.refresh_rate)
+            {
+                found = true;
+                break;
+            }
+        }
+
+        // add desktop display mode if not found
+        if(!found)
+            mDisplayModes[d].emplace_back(d, ddm.w, ddm.h, ddm.refresh_rate);
     }
 }
 

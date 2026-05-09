@@ -47,10 +47,6 @@ public:
     int GetHeight() const;
     void SetSize(int w, int h);
 
-    bool IsFullscreen() const;
-    void SetFullscreen(bool f);
-    void SwitchFullscreen();
-
     VideoMode GetVideoMode() const;
     void SetVideoMode(VideoMode vm);
 
@@ -58,11 +54,17 @@ public:
     int GetNumDisplayModes(unsigned int display) const;
     DisplayMode GetCurrentDisplayMode();
     DisplayMode GetDisplayMode(unsigned int display, unsigned int index) const;
-    bool SetDisplayMode(unsigned int display, unsigned int index, bool updateWindowSize = true);
+    bool SetDisplayMode(unsigned int display, unsigned int index);
 
     void AddWindowListener(WindowEventListener * el);
     void RemoveWindowListener(WindowEventListener * el);
     void HandleEvent(const union SDL_Event & event) override;
+
+#ifdef DEBUG
+    void PrintWindowFlags() const;
+    void PrintDisplayMode() const;
+    void PrintVideoSize() const;
+#endif
 
 private:
     Window(const char * title, int w, int h, core::Application * app);
@@ -87,20 +89,11 @@ private:
     SDL_Window * mSysWin = nullptr;
     unsigned int mSysWinId = 0;
 
-
-    bool mFullscreen = false;
-
     // Renderer needs to access the low level window
     friend class Renderer;
 };
 
 inline Window * Window::Instance() { return mInstance; }
-
-inline bool Window::IsFullscreen() const { return mFullscreen; }
-inline void Window::SwitchFullscreen()
-{
-    SetFullscreen(!mFullscreen);
-}
 
 inline int Window::GetWidth() const { return mW; }
 inline int Window::GetHeight() const { return mH; }
