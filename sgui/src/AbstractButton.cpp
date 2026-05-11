@@ -106,6 +106,10 @@ void AbstractButton::HandleMouseButtonDown(sgl::core::MouseButtonEvent & event)
     if(!IsEnabled())
         return ;
 
+    // only handle LEFT click
+    if(event.GetButton() != core::MouseEvent::BUTTON_LEFT)
+        return ;
+
     HandleButtonDown();
 
     event.SetConsumed();
@@ -114,6 +118,10 @@ void AbstractButton::HandleMouseButtonDown(sgl::core::MouseButtonEvent & event)
 void AbstractButton::HandleMouseButtonUp(core::MouseButtonEvent & event)
 {
     if(!IsEnabled())
+        return ;
+
+    // only handle LEFT click
+    if(event.GetButton() != core::MouseEvent::BUTTON_LEFT)
         return ;
 
     HandleButtonUp();
@@ -131,10 +139,10 @@ void AbstractButton::HandleMouseOver()
 
 void AbstractButton::HandleMouseOut()
 {
-    if(!IsEnabled() || IsChecked())
+    if(!IsEnabled())
         return ;
 
-    SetState(NORMAL);
+    SetState(mChecked ? CHECKED : NORMAL);
 }
 
 void AbstractButton::HandleKeyDown(sgl::core::KeyboardEvent & event)
@@ -168,16 +176,21 @@ void AbstractButton::OnStateChanged(VisualState state) { }
 
 void AbstractButton::HandleButtonDown()
 {
-    if(IsCheckable())
-        SetState(CHECKED);
-    else
-        SetState(PUSHED);
+    // do not push if exclusive (in button group) and checked
+    if(mExclusive && mChecked)
+        return ;
+
+    SetState(PUSHED);
 }
 
 void AbstractButton::HandleButtonUp()
 {
-    // do not uncheck if exclusive (in button group)
+    // do not uncheck if exclusive (in button group) and checked
     if(mExclusive && mChecked)
+        return ;
+
+    // do nothing if button is not pushed
+    if(mState != PUSHED)
         return ;
 
     // set default state then handle click
