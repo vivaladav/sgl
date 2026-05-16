@@ -28,6 +28,8 @@ public:
     void AddItem(ComboBoxItem * item);
     ComboBoxItem * GetItem(unsigned int index);
 
+    unsigned int GetNumItems() const;
+
     ComboBoxItem * GetActiveItem() const;
     int GetActiveItemIndex() const;
     void InitActiveItem(unsigned int index);
@@ -69,6 +71,8 @@ inline ComboBoxItem * ComboBox::GetItem(unsigned int index)
     else
         return nullptr;
 }
+
+inline unsigned int ComboBox::GetNumItems() const { return mItems.size(); }
 
 inline ComboBoxItem * ComboBox::GetActiveItem() const
 {
