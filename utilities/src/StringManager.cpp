@@ -94,6 +94,25 @@ const std::string & StringManager::GetString(const std::string & sid) const
         return unknown;
 }
 
+std::string StringManager::GetParametricString(const std::string & sid, const std::string & val) const
+{
+    static const std::string TAG_VALUE("%%STR%%");
+
+    const std::string & str = GetString(sid);
+
+    const size_t indTag = str.find(TAG_VALUE);
+
+    // replace TAG VALUE
+    if(indTag != std::string::npos)
+    {
+        std::string res = str;
+        res.replace(indTag, TAG_VALUE.length(), val);
+        return res;
+    }
+    else
+        return str;
+}
+
 void StringManager::AddListener(StringsChangeListener * l)
 {
     // listener already registered

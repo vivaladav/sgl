@@ -28,6 +28,7 @@ public:
     bool LoadStringsFromPackage(const char * file);
 
     const std::string & GetString(const std::string & sid) const;
+    std::string GetParametricString(const std::string & sid, const std::string & val) const;
     const char * GetCString(const std::string & sid) const;
 
     // LISTENERS
