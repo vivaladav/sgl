@@ -75,7 +75,7 @@ unsigned int AbstractButton::AddOnToggleFunction(const std::function<void(bool)>
 {
     static unsigned int num = 0;
 
-    int fId = ++num;
+    unsigned int fId = ++num;
     mOnToggle.emplace(fId, f);
 
     return fId;

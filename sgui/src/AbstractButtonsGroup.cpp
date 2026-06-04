@@ -9,11 +9,6 @@ namespace sgl
 namespace sgui
 {
 
-AbstractButtonsGroup::AbstractButtonsGroup()
-    : mOnToggle([](unsigned int, bool){})
-{
-}
-
 void AbstractButtonsGroup::SetExclusive(bool val)
 {
     // value already set
@@ -98,7 +93,8 @@ void AbstractButtonsGroup::AddButton(AbstractButton * button)
 
             mIndChecked = buttonIndex;
 
-            mOnToggle(buttonIndex, checked);
+            for(auto & it : mOnToggle)
+                it.second(buttonIndex, checked);
         });
 
         mToggleFunctions.emplace(button, fId);
@@ -128,6 +124,24 @@ void AbstractButtonsGroup::RemoveButton(AbstractButton * button)
 
         ++it;
     }
+}
+
+unsigned int AbstractButtonsGroup::AddFunctionOnToggle(const std::function<void(unsigned int, bool)> & f)
+{
+    static unsigned int num = 0;
+
+    unsigned int fId = ++num;
+    mOnToggle.emplace(fId, f);
+
+    return fId;
+}
+
+void AbstractButtonsGroup::AbstractButtonsGroup::RemoveFunctionOnToggle(unsigned int fId)
+{
+    auto it = mOnToggle.find(fId);
+
+    if(it != mOnToggle.end())
+        mOnToggle.erase(it);
 }
 
 void AbstractButtonsGroup::OnButtonAdded(AbstractButton *) { }

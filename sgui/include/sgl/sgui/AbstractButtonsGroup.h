@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <map>
 #include <unordered_map>
 #include <vector>
 
@@ -14,7 +15,7 @@ class AbstractButton;
 class AbstractButtonsGroup
 {
 public:
-    AbstractButtonsGroup();
+    virtual ~AbstractButtonsGroup() = default;
 
     bool IsExclusive() const;
     void SetExclusive(bool val);
@@ -31,7 +32,8 @@ public:
 
     unsigned int GetNumButtons() const;
 
-    void SetFunctionOnToggle(const std::function<void(unsigned int, bool)> & f);
+    unsigned int AddFunctionOnToggle(const std::function<void(unsigned int, bool)> & f);
+    void RemoveFunctionOnToggle(unsigned int fId);
 
 private:
     virtual void OnButtonAdded(AbstractButton * button);
@@ -43,7 +45,7 @@ private:
     std::unordered_map<AbstractButton *, unsigned int> mToggleFunctions;
     std::vector<AbstractButton *> mButtons;
 
-    std::function<void(unsigned int, bool)> mOnToggle;
+    std::map<unsigned int, std::function<void(unsigned int, bool)>> mOnToggle;
 
     int mIndChecked = -1;
 
@@ -63,11 +65,6 @@ inline AbstractButton * AbstractButtonsGroup::GetButton(unsigned int ind) const
 }
 
 inline unsigned int AbstractButtonsGroup::GetNumButtons() const { return mButtons.size(); }
-
-inline void AbstractButtonsGroup::SetFunctionOnToggle(const std::function<void(unsigned int, bool)> & f)
-{
-    mOnToggle = f;
-}
 
 } // namespace sgui
 } // namespace sgl
