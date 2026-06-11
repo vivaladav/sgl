@@ -37,6 +37,12 @@ ComboBox::ComboBox(Widget * parent)
     InitState(NORMAL);
 }
 
+ComboBox::~ComboBox()
+{
+    for(ComboBoxItem * item : mItems)
+        delete item;
+}
+
 void ComboBox::AddItem(ComboBoxItem * item)
 {
     const int numItems = mItems.size();
@@ -44,6 +50,7 @@ void ComboBox::AddItem(ComboBoxItem * item)
     item->SetVisible(false);
     mItems.push_back(item);
 
+    // parent set to NULL so it's possible to call MoveChildToFront on stage when visible
     item->SetParent(nullptr);
 
     item->AddOnClickFunction([this, numItems]

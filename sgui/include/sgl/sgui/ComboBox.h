@@ -24,6 +24,7 @@ class ComboBox : public AbstractButton
 {
 public:
     ComboBox(Widget * parent);
+    ~ComboBox();
 
     void AddItem(ComboBoxItem * item);
     ComboBoxItem * GetItem(unsigned int index);
