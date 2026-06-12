@@ -29,10 +29,14 @@ void WidgetContainer::ClearWidgets()
     {
         Widget * w = *it;
 
-        it = mWidgets.erase(it);
+        mWidgets.erase(it);
 
         // delete Widget after erase because destructor will call RemoveChild
         delete w;
+
+        // upadte it with whatever is in front of the queue as reference returned by erase
+        // might be invalid in corner cases (like for ComboBoxItems deleted by their ComboBox)
+        it = mWidgets.begin();
     }
 }
 
