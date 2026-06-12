@@ -45,8 +45,13 @@ public:
 
     void SetStep(int val);
 
+    // value changed is notified as soon as the slider value changes
     unsigned int AddOnValueChanged(const std::function<void(int)> & f);
     void RemoveOnValueChanged(unsigned int fId);
+    // value finalized is notified when the slider value is not being updated any more
+    // i.e.: after the user releases the mouse and stops dragging the slider box
+    unsigned int AddOnValueFinalized(const std::function<void(int)> & f);
+    void RemoveOnValueFinalized(unsigned int fId);
 
     bool IsScreenPointInside(int x, int y) override;
 
@@ -69,10 +74,12 @@ protected:
     void SetSlidingAreaPosition(int x, int y);
 
 private:
-    void NotifyValueChanged(int val);
+    void NotifyValueChanged();
+    void NotifyValueFinalized();
 
 private:
     std::map<unsigned int, std::function<void(int)>> mOnValChanged;
+    std::map<unsigned int, std::function<void(int)>> mOnValFinalized;
 
     Orientation mOrientation;
 
@@ -90,6 +97,7 @@ private:
     int mStep = 1;
 
     bool mDragging = false;
+    bool mValueChanged = false;
 };
 
 inline AbstractSlider::Orientation AbstractSlider::GetOrientation() const { return mOrientation;  }

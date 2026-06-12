@@ -21,6 +21,8 @@ void AbstractSlider::SetMinMax(int min, int max)
     mMin = min;
     mMax = max;
 
+    const int oldVal = mValue;
+
     if(mValue < mMin)
         mValue = mMin;
     else if(mValue > mMax)
@@ -28,8 +30,12 @@ void AbstractSlider::SetMinMax(int min, int max)
     else
         return ;
 
-    HandleValueChanged(mValue);
-    NotifyValueChanged(mValue);
+    if(oldVal != mValue)
+    {
+        HandleValueChanged(mValue);
+        NotifyValueChanged();
+        NotifyValueFinalized();
+    }
 }
 
 void AbstractSlider::SetValue(int val)
@@ -47,7 +53,8 @@ void AbstractSlider::SetValue(int val)
     mValuePerc = (mValue - mMin) * 100 / (mMax - mMin);
 
     HandleValueChanged(val);
-    NotifyValueChanged(val);
+    NotifyValueChanged();
+    NotifyValueFinalized();
 }
 
 unsigned int AbstractSlider::AddOnValueChanged(const std::function<void(int)> & f)
@@ -68,6 +75,24 @@ void AbstractSlider::RemoveOnValueChanged(unsigned int fId)
         mOnValChanged.erase(it);
 }
 
+unsigned int AbstractSlider::AddOnValueFinalized(const std::function<void(int)> & f)
+{
+    static unsigned int num = 0;
+
+    int fId = ++num;
+    mOnValFinalized.emplace(fId, f);
+
+    return fId;
+}
+
+void AbstractSlider::RemoveOnValueFinalized(unsigned int fId)
+{
+    auto it = mOnValFinalized.find(fId);
+
+    if(it != mOnValFinalized.end())
+        mOnValFinalized.erase(it);
+}
+
 bool AbstractSlider::IsScreenPointInside(int x, int y)
 {
     // always inside while dragging so to allow control anywhere the mouse is
@@ -82,6 +107,8 @@ void AbstractSlider::HandleMouseButtonDown(core::MouseButtonEvent & event)
 
     // start dragging
     mDragging = true;
+    // reset changed flag
+    mValueChanged = false;
 
     // HORIZONTAL AbstractSlider
     if(HORIZONTAL == mOrientation)
@@ -96,6 +123,9 @@ void AbstractSlider::HandleMouseButtonDown(core::MouseButtonEvent & event)
 void AbstractSlider::HandleMouseButtonUp(core::MouseButtonEvent & event)
 {
     mDragging = false;
+
+    if(mValueChanged)
+        NotifyValueFinalized();
 }
 
 void AbstractSlider::HandleMouseMotion(core::MouseMotionEvent & event)
@@ -161,8 +191,10 @@ void AbstractSlider::HandleMousePosition(int pos, int pos0, int pos1)
     {
         mValue = val;
 
+        mValueChanged = true;
+
         HandleValueChanged(val);
-        NotifyValueChanged(val);
+        NotifyValueChanged();
     }
 }
 
@@ -170,10 +202,16 @@ void AbstractSlider::OnStateChanged(VisualState) { }
 
 void AbstractSlider::HandleValueChanged(int) {  }
 
-void AbstractSlider::NotifyValueChanged(int val)
+void AbstractSlider::NotifyValueChanged()
 {
     for(auto & it: mOnValChanged)
-        it.second(val);
+        it.second(mValue);
+}
+
+void AbstractSlider::NotifyValueFinalized()
+{
+    for(auto & it: mOnValFinalized)
+        it.second(mValue);
 }
 
 } // namespace sgui
