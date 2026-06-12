@@ -3,6 +3,7 @@
 #include "sgl/sgui/Widget.h"
 
 #include <functional>
+#include <map>
 
 namespace sgl
 {
@@ -44,7 +45,8 @@ public:
 
     void SetStep(int val);
 
-    void SetOnValueChanged(const std::function<void(int)> & f);
+    unsigned int AddOnValueChanged(const std::function<void(int)> & f);
+    void RemoveOnValueChanged(unsigned int fId);
 
     bool IsScreenPointInside(int x, int y) override;
 
@@ -67,7 +69,10 @@ protected:
     void SetSlidingAreaPosition(int x, int y);
 
 private:
-    std::function<void(int)> mOnValChanged;
+    void NotifyValueChanged(int val);
+
+private:
+    std::map<unsigned int, std::function<void(int)>> mOnValChanged;
 
     Orientation mOrientation;
 
@@ -94,8 +99,6 @@ inline int AbstractSlider::GetValue() const { return mValue; }
 inline int AbstractSlider::GetValuePerc() const { return mValuePerc; }
 
 inline void AbstractSlider::SetStep(int val) { mStep = val; }
-
-inline void AbstractSlider::SetOnValueChanged(const std::function<void(int)> & f) { mOnValChanged = f; }
 
 inline int AbstractSlider::GetSlidingAreaWidth() const { return mSlidingAreaW; }
 inline int AbstractSlider::GetSlidingAreaHeight() const { return mSlidingAreaH; }

@@ -12,7 +12,6 @@ namespace sgui
 
 AbstractSlider::AbstractSlider(Orientation o, Widget * parent)
     : Widget(parent)
-    , mOnValChanged([](int){})
     , mOrientation(o)
 {
 }
@@ -30,7 +29,7 @@ void AbstractSlider::SetMinMax(int min, int max)
         return ;
 
     HandleValueChanged(mValue);
-    mOnValChanged(mValue);
+    NotifyValueChanged(mValue);
 }
 
 void AbstractSlider::SetValue(int val)
@@ -48,7 +47,25 @@ void AbstractSlider::SetValue(int val)
     mValuePerc = (mValue - mMin) * 100 / (mMax - mMin);
 
     HandleValueChanged(val);
-    mOnValChanged(val);
+    NotifyValueChanged(val);
+}
+
+unsigned int AbstractSlider::AddOnValueChanged(const std::function<void(int)> & f)
+{
+    static unsigned int num = 0;
+
+    int fId = ++num;
+    mOnValChanged.emplace(fId, f);
+
+    return fId;
+}
+
+void AbstractSlider::RemoveOnValueChanged(unsigned int fId)
+{
+    auto it = mOnValChanged.find(fId);
+
+    if(it != mOnValChanged.end())
+        mOnValChanged.erase(it);
 }
 
 bool AbstractSlider::IsScreenPointInside(int x, int y)
@@ -145,13 +162,19 @@ void AbstractSlider::HandleMousePosition(int pos, int pos0, int pos1)
         mValue = val;
 
         HandleValueChanged(val);
-        mOnValChanged(val);
+        NotifyValueChanged(val);
     }
 }
 
 void AbstractSlider::OnStateChanged(VisualState) { }
 
 void AbstractSlider::HandleValueChanged(int) {  }
+
+void AbstractSlider::NotifyValueChanged(int val)
+{
+    for(auto & it: mOnValChanged)
+        it.second(val);
+}
 
 } // namespace sgui
 } // namespace sgl
