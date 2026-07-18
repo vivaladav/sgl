@@ -320,8 +320,8 @@ void WidgetContainer::PropagateUpdate(float delta)
 {
     for(Widget * w : mWidgets)
     {
-        // do not update if disabled or not visible
-        if(!w->IsEnabled() || !w->IsVisible() || !w->IsInVisibleArea())
+        // do not update if disabled
+        if(!w->IsEnabled())
             continue ;
 
         if(w->IsMouseOver())
