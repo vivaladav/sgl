@@ -24,5 +24,11 @@ bool FilesystemBase::DoesDirectoryExist(const std::string & path) const
     return d.is_directory();
 }
 
+bool FilesystemBase::DoesPathExist(const std::string & path) const
+{
+    const std::filesystem::path p(path);
+    return std::filesystem::exists(p);
+}
+
 } // namespace utilities
 } // namespace sgl
