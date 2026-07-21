@@ -5,6 +5,7 @@ find_package(SDL2 REQUIRED)
 
 add_library(
     utilities
+    include/sgl/utilities/BinaryFile.h
     include/sgl/utilities/IFilesystem.h
     include/sgl/utilities/ISystem.h
     include/sgl/utilities/Filesystem.h
@@ -22,6 +23,7 @@ add_library(
     $<$<PLATFORM_ID:Windows>:include/sgl/utilities/windows/System.h>
     include/sgl/utilities/UniformDistribution.h
     include/sgl/utilities/UniformRealDistribution.h
+    src/BinaryFile.cpp
     src/FilesystemBase.cpp
     src/HashCRC32.cpp
     src/LoadedDie.cpp
