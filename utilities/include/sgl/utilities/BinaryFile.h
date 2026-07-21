@@ -27,6 +27,7 @@ public:
 
     void WriteCString(const char * str, unsigned int size);
     void WriteString(const std::string & str);
+    void WriteBool(bool val);
     void WriteInt(int val);
     void WriteUint(unsigned int val);
     void WriteFloat(float val);
@@ -48,6 +49,11 @@ inline void BinaryFile::WriteCString(const char * str, unsigned int size)
 inline void BinaryFile::WriteString(const std::string & str)
 {
     mStream.write(str.c_str(), str.size());
+}
+
+inline void BinaryFile::WriteBool(bool val)
+{
+    mStream.write(reinterpret_cast<const char *>(&val), sizeof(bool));
 }
 
 inline void BinaryFile::WriteInt(int val)
