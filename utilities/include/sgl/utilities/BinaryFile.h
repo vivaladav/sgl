@@ -20,13 +20,10 @@ public:
     BinaryFile(const std::string & path, OpenMode mode, bool truncate);
     ~BinaryFile();
 
-    bool OpenToWri();
-    bool OpenToWrite(const std::string & path, bool truncate);
-
     bool IsOpen() const;
 
-    void ReadCstring(char str[], unsigned int size);
-    void ReadString(std::string & str, unsigned int size);
+    void ReadCstring(char str[]);
+    void ReadString(std::string & str);
     bool ReadBool();
     int ReadInt();
     unsigned int ReadUint();
@@ -49,14 +46,17 @@ private:
 
 inline bool BinaryFile::IsOpen() const { return mStream.is_open(); }
 
-inline void BinaryFile::ReadCstring(char str[], unsigned int size)
+inline void BinaryFile::ReadCstring(char str[])
 {
+    const unsigned int size = ReadUint();
+
     mStream.read(str, size);
-    str[size] = 0;
 }
 
-inline void BinaryFile::ReadString(std::string & str, unsigned int size)
+inline void BinaryFile::ReadString(std::string & str)
 {
+    const unsigned int size = ReadUint();
+
     str.resize(size);
     mStream.read(str.data(), size);
 }
@@ -98,12 +98,17 @@ inline double BinaryFile::ReadDouble()
 
 inline void BinaryFile::WriteCstring(const char * str, unsigned int size)
 {
+    WriteUint(size);
+
     mStream.write(str, size);
 }
 
 inline void BinaryFile::WriteString(const std::string & str)
 {
-    mStream.write(str.c_str(), str.size());
+    const unsigned int size = str.size();
+    WriteUint(size);
+
+    mStream.write(str.c_str(), size);
 }
 
 inline void BinaryFile::WriteBool(bool val)
