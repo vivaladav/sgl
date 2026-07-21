@@ -13,11 +13,14 @@ BinaryFile::BinaryFile(const std::string & path, OpenMode mode, bool truncate)
 
     if(mode == OPEN_INPUT)
         flags |= ios::in;
+    // output
     else
+    {
         flags |= ios::out;
 
-    if(truncate)
-        flags |= ios::trunc;
+        if(truncate)
+            flags |= ios::trunc;
+    }
 
     mStream.open(path, flags);
 }

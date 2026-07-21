@@ -25,7 +25,15 @@ public:
 
     bool IsOpen() const;
 
-    void WriteCString(const char * str, unsigned int size);
+    void ReadCstring(char str[], unsigned int size);
+    void ReadString(std::string & str, unsigned int size);
+    bool ReadBool();
+    int ReadInt();
+    unsigned int ReadUint();
+    float ReadFloat();
+    double ReadDouble();
+
+    void WriteCstring(const char * str, unsigned int size);
     void WriteString(const std::string & str);
     void WriteBool(bool val);
     void WriteInt(int val);
@@ -41,7 +49,54 @@ private:
 
 inline bool BinaryFile::IsOpen() const { return mStream.is_open(); }
 
-inline void BinaryFile::WriteCString(const char * str, unsigned int size)
+inline void BinaryFile::ReadCstring(char str[], unsigned int size)
+{
+    mStream.read(str, size);
+    str[size] = 0;
+}
+
+inline void BinaryFile::ReadString(std::string & str, unsigned int size)
+{
+    str.resize(size);
+    mStream.read(str.data(), size);
+}
+
+inline bool BinaryFile::ReadBool()
+{
+    bool val = false;
+    mStream.read(reinterpret_cast<char *>(&val), sizeof(bool));
+    return val;
+}
+
+inline int BinaryFile::ReadInt()
+{
+    int val = 0;
+    mStream.read(reinterpret_cast<char *>(&val), sizeof(int));
+    return val;
+}
+
+inline unsigned int BinaryFile::ReadUint()
+{
+    unsigned int val = 0;
+    mStream.read(reinterpret_cast<char *>(&val), sizeof(unsigned int));
+    return val;
+}
+
+inline float BinaryFile::ReadFloat()
+{
+    float val = 0.f;
+    mStream.read(reinterpret_cast<char *>(&val), sizeof(float));
+    return val;
+}
+
+inline double BinaryFile::ReadDouble()
+{
+    double val = 0.0;
+    mStream.read(reinterpret_cast<char *>(&val), sizeof(double));
+    return val;
+}
+
+inline void BinaryFile::WriteCstring(const char * str, unsigned int size)
 {
     mStream.write(str, size);
 }
@@ -53,27 +108,27 @@ inline void BinaryFile::WriteString(const std::string & str)
 
 inline void BinaryFile::WriteBool(bool val)
 {
-    mStream.write(reinterpret_cast<const char *>(&val), sizeof(bool));
+    mStream.write(reinterpret_cast<char *>(&val), sizeof(bool));
 }
 
 inline void BinaryFile::WriteInt(int val)
 {
-    mStream.write(reinterpret_cast<const char *>(&val), sizeof(int));
+    mStream.write(reinterpret_cast<char *>(&val), sizeof(int));
 }
 
 inline void BinaryFile::WriteUint(unsigned int val)
 {
-    mStream.write(reinterpret_cast<const char *>(&val), sizeof(unsigned int));
+    mStream.write(reinterpret_cast<char *>(&val), sizeof(unsigned int));
 }
 
 inline void BinaryFile::WriteFloat(float val)
 {
-    mStream.write(reinterpret_cast<const char *>(&val), sizeof(float));
+    mStream.write(reinterpret_cast<char *>(&val), sizeof(float));
 }
 
 inline void BinaryFile::WriteDouble(double val)
 {
-    mStream.write(reinterpret_cast<const char *>(&val), sizeof(double));
+    mStream.write(reinterpret_cast<char *>(&val), sizeof(double));
 }
 
 inline void BinaryFile::Close()
