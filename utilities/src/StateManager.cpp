@@ -108,7 +108,7 @@ bool StateManager::SetInitialActiveState(int stateId, StateData * data)
     return true;
 }
 
-int StateManager::GetActiveStateId() const
+unsigned int StateManager::GetActiveStateId() const
 {
     if(mActive != nullptr)
         return mActive->GetStateId();

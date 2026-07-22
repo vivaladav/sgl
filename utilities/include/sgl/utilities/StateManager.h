@@ -22,7 +22,7 @@ public:
     bool RequestNextActiveState(int stateId, StateData * data = nullptr);
     bool SetInitialActiveState(int stateId, StateData * data = nullptr);
 
-    int GetActiveStateId() const;
+    unsigned int GetActiveStateId() const;
     State * GetActiveState() const;
 
     void Update(float delta);

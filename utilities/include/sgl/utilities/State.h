@@ -19,7 +19,7 @@ public:
     State(int stateId);
     virtual ~State();
 
-    int GetStateId() const;
+    unsigned int GetStateId() const;
 
     virtual void SetNextStateData(StateData * data);
 
@@ -42,7 +42,7 @@ private:
 inline State::State(int stateId) : mId(stateId) { }
 inline State::~State() { }
 
-inline int State::GetStateId() const { return mId; }
+inline unsigned int State::GetStateId() const { return mId; }
 
 inline StateManager * State::GetStateManager() const { return mManager; }
 
