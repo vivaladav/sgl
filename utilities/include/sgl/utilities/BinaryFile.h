@@ -50,15 +50,19 @@ inline void BinaryFile::ReadCstring(char str[])
 {
     const unsigned int size = ReadUint();
 
-    mStream.read(str, size);
+    if(size > 0)
+        mStream.read(str, size);
 }
 
 inline void BinaryFile::ReadString(std::string & str)
 {
     const unsigned int size = ReadUint();
 
-    str.resize(size);
-    mStream.read(str.data(), size);
+    if(size > 0)
+    {
+        str.resize(size);
+        mStream.read(str.data(), size);
+    }
 }
 
 inline bool BinaryFile::ReadBool()
@@ -100,7 +104,8 @@ inline void BinaryFile::WriteCstring(const char * str, unsigned int size)
 {
     WriteUint(size);
 
-    mStream.write(str, size);
+    if(size > 0)
+        mStream.write(str, size);
 }
 
 inline void BinaryFile::WriteString(const std::string & str)
@@ -108,7 +113,8 @@ inline void BinaryFile::WriteString(const std::string & str)
     const unsigned int size = str.size();
     WriteUint(size);
 
-    mStream.write(str.c_str(), size);
+    if(size > 0)
+        mStream.write(str.c_str(), size);
 }
 
 inline void BinaryFile::WriteBool(bool val)
