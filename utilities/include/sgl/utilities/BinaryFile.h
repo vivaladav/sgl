@@ -17,7 +17,7 @@ public:
     };
 
 public:
-    BinaryFile(const std::string & path, OpenMode mode, bool truncate);
+    BinaryFile(const std::string & path, OpenMode mode, bool truncate = false);
     ~BinaryFile();
 
     bool IsOpen() const;
