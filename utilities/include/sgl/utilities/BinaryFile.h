@@ -29,6 +29,7 @@ public:
     unsigned int ReadUint();
     float ReadFloat();
     double ReadDouble();
+    std::size_t ReadSizeT();
 
     void WriteCstring(const char * str, unsigned int size);
     void WriteString(const std::string & str);
@@ -37,6 +38,7 @@ public:
     void WriteUint(unsigned int val);
     void WriteFloat(float val);
     void WriteDouble(double val);
+    void WriteSizeT(std::size_t val);
 
     void Close();
 
@@ -100,6 +102,13 @@ inline double BinaryFile::ReadDouble()
     return val;
 }
 
+inline std::size_t BinaryFile::ReadSizeT()
+{
+    std::size_t val = 0;
+    mStream.read(reinterpret_cast<char *>(&val), sizeof(std::size_t));
+    return val;
+}
+
 inline void BinaryFile::WriteCstring(const char * str, unsigned int size)
 {
     WriteUint(size);
@@ -140,6 +149,11 @@ inline void BinaryFile::WriteFloat(float val)
 inline void BinaryFile::WriteDouble(double val)
 {
     mStream.write(reinterpret_cast<char *>(&val), sizeof(double));
+}
+
+inline void BinaryFile::WriteSizeT(std::size_t val)
+{
+    mStream.write(reinterpret_cast<char *>(&val), sizeof(std::size_t));
 }
 
 inline void BinaryFile::Close()
