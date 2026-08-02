@@ -18,6 +18,9 @@ ComboBox::ComboBox(Widget * parent)
     mBody = new graphic::Image;
     RegisterRenderable(mBody);
 
+    // size is not affected by items added later
+    SetResizePolicy(FIXED);
+
     SetCheckable(true);
 
     AddOnToggleFunction([this](bool checked)
@@ -25,12 +28,13 @@ ComboBox::ComboBox(Widget * parent)
         for(ComboBoxItem * item : mItems)
             item->SetVisible(checked);
 
+        // move everything to the front to show items on top of other widgets
         if(checked)
         {
-            auto stage = sgl::sgui::Stage::Instance();
-
-            for(ComboBoxItem * item : mItems)
-                stage->MoveChildToFront(item);
+            if(GetParent() != nullptr)
+                GetParent()->MoveChildToFront(this);
+            else
+                sgl::sgui::Stage::Instance()->MoveChildToFront(this);
         }
     });
 
@@ -50,8 +54,8 @@ void ComboBox::AddItem(ComboBoxItem * item)
     item->SetVisible(false);
     mItems.push_back(item);
 
-    // parent set to NULL so it's possible to call MoveChildToFront on stage when visible
-    item->SetParent(nullptr);
+    // set item's parent to the ComboBox
+    item->SetParent(this);
 
     item->AddOnClickFunction([this, numItems]
     {
@@ -134,11 +138,12 @@ void ComboBox::HandlePositionChanged()
     }
 
     // position ITEMS
-    int y = y0 + h0;
+    const int x = 0;
+    int y = h0;
 
     for(ComboBoxItem * item : mItems)
     {
-        item->SetPosition(x0, y);
+        item->SetPosition(x, y);
 
         y += item->GetHeight();
     }
