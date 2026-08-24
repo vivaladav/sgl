@@ -53,8 +53,8 @@ void Camera::ResetPosition()
 
 void Camera::CenterToPoint(int x, int y)
 {
-    mXf = x - (mWidth * 0.5f);
-    mYf = y - (mHeight * 0.5f);
+    mXf = x - mHalfWidth;
+    mYf = y - mHalfHeight;
 
     mXd = std::roundf(mXf);
     mYd = std::roundf(mYf);

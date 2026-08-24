@@ -16,6 +16,8 @@ public:
     // camera data
     int GetX() const;
     int GetY() const;
+    int GetCenterX() const;
+    int GetCenterY() const;
     int GetWidth() const;
     int GetHeight() const;
 
@@ -67,19 +69,34 @@ private:
     int mYd = 0;
     int mWidth = 0;
     int mHeight = 0;
+    int mHalfWidth = 0;
+    int mHalfHeight = 0;
 };
 
 inline int Camera::GetX() const { return mXd; }
 inline int Camera::GetY() const { return mYd; }
+inline int Camera::GetCenterX() const { return mXd + mHalfWidth; };
+inline int Camera::GetCenterY() const { return mYd + mHalfHeight; };
 inline int Camera::GetWidth() const { return mWidth; }
 inline int Camera::GetHeight() const { return mHeight; }
 
-inline void Camera::SetWidth(int w) { mWidth = w; }
-inline void Camera::SetHeight(int h) { mHeight = h; }
+inline void Camera::SetWidth(int w)
+{
+    mWidth = w;
+    mHalfWidth = w / 2;
+}
+inline void Camera::SetHeight(int h)
+{
+    mHeight = h;
+    mHalfHeight = h / 2;
+}
 inline void Camera::SetSize(int w, int h)
 {
     mWidth = w;
     mHeight = h;
+
+    mHalfWidth = w / 2;
+    mHalfHeight = h / 2;
 }
 
 inline void Camera::ClearFunctionOnMove() { mFuncOnMove = []{}; }
