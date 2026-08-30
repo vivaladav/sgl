@@ -81,6 +81,7 @@ public:
     void ClearVisibleArea();
     bool IsInVisibleArea() const;
     bool IsWidgetInVisibleArea(const Widget * w) const;
+    bool IsPointInVisibleArea(int x, int y) const;
 
     void DeleteLater();
 
@@ -248,20 +249,24 @@ inline void Widget::ClearVisibleArea()
 
 inline bool Widget::IsInVisibleArea() const
 {
-    return nullptr == mParent || mParent->IsWidgetInVisibleArea(this);
+    return nullptr == mParent ||
+                      (mParent->IsInVisibleArea() && mParent->IsWidgetInVisibleArea(this));
 }
 
 inline bool Widget::IsWidgetInVisibleArea(const Widget * w) const
 {
-    if(!mVisibleAreaSet)
-        return true;
-
     const int wX1 = w->GetScreenX();
     const int wY1 = w->GetScreenY();
     const int wX2 = wX1 + w->GetWidth();
     const int wY2 = wY1 + w->GetHeight();
 
     return !mVisibleAreaSet || (wX1 < mVisX2 && wX2 > mVisX1 && wY1 < mVisY2 && wY2 > mVisY1);
+}
+
+inline bool Widget::IsPointInVisibleArea(int x, int y) const
+{
+    return (!mVisibleAreaSet || (x < mVisX2 && x > mVisX1 && y < mVisY2 && y > mVisY1)) &&
+           (nullptr == mParent || mParent->IsPointInVisibleArea(x, y));
 }
 
 inline unsigned int Widget::MixColorAndAlpha(unsigned int color) const

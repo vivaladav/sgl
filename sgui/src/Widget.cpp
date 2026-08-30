@@ -325,7 +325,14 @@ bool Widget::IsScreenPointInside(int x, int y)
             return true;
     }
 
-    return x > mScreenX && x < (mScreenX + mWidth) && y > mScreenY && y < (mScreenY + mHeight);
+    // make sure point is inside a visible area
+    if(!IsPointInVisibleArea(x, y))
+        return false;
+
+    if(mVisibleAreaSet)
+        return x > mVisX1 && x < mVisX2 && y > mVisY1 && y < mVisY2;
+    else
+        return x > mScreenX && x < (mScreenX + mWidth) && y > mScreenY && y < (mScreenY + mHeight);
 }
 
 void Widget::HandlePositionChanged() { }
