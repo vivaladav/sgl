@@ -37,6 +37,32 @@ void PushButton::SetBackground(const char * file)
     SetCurrBg(mBg);
 }
 
+void PushButton::SetBackground(graphic::Texture * tex)
+{
+    assert(tex);
+
+    UnregisterRenderable(mBg);
+    delete mBg;
+
+    mBg = new graphic::Image(tex); // TODO check if Image is valid after creation and fallback on dummy
+    RegisterRenderable(mBg);
+
+    SetCurrBg(mBg);
+}
+
+void PushButton::SetIcon(graphic::Texture * tex)
+{
+    assert(tex);
+
+    UnregisterRenderable(mIcon);
+    delete mIcon;
+
+    mIcon = new graphic::Image(tex); // TODO check if Image is valid after creation and fallback on dummy
+    RegisterRenderable(mIcon);
+
+    SetCurrIcon(mIcon);
+}
+
 void PushButton::SetLabel(const char * text)
 {
     const std::string txt = text;
@@ -62,20 +88,6 @@ void PushButton::SetLabel(const char * text)
     mLabel->SetColor(col);
 
     SetCurrLabel(mLabel);
-}
-
-void PushButton::SetLabelColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
-{
-    a = MixAlphaAndAlpha(a);
-
-    mCurrLabel->SetColor(r, g, b, a);
-}
-
-void PushButton::SetLabelColor(unsigned int color)
-{
-    color = MixColorAndAlpha(color);
-
-    mCurrLabel->SetColor(color);
 }
 
 void PushButton::SetLabelFont(graphic::Font * font)
@@ -106,6 +118,28 @@ void PushButton::SetLabelFont(graphic::Font * font)
     }
 }
 
+void PushButton::SetContentColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+    a = MixAlphaAndAlpha(a);
+
+    if(mCurrIcon != nullptr)
+        mCurrIcon->SetColor(r, g, b, a);
+
+    if(mCurrLabel != nullptr)
+        mCurrLabel->SetColor(r, g, b, a);
+}
+
+void PushButton::SetContentColor(unsigned int color)
+{
+    color = MixColorAndAlpha(color);
+
+    if(mCurrIcon != nullptr)
+        mCurrIcon->SetColor(color);
+
+    if(mCurrLabel != nullptr)
+        mCurrLabel->SetColor(color);
+}
+
 void PushButton::SetCurrBg(graphic::Renderable * bg)
 {
     mCurrBg = bg;
@@ -117,26 +151,57 @@ void PushButton::SetCurrBg(graphic::Renderable * bg)
     SetSize(w, h);
 }
 
+void PushButton::SetCurrIcon(graphic::Renderable * icon)
+{
+    mCurrIcon = icon;
+
+    PositionElements();
+}
+
 void PushButton::SetCurrLabel(graphic::Renderable * label)
 {
     mCurrLabel = label;
 
-    PositionLabel();
+    PositionElements();
 }
 
 void PushButton::HandlePositionChanged()
 {
-    mCurrBg->SetPosition(GetScreenX(), GetScreenY());
-
-    PositionLabel();
+    PositionElements();
 }
 
-void PushButton::PositionLabel()
+void PushButton::PositionElements()
 {
-    const int x = GetScreenX() + (GetWidth() - mCurrLabel->GetWidth()) * 0.5f;
-    const int y = GetScreenY() + (GetHeight() - mCurrLabel->GetHeight()) * 0.5f;
+    const int x0 = GetScreenX();
+    const int y0 = GetScreenY();
 
-    mCurrLabel->SetPosition(x, y);
+    if(mCurrBg != nullptr)
+        mCurrBg->SetPosition(x0, y0);
+
+    int contentW = 0;
+
+    if(mCurrIcon != nullptr)
+        contentW += mCurrIcon->GetWidth();
+
+    if(mLabel != nullptr)
+        contentW += mLabel->GetWidth();
+
+    if(mCurrIcon != nullptr && mLabel != nullptr)
+        contentW += mMarginIcon;
+
+    int x = x0 + (GetWidth() - contentW) / 2;
+
+    if(mCurrIcon != nullptr)
+    {
+        mCurrIcon->SetPosition(x, y0 + (GetHeight() - mCurrIcon->GetHeight()) / 2);
+        x += mCurrIcon->GetWidth() + mMarginIcon;
+    }
+
+    // const int x = GetScreenX() + (GetWidth() - mCurrLabel->GetWidth()) * 0.5f;
+    // const int y = GetScreenY() + (GetHeight() - mCurrLabel->GetHeight()) * 0.5f;
+
+    if(mLabel != nullptr)
+        mCurrLabel->SetPosition(x, y0 + (GetHeight() - mCurrLabel->GetHeight()) / 2);
 }
 
 } // namespace sgui
