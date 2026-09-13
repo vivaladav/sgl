@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <fstream>
 
 namespace sgl
@@ -30,6 +31,7 @@ public:
     float ReadFloat();
     double ReadDouble();
     std::size_t ReadSizeT();
+    std::time_t ReadTimeT();
 
     void WriteCstring(const char * str, unsigned int size);
     void WriteString(const std::string & str);
@@ -39,6 +41,7 @@ public:
     void WriteFloat(float val);
     void WriteDouble(double val);
     void WriteSizeT(std::size_t val);
+    void WriteTimeT(std::time_t val);
 
     void Close();
 
@@ -109,6 +112,13 @@ inline std::size_t BinaryFile::ReadSizeT()
     return val;
 }
 
+inline std::time_t BinaryFile::ReadTimeT()
+{
+    std::time_t val = 0;
+    mStream.read(reinterpret_cast<char *>(&val), sizeof(std::time_t));
+    return val;
+}
+
 inline void BinaryFile::WriteCstring(const char * str, unsigned int size)
 {
     WriteUint(size);
@@ -154,6 +164,11 @@ inline void BinaryFile::WriteDouble(double val)
 inline void BinaryFile::WriteSizeT(std::size_t val)
 {
     mStream.write(reinterpret_cast<char *>(&val), sizeof(std::size_t));
+}
+
+inline void BinaryFile::WriteTimeT(std::time_t val)
+{
+    mStream.write(reinterpret_cast<char *>(&val), sizeof(std::time_t));
 }
 
 inline void BinaryFile::Close()
