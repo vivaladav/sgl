@@ -17,6 +17,8 @@ public:
     bool Init();
     void Shutdown();
 
+    const char * GetLanguage();
+
 private:
     Steam();
     ~Steam();

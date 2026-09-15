@@ -42,6 +42,11 @@ void Steam::Shutdown()
 {
     SteamAPI_Shutdown();
 }
+
+const char * Steam::GetLanguage()
+{
+    return SteamApps()->GetCurrentGameLanguage();
+}
 // ===== NOT USING THE STEAM SDK =====
 #else
 bool Steam::NeedRestartInSteam(unsigned int appID) { return false; }
@@ -49,6 +54,8 @@ bool Steam::NeedRestartInSteam(unsigned int appID) { return false; }
 bool Steam::Init() { return false; }
 
 void Steam::Shutdown() { }
+
+const char * Steam::GetLanguage() { return nullptr; }
 #endif
 
 
