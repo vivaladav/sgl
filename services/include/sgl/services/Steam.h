@@ -29,6 +29,14 @@ public:
     unsigned int GetUserId();
     const char * GetUserName();
 
+    // -- STATS --
+    bool GetStat(const char * name, int * value);
+    bool GetStat(const char * name, float * value);
+    bool SetStat(const char * name, int value);
+    bool SetStat(const char * name, float value);
+    bool UpdateAverageStat(const char * name, float value, double sessionLen);
+    bool StoreStats();
+
 private:
     Steam();
     ~Steam();
