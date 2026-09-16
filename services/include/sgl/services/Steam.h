@@ -12,12 +12,22 @@ public:
     static Steam * Instance();
     static void Destroy();
 
+    // -- INIT / SHUTDOWN --
     bool NeedRestartInSteam(unsigned int appID);
-
     bool Init();
+    bool IsInitDone() const;
     void Shutdown();
 
-    const char * GetLanguage();
+    // -- APP INFO --
+    unsigned int GetAppId();
+    const char * GetAppLanguage();
+
+    // -- SYSTEM INFO --
+    bool IsRunningOnDeck();
+
+    // -- USER INFO --
+    unsigned int GetUserId();
+    const char * GetUserName();
 
 private:
     Steam();
@@ -33,6 +43,8 @@ inline Steam::Steam() : mInitDone(false) { }
 inline Steam::~Steam() { Shutdown(); }
 
 inline Steam * Steam::Instance() { return mInstance; }
+
+inline bool Steam::IsInitDone() const { return mInitDone; }
 
 } // namespace services
 } // namespace sgl

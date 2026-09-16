@@ -26,6 +26,7 @@ void Steam::Destroy()
 
 // ===== USING THE STEAM SDK =====
 #ifdef USE_STEAM
+// -- INIT / SHUTDOWN --
 bool Steam::NeedRestartInSteam(unsigned int appID)
 {
     return SteamAPI_RestartAppIfNecessary(appID);
@@ -42,20 +43,43 @@ void Steam::Shutdown()
 {
     SteamAPI_Shutdown();
 }
+// -- APP INFO --
+unsigned int Steam::GetAppId()
+{
+    return SteamUtils()->GetAppID();
+}
 
-const char * Steam::GetLanguage()
+const char * Steam::GetAppLanguage()
 {
     return SteamApps()->GetCurrentGameLanguage();
+}
+
+// -- SYSTEM INFO --
+bool Steam::IsRunningOnDeck()
+{
+    return SteamUtils()->IsRunningOnSteamHardware() == k_ESteamHardwareTypeSteamDeck;
+}
+
+// -- USER INFO --
+unsigned int Steam::GetUserId()
+{
+    return SteamUser()->GetSteamID().GetAccountID();
+}
+
+const char * Steam::GetUserName()
+{
+    return SteamFriends()->GetPersonaName();
 }
 // ===== NOT USING THE STEAM SDK =====
 #else
 bool Steam::NeedRestartInSteam(unsigned int appID) { return false; }
-
 bool Steam::Init() { return false; }
-
 void Steam::Shutdown() { }
-
-const char * Steam::GetLanguage() { return nullptr; }
+unsigned int Steam::GetAppId() { return 0; }
+const char * Steam::GetAppLanguage() { return nullptr; }
+bool Steam::IsRunningOnDeck() { return false; }
+unsigned int Steam::GetUserId() { return 0; }
+const char * Steam::GetUserName() { return nullptr; }
 #endif
 
 
