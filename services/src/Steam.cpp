@@ -101,6 +101,11 @@ bool Steam::StoreStats()
 {
     return SteamUserStats()->StoreStats();
 }
+
+bool Steam::boolResetStats()
+{
+    return SteamUserStats()->ResetAllStats(false);
+}
 // ===== NOT USING THE STEAM SDK =====
 #else
 bool Steam::NeedRestartInSteam(unsigned int appID) { return false; }
@@ -117,6 +122,7 @@ bool Steam::SetStat(const char * name, int value) { return false; }
 bool Steam::SetStat(const char * name, float value) { return false; }
 bool Steam::UpdateAverageStat(const char * name, float value, double sessionLen) { return false; }
 bool Steam::StoreStats() { return false; }
+bool Steam::boolResetStats() { return false; }
 #endif
 
 } // namespace services

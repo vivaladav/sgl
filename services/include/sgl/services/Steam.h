@@ -36,6 +36,7 @@ public:
     bool SetStat(const char * name, float value);
     bool UpdateAverageStat(const char * name, float value, double sessionLen);
     bool StoreStats();
+    bool boolResetStats();
 
 private:
     Steam();
