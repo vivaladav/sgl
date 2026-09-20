@@ -35,8 +35,17 @@ public:
     bool SetStat(const char * name, int value);
     bool SetStat(const char * name, float value);
     bool UpdateAverageStat(const char * name, float value, double sessionLen);
-    bool StoreStats();
-    bool boolResetStats();
+    bool ResetStats();
+
+    // -- ACHIEVEMENTS --
+    bool ClearAchievement(const char * name);
+    bool IsAchievementHidden(const char * name);
+    bool IsAchievementUnlocked(const char * name, bool * unlocked);
+    unsigned int GetNumberOfAchievements();
+    bool UnlockAchievement(const char * name);
+
+    bool ResetStatsAndAchievements();
+    bool StoreStatsAndAchievements();
 
 private:
     Steam();

@@ -2,6 +2,8 @@
 
 #if USE_STEAM
 #include <steam/steam_api.h>
+
+#include <string>
 #endif
 
 namespace sgl
@@ -97,15 +99,52 @@ bool Steam::UpdateAverageStat(const char * name, float value, double sessionLen)
     return SteamUserStats()->UpdateAvgRateStat(name, value, sessionLen);
 }
 
-bool Steam::StoreStats()
+bool Steam::ResetStats()
+{
+    return SteamUserStats()->ResetAllStats(false);
+}
+
+// -- ACHIEVEMENTS --
+bool Steam::ClearAchievement(const char * name)
+{
+    return SteamUserStats()->ClearAchievement(name);
+}
+
+bool Steam::IsAchievementHidden(const char * name)
+{
+    const std::string hidden("1");
+
+    const char * key = "hidden";
+    const std::string res = SteamUserStats()->GetAchievementDisplayAttribute(name, key);
+
+    return !res.empty() && res == hidden;
+}
+
+bool Steam::IsAchievementUnlocked(const char * name, bool * unlocked)
+{
+    return SteamUserStats()->GetAchievement(name, unlocked);
+}
+
+unsigned int Steam::GetNumberOfAchievements()
+{
+    return SteamUserStats()->GetNumAchievements();
+}
+
+bool Steam::UnlockAchievement(const char * name)
+{
+    return SteamUserStats()->SetAchievement(name);
+}
+
+bool Steam::ResetStatsAndAchievements()
+{
+    return SteamUserStats()->ResetAllStats(true);
+}
+
+bool Steam::StoreStatsAndAchievements()
 {
     return SteamUserStats()->StoreStats();
 }
 
-bool Steam::boolResetStats()
-{
-    return SteamUserStats()->ResetAllStats(false);
-}
 // ===== NOT USING THE STEAM SDK =====
 #else
 bool Steam::NeedRestartInSteam(unsigned int appID) { return false; }
@@ -121,8 +160,14 @@ bool Steam::GetStat(const char * name, float * value) { return false; }
 bool Steam::SetStat(const char * name, int value) { return false; }
 bool Steam::SetStat(const char * name, float value) { return false; }
 bool Steam::UpdateAverageStat(const char * name, float value, double sessionLen) { return false; }
-bool Steam::StoreStats() { return false; }
-bool Steam::boolResetStats() { return false; }
+bool Steam::ResetStats() { return false; }
+bool Steam::ClearAchievement(const char * name) { return false; }
+bool Steam::IsAchievementHidden(const char * name) { return false; }
+bool Steam::IsAchievementUnlocked(const char * name, bool * unlocked)  { return false; }
+unsigned int Steam::GetNumberOfAchievements() { return 0; }
+bool Steam::UnlockAchievement(const char * name) { return false; }
+bool Steam::ResetStatsAndAchievements() { return false; }
+bool Steam::StoreStatsAndAchievements() { return false; }
 #endif
 
 } // namespace services
