@@ -42,6 +42,8 @@ public:
     bool IsAchievementHidden(const char * name);
     bool IsAchievementUnlocked(const char * name, bool * unlocked);
     unsigned int GetNumberOfAchievements();
+    bool ShowAchievementProgressNotification(const char * name, unsigned int progress,
+                                             unsigned int max);
     bool UnlockAchievement(const char * name);
 
     bool ResetStatsAndAchievements();

@@ -112,12 +112,12 @@ bool Steam::ClearAchievement(const char * name)
 
 bool Steam::IsAchievementHidden(const char * name)
 {
-    const std::string hidden("1");
+    const std::string ok("1");
 
     const char * key = "hidden";
     const std::string res = SteamUserStats()->GetAchievementDisplayAttribute(name, key);
 
-    return !res.empty() && res == hidden;
+    return !res.empty() && res == ok;
 }
 
 bool Steam::IsAchievementUnlocked(const char * name, bool * unlocked)
@@ -128,6 +128,12 @@ bool Steam::IsAchievementUnlocked(const char * name, bool * unlocked)
 unsigned int Steam::GetNumberOfAchievements()
 {
     return SteamUserStats()->GetNumAchievements();
+}
+
+bool Steam::ShowAchievementProgressNotification(const char * name, unsigned int progress,
+                                                unsigned int max)
+{
+    return SteamUserStats()->IndicateAchievementProgress(name, progress, max);
 }
 
 bool Steam::UnlockAchievement(const char * name)
@@ -147,7 +153,7 @@ bool Steam::StoreStatsAndAchievements()
 
 // ===== NOT USING THE STEAM SDK =====
 #else
-bool Steam::NeedRestartInSteam(unsigned int appID) { return false; }
+bool Steam::NeedRestartInSteam(unsigned int) { return false; }
 bool Steam::Init() { return false; }
 void Steam::Shutdown() { }
 unsigned int Steam::GetAppId() { return 0; }
@@ -165,6 +171,8 @@ bool Steam::ClearAchievement(const char * name) { return false; }
 bool Steam::IsAchievementHidden(const char * name) { return false; }
 bool Steam::IsAchievementUnlocked(const char * name, bool * unlocked)  { return false; }
 unsigned int Steam::GetNumberOfAchievements() { return 0; }
+bool Steam::ShowAchievementProgressNotification(const char * name, unsigned int progress,
+                                                unsigned int max) { return false; }
 bool Steam::UnlockAchievement(const char * name) { return false; }
 bool Steam::ResetStatsAndAchievements() { return false; }
 bool Steam::StoreStatsAndAchievements() { return false; }
