@@ -11,6 +11,7 @@
 #endif
 
 #include <iostream>
+#include <limits>
 
 #define SYSTEM_MUSIC(ptr) static_cast<Mix_Music *>(ptr)
 
@@ -75,9 +76,12 @@ Music::~Music()
         SDL_RWclose(mDataRW);
 }
 
-bool Music::Play()
+bool Music::PlayLoops(int loops)
 {
-    if(Mix_PlayMusic(SYSTEM_MUSIC(mData), 0) == -1)
+    if(loops < 0)
+        loops = std::numeric_limits<int>::max();
+
+    if(Mix_PlayMusic(SYSTEM_MUSIC(mData), loops) == -1)
     {
         std::cout << "Music::Play ERROR: " << SDL_GetError() << std::endl;
         return false;

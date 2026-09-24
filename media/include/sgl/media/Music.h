@@ -26,6 +26,8 @@ public:
     bool IsValid() const;
 
     bool Play();
+    // when loops < 0 it's infinite loops
+    bool PlayLoops(int loops = -1);
 
 private:
     SDL_RWops * mDataRW = nullptr;
@@ -43,6 +45,8 @@ inline std::size_t Music::GetId() const { return mId; }
 inline float Music::GetDurationSec() const { return mDuration; }
 
 inline bool Music::IsValid() const { return mValid; }
+
+inline bool Music::Play() { return PlayLoops(0); }
 
 } // namespace media
 } // namespace sgl

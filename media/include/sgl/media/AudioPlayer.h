@@ -19,6 +19,8 @@ public:
     // -- MUSIC --
     void PlayMusic(const char * filename, bool restartSame = false);
     void PlayMusic(std::size_t musicId, bool restartSame = false);
+    void PlayMusicLoop(const char * filename, bool restartSame = false);
+    void PlayMusicLoop(std::size_t musicId, bool restartSame = false);
     void PauseMusic();
     void ResumeMusic();
     void StopMusic();
@@ -49,6 +51,8 @@ private:
     AudioPlayer(AudioManager * am);
     ~AudioPlayer() = default;
 
+    void PlayMusic(std::size_t musicId, bool restartSame, bool loop);
+
 private:
     std::vector<std::size_t> mQueue;
     unsigned int mQueueInd = 0;
@@ -67,6 +71,16 @@ private:
     // only AudioManager can create and delete this
     friend class AudioManager;
 };
+
+inline void AudioPlayer::PlayMusic(std::size_t musicId, bool restartSame)
+{
+    PlayMusic(musicId, restartSame, false);
+}
+
+inline void AudioPlayer::PlayMusicLoop(std::size_t musicId, bool restartSame)
+{
+    PlayMusic(musicId, restartSame, true);
+}
 
 inline bool AudioPlayer::IsMusicEnabled() const { return mMusicEnabled; }
 inline bool AudioPlayer::IsSoundEnabled() const { return mSoundEnabled; }

@@ -20,35 +20,14 @@ namespace media
 // -- MUSIC --
 void AudioPlayer::PlayMusic(const char * filename, bool restartSame)
 {
-    // do not play when music is disabled
-    if(!mMusicEnabled)
-        return ;
-
     const std::size_t musicId = mAm->GetFileId(filename);
-
     PlayMusic(musicId, restartSame);
 }
 
-void AudioPlayer::PlayMusic(std::size_t musicId, bool restartSame)
+void AudioPlayer::PlayMusicLoop(const char * filename, bool restartSame)
 {
-    // do not play when music is disabled
-    if(!mMusicEnabled)
-        return ;
-
-    // music already playing and caller doesn't want to restart
-    if(!restartSame && musicId == mMusicPlayingId)
-        return ;
-
-    Music * music = mAm->GetMusic(musicId);
-
-    if(nullptr == music)
-        return ;
-
-    mMusicPlayingId = musicId;
-    mMusicPlaying = true;
-    mPlayingDurationLeft = music->GetDurationSec();
-
-    music->Play();
+    const std::size_t musicId = mAm->GetFileId(filename);
+    PlayMusicLoop(musicId, restartSame);
 }
 
 void AudioPlayer::PauseMusic()
@@ -261,6 +240,31 @@ void AudioPlayer::Update(float delta)
             mMusicPlaying = false;
         }
     }
+}
+
+void AudioPlayer::PlayMusic(std::size_t musicId, bool restartSame, bool loop)
+{
+    // do not play when music is disabled
+    if(!mMusicEnabled)
+        return ;
+
+    // music already playing and caller doesn't want to restart
+    if(!restartSame && musicId == mMusicPlayingId)
+        return ;
+
+    Music * music = mAm->GetMusic(musicId);
+
+    if(nullptr == music)
+        return ;
+
+    mMusicPlayingId = musicId;
+    mMusicPlaying = true;
+    mPlayingDurationLeft = music->GetDurationSec();
+
+    if(loop)
+        music->PlayLoops();
+    else
+        music->Play();
 }
 
 } // namespace media
