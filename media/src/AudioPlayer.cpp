@@ -118,10 +118,16 @@ void AudioPlayer::ClearMusicQueue()
     mQueueInd = 0;
 }
 
-void AudioPlayer::PlayMusicQueue()
+void AudioPlayer::PlayMusicQueue(bool loop)
 {
-    if(mQueueInd >= mQueue.size())
+    // this should not happen
+    if(mQueue.empty() || mQueueInd >= mQueue.size())
+    {
+        StopMusic();
         return;
+    }
+
+    mLoopMusicQueue = loop;
 
     const std::size_t musicId = mQueue[mQueueInd];
 
@@ -233,10 +239,20 @@ void AudioPlayer::Update(float delta)
         {
             ++mQueueInd;
 
-            if(mQueueInd < mQueue.size())
-                PlayMusicQueue();
+            if(mLoopMusicQueue)
+            {
+                if(mQueueInd == mQueue.size())
+                    mQueueInd = 0;
+
+                PlayMusicQueue(true);
+            }
             else
-                StopMusic();
+            {
+                if(mQueueInd < mQueue.size())
+                    PlayMusicQueue(false);
+                else
+                    StopMusic();
+            }
         }
         // playing single track
         else

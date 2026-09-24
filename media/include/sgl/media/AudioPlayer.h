@@ -29,7 +29,7 @@ public:
     // -- MUSIC PLAYLIST --
     void AddMusicToQueue(const char * filename);
     void ClearMusicQueue();
-    void PlayMusicQueue();
+    void PlayMusicQueue(bool loop);
 
     // -- SOUNDS --
     void PlaySound(const char * filename, unsigned int loops = 0);
@@ -62,6 +62,7 @@ private:
     bool mMusicQueuePlaying = false;
     bool mMusicEnabled = true;
     bool mSoundEnabled = true;
+    bool mLoopMusicQueue = false;
 
     // only AudioManager can create and delete this
     friend class AudioManager;
