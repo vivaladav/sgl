@@ -20,12 +20,17 @@ public:
     void ClearDone();
     void SetDone();
 
+    bool HasDelay() const;
+    float GetDelay() const;
+    void SetDelay(float val);
+
     virtual void Render() = 0;
 
 private:
     virtual void OnDone();
 
 private:
+    float mDelay = 0.f;
     bool mActive = true;
     bool mDone = false;
 };
@@ -42,6 +47,10 @@ inline void Particle::SetDone()
     mDone = true;
     OnDone();
 }
+
+inline bool Particle::HasDelay() const { return mDelay > 0.f; }
+inline float Particle::GetDelay() const { return mDelay; }
+inline void Particle::SetDelay(float val) { mDelay = val; }
 
 inline void Particle::OnDone() { }
 

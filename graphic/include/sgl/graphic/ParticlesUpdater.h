@@ -28,6 +28,7 @@ private:
 
 protected:
     std::vector<Particle *> mActiveParticles;
+    std::vector<Particle *> mDelayedParticles;
     std::vector<Particle *> mParticles;
 };
 
