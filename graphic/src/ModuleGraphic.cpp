@@ -81,6 +81,97 @@ void ModuleGraphic::PrintVideoInfo()
     std::cout << "--------------------------------------------" << std::endl;
 }
 
+// -- display --
+int ModuleGraphic::GetNumDisplays()
+{
+    return SDL_GetNumVideoDisplays();
+}
+
+int ModuleGraphic::GetNumDisplayModes(int display)
+{
+    return SDL_GetNumDisplayModes(display);
+}
+
+bool ModuleGraphic::IsDisplayModeSupported(int display, int w, int h, int refresh)
+{
+    const int modes = SDL_GetNumDisplayModes(display);
+
+    if(modes < 0)
+        return false;
+
+    for(int m = 0; m < modes; ++m)
+    {
+        SDL_DisplayMode dm;
+        SDL_GetDisplayMode(display, m, &dm);
+
+        if((dm.w == w || w < 0) && (dm.h == h || h < 0) &&
+           (dm.refresh_rate == refresh || refresh < 0))
+            return true;
+    }
+
+    return false;
+}
+
+int ModuleGraphic::GetDisplayModeIndex(int display, int w, int h, int refresh)
+{
+    const int modes = SDL_GetNumDisplayModes(display);
+
+    if(modes < 0)
+        return -1;
+
+    for(int m = 0; m < modes; ++m)
+    {
+        SDL_DisplayMode dm;
+        SDL_GetDisplayMode(display, m, &dm);
+
+        if((dm.w == w || w < 0) && (dm.h == h || h < 0) &&
+           (dm.refresh_rate == refresh || refresh < 0))
+            return m;
+    }
+
+    return -1;
+}
+
+void ModuleGraphic::GetDisplayBounds(int display, int & x, int & y, int & w, int & h)
+{
+    SDL_Rect r;
+
+    if(SDL_GetDisplayBounds(display, &r) < 0)
+    {
+        x = 0;
+        y = 0;
+        w = 0;
+        h = 0;
+    }
+    else
+    {
+        x = r.x;
+        y = r.y;
+        w = r.w;
+        h = r.h;
+    }
+}
+
+void ModuleGraphic::PrintDisplayModes(int display)
+{
+    const int modes = SDL_GetNumDisplayModes(display);
+
+    if(modes < 0)
+        return ;
+
+    std::cout << "ModuleGraphic::PrintDisplayModes\n";
+
+    for(int m = 0; m < modes; ++m)
+    {
+        SDL_DisplayMode dm;
+        SDL_GetDisplayMode(display, m, &dm);
+
+        std::cout << "#" << m << " - " << dm.w << " x " << dm.h << " @ " << dm.refresh_rate << "Hz\n";
+    }
+
+    std::cout << std::endl;
+}
+
 // -- cursor --
 void ModuleGraphic::HideSystemCursor()
 {
