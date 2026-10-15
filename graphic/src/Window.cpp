@@ -94,7 +94,7 @@ DisplayMode Window::GetCurrentDisplayMode()
     return mode;
 }
 
-DisplayMode Window::GetDisplayMode(unsigned int display, unsigned int index) const
+DisplayMode Window::GetDisplayMode(int display, int index) const
 {
     if(display < mDisplayModes.size() && index < mDisplayModes[display].size())
         return mDisplayModes[display][index];
@@ -102,8 +102,10 @@ DisplayMode Window::GetDisplayMode(unsigned int display, unsigned int index) con
         return {};
 }
 
-bool Window::SetDisplayMode(unsigned int display, unsigned int index)
+bool Window::SetDisplayMode(int display, int index)
 {
+    const int currDisplay = GetCurrentDisplayIndex();
+
     SDL_DisplayMode mode;
 
     int res = SDL_GetDisplayMode(display, index, &mode);
@@ -122,6 +124,8 @@ bool Window::SetDisplayMode(unsigned int display, unsigned int index)
         return false;
     }
 
+    mDisplayModeIndex = index;
+
 #ifdef DEBUG
     std::cout << "Window::SetDisplayMode - SET DISPLAY " << mode.w << "x" << mode.h
               << " @ " << mode.refresh_rate << "Hz." << std::endl;
@@ -130,7 +134,29 @@ bool Window::SetDisplayMode(unsigned int display, unsigned int index)
 
     SetSize(mode.w, mode.h);
 
+    // move window to new display if changed
+    if(currDisplay != display)
+    {
+        VideoMode prevVM = mVideoMode;
+
+        if(mVideoMode != VM_WINDOW)
+            SetVideoMode(VM_WINDOW);
+
+        SDL_Rect r;
+        SDL_GetDisplayBounds(display, &r);
+
+        SDL_SetWindowPosition(mSysWin, r.x, r.y);
+
+        if(prevVM != VM_WINDOW)
+            SetVideoMode(prevVM);
+    }
+
     return true;
+}
+
+int Window::GetCurrentDisplayIndex() const
+{
+    return SDL_GetWindowDisplayIndex(mSysWin);
 }
 
 void Window::AddWindowListener(WindowEventListener * el)
@@ -362,7 +388,7 @@ void Window::PrintVideoSize() const
 Window::Window(const char * title, int w, int h, core::Application * app)
     : mW(w)
     , mH(h)
-    , mVideoMode(VM_BORDERLESS)
+    , mVideoMode(VM_WINDOW)
 {
     UpdateDisplayModes();
 
@@ -378,9 +404,11 @@ Window::Window(const char * title, int w, int h, core::Application * app)
 
     const int posX = SDL_WINDOWPOS_CENTERED;
     const int posY = SDL_WINDOWPOS_CENTERED;
-    const int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_FULLSCREEN_DESKTOP;
+    const int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_FOCUS;
 
     mSysWin = SDL_CreateWindow(title, posX, posY, mW, mH, flags);
+
+    UpdateDisplayModeIndex();
 
     mSysWinId = SDL_GetWindowID(mSysWin);
     mContextGL = SDL_GL_CreateContext(mSysWin);
@@ -441,6 +469,36 @@ void Window::UpdateDisplayModes()
         // add desktop display mode if not found
         if(!found)
             mDisplayModes[d].emplace_back(d, ddm.w, ddm.h, ddm.refresh_rate);
+    }
+}
+
+void Window::UpdateDisplayModeIndex()
+{
+    mDisplayModeIndex = -1;
+
+    const int display = SDL_GetWindowDisplayIndex(mSysWin);
+
+    if(display < 0)
+        return ;
+
+    SDL_DisplayMode currentDM;
+    const int res = SDL_GetWindowDisplayMode(mSysWin, &currentDM);
+
+    if(res < 0)
+        return ;
+
+    const int numModes = SDL_GetNumDisplayModes(display);
+
+    for(int m = 0; m < numModes; ++m)
+    {
+        SDL_DisplayMode dm;
+        SDL_GetDisplayMode(display, m, &dm);
+
+        if(dm.w == currentDM.w && dm.h == currentDM.h && dm.refresh_rate == currentDM.refresh_rate)
+        {
+            mDisplayModeIndex = m;
+            return ;
+        }
     }
 }
 

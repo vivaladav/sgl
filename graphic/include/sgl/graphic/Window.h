@@ -51,10 +51,12 @@ public:
     void SetVideoMode(VideoMode vm);
 
     int GetNumDisplays() const;
-    int GetNumDisplayModes(unsigned int display) const;
+    int GetNumDisplayModes(int display) const;
     DisplayMode GetCurrentDisplayMode();
-    DisplayMode GetDisplayMode(unsigned int display, unsigned int index) const;
-    bool SetDisplayMode(unsigned int display, unsigned int index);
+    DisplayMode GetDisplayMode(int display, int index) const;
+    bool SetDisplayMode(int display, int index);
+    int GetCurrentDisplayIndex() const;
+    int GetCurrentDisplayModeIndex() const;
 
     void AddWindowListener(WindowEventListener * el);
     void RemoveWindowListener(WindowEventListener * el);
@@ -71,6 +73,7 @@ private:
     ~Window();
 
     void UpdateDisplayModes();
+    void UpdateDisplayModeIndex();
 
 private:
     static Window * mInstance;
@@ -80,6 +83,7 @@ private:
 
     std::vector<std::vector<DisplayMode>> mDisplayModes;
     int mNumDisplays = 0;
+    int mDisplayModeIndex = -1;
 
     int mW = 0;
     int mH = 0;
@@ -101,13 +105,15 @@ inline int Window::GetHeight() const { return mH; }
 inline Window::VideoMode Window::GetVideoMode() const { return mVideoMode; }
 
 inline int Window::GetNumDisplays() const { return mDisplayModes.size(); }
-inline int Window::GetNumDisplayModes(unsigned int display) const
+inline int Window::GetNumDisplayModes(int display) const
 {
     if(display < mDisplayModes.size())
         return mDisplayModes[display].size();
     else
         return 0;
 }
+
+inline int Window::GetCurrentDisplayModeIndex() const { return mDisplayModeIndex; }
 
 } // namespace graphic
 } // namespace sgl
