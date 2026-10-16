@@ -109,6 +109,7 @@ protected:
 
     void RegisterRenderable(graphic::Renderable * elem);
     void UnregisterRenderable(graphic::Renderable * elem);
+    bool IsRenderableRegistered(const graphic::Renderable * elem) const;
 
     unsigned int MixColorAndAlpha(unsigned int color) const;
     unsigned char MixAlphaAndAlpha(unsigned char a) const;

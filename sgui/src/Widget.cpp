@@ -176,6 +176,13 @@ void Widget::UnregisterRenderable(graphic::Renderable * elem)
         mRenderables.erase(it);
 }
 
+bool Widget::IsRenderableRegistered(const graphic::Renderable * elem) const
+{
+    const auto it = std::find(mRenderables.begin(), mRenderables.end(), elem);
+
+    return it != mRenderables.end();
+}
+
 void Widget::ShowTooltip()
 {
     mOnShowingTooltip();
