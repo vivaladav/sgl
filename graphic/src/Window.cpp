@@ -159,6 +159,19 @@ int Window::GetCurrentDisplayIndex() const
     return SDL_GetWindowDisplayIndex(mSysWin);
 }
 
+bool Window::IsMouseGrabbed() const
+{
+    return SDL_GetWindowGrab(mSysWin) == SDL_TRUE;
+}
+
+void Window::GrabMouse(bool enabled)
+{
+    static_assert(static_cast<int>(true) == 1);
+    const auto val = static_cast<SDL_bool>(SDL_FALSE + enabled);
+
+    SDL_SetWindowGrab(mSysWin, val);
+}
+
 void Window::AddWindowListener(WindowEventListener * el)
 {
     // do not add NULL

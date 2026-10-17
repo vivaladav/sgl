@@ -58,6 +58,9 @@ public:
     int GetCurrentDisplayIndex() const;
     int GetCurrentDisplayModeIndex() const;
 
+    bool IsMouseGrabbed() const;
+    void GrabMouse(bool enabled);
+
     void AddWindowListener(WindowEventListener * el);
     void RemoveWindowListener(WindowEventListener * el);
     void HandleEvent(const union SDL_Event & event) override;
